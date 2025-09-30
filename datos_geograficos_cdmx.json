@@ -1,0 +1,327 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created_date": "2025-09-30",
+    "description": "Datos geográficos básicos para mapas de CDMX - CasaMX",
+    "coordinate_system": "WGS84",
+    "bounds": {
+      "north": 19.5925,
+      "south": 19.0489,
+      "east": -98.9407,
+      "west": -99.3654
+    }
+  },
+  "alcaldias": [
+    {
+      "nombre": "Álvaro Obregón",
+      "centro": {"lat": 19.3578, "lon": -99.2052},
+      "color": "#FF6B6B",
+      "poblacion": 759137
+    },
+    {
+      "nombre": "Azcapotzalco", 
+      "centro": {"lat": 19.4905, "lon": -99.1859},
+      "color": "#4ECDC4",
+      "poblacion": 432205
+    },
+    {
+      "nombre": "Benito Juárez",
+      "centro": {"lat": 19.3716, "lon": -99.1595},
+      "color": "#45B7D1",
+      "poblacion": 434153
+    },
+    {
+      "nombre": "Coyoacán",
+      "centro": {"lat": 19.3467, "lon": -99.1639},
+      "color": "#96CEB4",
+      "poblacion": 614447
+    },
+    {
+      "nombre": "Cuajimalpa de Morelos",
+      "centro": {"lat": 19.3656, "lon": -99.2929},
+      "color": "#FFEAA7",
+      "poblacion": 217686
+    },
+    {
+      "nombre": "Cuauhtémoc",
+      "centro": {"lat": 19.4284, "lon": -99.1576},
+      "color": "#DDA0DD",
+      "poblacion": 545884
+    },
+    {
+      "nombre": "Gustavo A. Madero",
+      "centro": {"lat": 19.4883, "lon": -99.1284},
+      "color": "#98D8C8",
+      "poblacion": 1173351
+    },
+    {
+      "nombre": "Iztacalco",
+      "centro": {"lat": 19.3968, "lon": -99.1122},
+      "color": "#F7DC6F",
+      "poblacion": 404695
+    },
+    {
+      "nombre": "Iztapalapa",
+      "centro": {"lat": 19.3571, "lon": -99.0555},
+      "color": "#BB8FCE",
+      "poblacion": 1815786
+    },
+    {
+      "nombre": "La Magdalena Contreras",
+      "centro": {"lat": 19.3018, "lon": -99.2445},
+      "color": "#85C1E9",
+      "poblacion": 247622
+    },
+    {
+      "nombre": "Miguel Hidalgo",
+      "centro": {"lat": 19.4326, "lon": -99.1954},
+      "color": "#F8C471",
+      "poblacion": 414470
+    },
+    {
+      "nombre": "Milpa Alta",
+      "centro": {"lat": 19.1926, "lon": -99.0233},
+      "color": "#82E0AA",
+      "poblacion": 152685
+    },
+    {
+      "nombre": "Tláhuac",
+      "centro": {"lat": 19.2864, "lon": -99.0134},
+      "color": "#F1948A",
+      "poblacion": 392313
+    },
+    {
+      "nombre": "Tlalpan",
+      "centro": {"lat": 19.2898, "lon": -99.1658},
+      "color": "#AED6F1",
+      "poblacion": 699928
+    },
+    {
+      "nombre": "Venustiano Carranza",
+      "centro": {"lat": 19.4386, "lon": -99.1039},
+      "color": "#D7BDE2",
+      "poblacion": 443704
+    },
+    {
+      "nombre": "Xochimilco",
+      "centro": {"lat": 19.2647, "lon": -99.1031},
+      "color": "#A9DFBF",
+      "poblacion": 442178
+    }
+  ],
+  "puntos_interes": [
+    {
+      "nombre": "Zócalo/Centro Histórico",
+      "coordenadas": {"lat": 19.4326, "lon": -99.1332},
+      "tipo": "historico",
+      "importancia": "alta"
+    },
+    {
+      "nombre": "Aeropuerto Internacional CDMX",
+      "coordenadas": {"lat": 19.4363, "lon": -99.0721},
+      "tipo": "transporte",
+      "importancia": "critica"
+    },
+    {
+      "nombre": "Aeropuerto Felipe Ángeles",
+      "coordenadas": {"lat": 19.7411, "lon": -99.0186},
+      "tipo": "transporte",
+      "importancia": "alta"
+    },
+    {
+      "nombre": "Santa Fe (Distrito Financiero)",
+      "coordenadas": {"lat": 19.3598, "lon": -99.2599},
+      "tipo": "negocios",
+      "importancia": "critica"
+    },
+    {
+      "nombre": "Polanco",
+      "coordenadas": {"lat": 19.4326, "lon": -99.1954},
+      "tipo": "negocios",
+      "importancia": "alta"
+    },
+    {
+      "nombre": "Ciudad Universitaria",
+      "coordenadas": {"lat": 19.3188, "lon": -99.1839},
+      "tipo": "educativo",
+      "importancia": "alta"
+    },
+    {
+      "nombre": "Terminal de Autobuses Norte",
+      "coordenadas": {"lat": 19.5066, "lon": -99.1474},
+      "tipo": "transporte",
+      "importancia": "media"
+    },
+    {
+      "nombre": "Terminal de Autobuses Sur",
+      "coordenadas": {"lat": 19.3838, "lon": -99.1551},
+      "tipo": "transporte",
+      "importancia": "media"
+    }
+  ],
+  "transporte_metro": {
+    "lineas": [
+      {
+        "numero": 1,
+        "nombre": "Rosa",
+        "color": "#E91E63",
+        "estaciones": [
+          {"nombre": "Observatorio", "lat": 19.4022, "lon": -99.2066},
+          {"nombre": "Tacubaya", "lat": 19.4022, "lon": -99.1859},
+          {"nombre": "Juanacatlán", "lat": 19.4022, "lon": -99.1816},
+          {"nombre": "Chapultepec", "lat": 19.4203, "lon": -99.1675},
+          {"nombre": "Sevilla", "lat": 19.4219, "lon": -99.1650},
+          {"nombre": "Insurgentes", "lat": 19.4235, "lon": -99.1624},
+          {"nombre": "Cuauhtémoc", "lat": 19.4251, "lon": -99.1599},
+          {"nombre": "Balderas", "lat": 19.4267, "lon": -99.1574},
+          {"nombre": "Salto del Agua", "lat": 19.4283, "lon": -99.1548},
+          {"nombre": "Isabel la Católica", "lat": 19.4299, "lon": -99.1523},
+          {"nombre": "Pino Suárez", "lat": 19.4315, "lon": -99.1497},
+          {"nombre": "Merced", "lat": 19.4331, "lon": -99.1472},
+          {"nombre": "Candelaria", "lat": 19.4347, "lon": -99.1446},
+          {"nombre": "San Lázaro", "lat": 19.4363, "lon": -99.1421},
+          {"nombre": "Moctezuma", "lat": 19.4379, "lon": -99.1124},
+          {"nombre": "Balbuena", "lat": 19.4395, "lon": -99.1098},
+          {"nombre": "Boulevard Puerto Aéreo", "lat": 19.4411, "lon": -99.1073},
+          {"nombre": "Gómez Farías", "lat": 19.4427, "lon": -99.1047},
+          {"nombre": "Zaragoza", "lat": 19.4443, "lon": -99.1022},
+          {"nombre": "Pantitlán", "lat": 19.4459, "lon": -99.0996}
+        ]
+      },
+      {
+        "numero": 2,
+        "nombre": "Azul",
+        "color": "#2196F3",
+        "estaciones": [
+          {"nombre": "Cuatro Caminos", "lat": 19.4591, "lon": -99.2159},
+          {"nombre": "Panteones", "lat": 19.4583, "lon": -99.2031},
+          {"nombre": "Tacuba", "lat": 19.4575, "lon": -99.1903},
+          {"nombre": "Cuitláhuac", "lat": 19.4567, "lon": -99.1775},
+          {"nombre": "Popotla", "lat": 19.4559, "lon": -99.1647},
+          {"nombre": "Colegio Militar", "lat": 19.4551, "lon": -99.1519},
+          {"nombre": "Normal", "lat": 19.4444, "lon": -99.1436},
+          {"nombre": "San Cosme", "lat": 19.4436, "lon": -99.1588},
+          {"nombre": "Revolución", "lat": 19.4428, "lon": -99.1640},
+          {"nombre": "Hidalgo", "lat": 19.4372, "lon": -99.1406},
+          {"nombre": "Bellas Artes", "lat": 19.4364, "lon": -99.1418},
+          {"nombre": "Allende", "lat": 19.4356, "lon": -99.1370},
+          {"nombre": "Zócalo", "lat": 19.4348, "lon": -99.1322},
+          {"nombre": "Pino Suárez", "lat": 19.4315, "lon": -99.1497},
+          {"nombre": "San Antonio Abad", "lat": 19.4062, "lon": -99.1341},
+          {"nombre": "Chabacano", "lat": 19.4054, "lon": -99.1353},
+          {"nombre": "Viaducto", "lat": 19.3910, "lon": -99.1378},
+          {"nombre": "Xola", "lat": 19.3866, "lon": -99.1390},
+          {"nombre": "Villa de Cortés", "lat": 19.3822, "lon": -99.1402},
+          {"nombre": "Nativitas", "lat": 19.3778, "lon": -99.1414},
+          {"nombre": "Portales", "lat": 19.3615, "lon": -99.1598},
+          {"nombre": "Ermita", "lat": 19.3571, "lon": -99.1610},
+          {"nombre": "General Anaya", "lat": 19.3527, "lon": -99.1622},
+          {"nombre": "Tasqueña", "lat": 19.3244, "lon": -99.1279}
+        ]
+      }
+    ]
+  },
+  "zonas_precio": [
+    {
+      "nivel": "Premium",
+      "rango_precio_m2": [70000, 150000],
+      "colonias": ["Polanco", "Santa Fe", "Pedregal de San Ángel", "Las Lomas"],
+      "color": "#8B0000"
+    },
+    {
+      "nivel": "Alto",
+      "rango_precio_m2": [45000, 70000],
+      "colonias": ["Roma Norte", "Condesa", "Anzures", "Hipódromo"],
+      "color": "#FF4500"
+    },
+    {
+      "nivel": "Medio-Alto",
+      "rango_precio_m2": [35000, 45000],
+      "colonias": ["Del Valle", "Álamos", "Juárez", "Coyoacán Centro"],
+      "color": "#FFD700"
+    },
+    {
+      "nivel": "Medio",
+      "rango_precio_m2": [25000, 35000],
+      "colonias": ["Narvarte", "Portales", "Escandón", "Tlalpan"],
+      "color": "#ADFF2F"
+    },
+    {
+      "nivel": "Accesible",
+      "rango_precio_m2": [15000, 25000],
+      "colonias": ["Doctores", "Lindavista", "Xochimilco", "Magdalena Contreras"],
+      "color": "#00CED1"
+    }
+  ],
+  "rutas_principales": [
+    {
+      "nombre": "Eje Central Lázaro Cárdenas",
+      "tipo": "eje_vial",
+      "coordenadas": [
+        {"lat": 19.5066, "lon": -99.1474},
+        {"lat": 19.4326, "lon": -99.1332},
+        {"lat": 19.2898, "lon": -99.1658}
+      ]
+    },
+    {
+      "nombre": "Insurgentes Sur/Norte",
+      "tipo": "eje_vial", 
+      "coordenadas": [
+        {"lat": 19.5925, "lon": -99.1624},
+        {"lat": 19.4235, "lon": -99.1624},
+        {"lat": 19.2898, "lon": -99.1658}
+      ]
+    },
+    {
+      "nombre": "Reforma",
+      "tipo": "avenida_principal",
+      "coordenadas": [
+        {"lat": 19.4203, "lon": -99.1675},
+        {"lat": 19.4326, "lon": -99.1332}
+      ]
+    },
+    {
+      "nombre": "Anillo Periférico",
+      "tipo": "autopista",
+      "coordenadas": [
+        {"lat": 19.3578, "lon": -99.2052},
+        {"lat": 19.4905, "lon": -99.1859},
+        {"lat": 19.4883, "lon": -99.1284},
+        {"lat": 19.3571, "lon": -99.0555}
+      ]
+    }
+  ],
+  "configuracion_mapa": {
+    "centro_default": {"lat": 19.4326, "lon": -99.1332},
+    "zoom_default": 11,
+    "zoom_colonia": 14,
+    "zoom_detalle": 16,
+    "estilos_disponibles": [
+      "OpenStreetMap",
+      "Satellite",
+      "Terrain"
+    ],
+    "capas": [
+      {
+        "nombre": "colonias",
+        "activa": true,
+        "tipo": "poligono"
+      },
+      {
+        "nombre": "transporte",
+        "activa": true,
+        "tipo": "linea"
+      },
+      {
+        "nombre": "puntos_interes",
+        "activa": false,
+        "tipo": "marcador"
+      },
+      {
+        "nombre": "precios",
+        "activa": false,
+        "tipo": "heatmap"
+      }
+    ]
+  }
+}

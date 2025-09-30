@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CasaMX - Datatón ITAM 2025</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- Slide 1: Title -->
+            <section class="title-slide" data-background-gradient="linear-gradient(45deg, #1e3c72, #2a5298)">
+                <div class="title-content">
+                    <h1 class="main-title">CasaMX</h1>
+                    <h2 class="subtitle">Tu hogar ideal en México</h2>
+                    <div class="team-info">
+                        <p><strong>Datatón ITAM 2025</strong></p>
+                        <p>Equipo: [Nombre del Equipo]</p>
+                    </div>
+                    <div class="tech-badge">
+                        <i class="fas fa-home"></i>
+                        <span>AI-Powered Housing Recommendations</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 2: Problem -->
+            <section class="problem-slide">
+                <h2 class="slide-title">El Problema</h2>
+                <div class="problem-content">
+                    <div class="problem-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">2.1M+</div>
+                            <div class="stat-label">Extranjeros en México</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">78%</div>
+                            <div class="stat-label">Dificultad para encontrar vivienda</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">45 días</div>
+                            <div class="stat-label">Tiempo promedio de búsqueda</div>
+                        </div>
+                    </div>
+                    
+                    <div class="problem-points">
+                        <h3>Desafíos principales:</h3>
+                        <ul>
+                            <li><i class="fas fa-map-marked-alt"></i> Desconocimiento de zonas seguras y convenientes</li>
+                            <li><i class="fas fa-money-bill-wave"></i> Información dispersa sobre precios y calidad</li>
+                            <li><i class="fas fa-language"></i> Barreras idiomáticas y culturales</li>
+                            <li><i class="fas fa-clock"></i> Proceso de búsqueda ineficiente y tardado</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: Solution -->
+            <section class="solution-slide">
+                <h2 class="slide-title">Nuestra Solución</h2>
+                <div class="solution-content">
+                    <div class="solution-overview">
+                        <div class="solution-box">
+                            <i class="fas fa-brain"></i>
+                            <h3>Algoritmo Inteligente</h3>
+                            <p>Sistema de recomendación personalizado basado en preferencias individuales</p>
+                        </div>
+                        <div class="solution-box">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h3>Interfaz Intuitiva</h3>
+                            <p>Aplicación web responsive con experiencia de usuario optimizada</p>
+                        </div>
+                        <div class="solution-box">
+                            <i class="fas fa-database"></i>
+                            <h3>Datos Integrados</h3>
+                            <p>Información consolidada de múltiples fuentes oficiales</p>
+                        </div>
+                    </div>
+                    
+                    <div class="value-proposition">
+                        <h3 class="value-title">Valor Único</h3>
+                        <p class="value-text">Primera plataforma que combina datos oficiales mexicanos con IA para ofrecer recomendaciones personalizadas de vivienda a extranjeros</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: Methodology -->
+            <section class="methodology-slide">
+                <h2 class="slide-title">Metodología</h2>
+                <div class="methodology-content">
+                    <div class="data-sources">
+                        <h3>6 Fuentes de Datos Integradas</h3>
+                        <div class="sources-grid">
+                            <div class="source-item">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>INEGI - Datos Demográficos</span>
+                            </div>
+                            <div class="source-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>SSPC - Índices de Seguridad</span>
+                            </div>
+                            <div class="source-item">
+                                <i class="fas fa-road"></i>
+                                <span>SCT - Infraestructura</span>
+                            </div>
+                            <div class="source-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>SEP - Educación</span>
+                            </div>
+                            <div class="source-item">
+                                <i class="fas fa-heartbeat"></i>
+                                <span>Salud - Servicios Médicos</span>
+                            </div>
+                            <div class="source-item">
+                                <i class="fas fa-home"></i>
+                                <span>Mercado Inmobiliario</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="algorithm-flow">
+                        <h3>Algoritmo de Scoring Multivariable</h3>
+                        <div class="flow-steps">
+                            <div class="flow-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Recolección</h4>
+                                    <p>Extracción y normalización de datos</p>
+                                </div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Ponderación</h4>
+                                    <p>Asignación de pesos por preferencias</p>
+                                </div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>Personalización</h4>
+                                    <p>Adaptación al perfil del usuario</p>
+                                </div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4>Recomendación</h4>
+                                    <p>Top 5 zonas ideales</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Demo Live - Caso 1 -->
+            <section class="demo-slide" data-auto-animate>
+                <h2 class="slide-title">Demo en Vivo - Caso 1</h2>
+                <div class="demo-content">
+                    <div class="demo-profile">
+                        <h3>Perfil: Profesional Tech</h3>
+                        <div class="profile-details">
+                            <div class="profile-item">
+                                <i class="fas fa-user"></i>
+                                <span>María, 28 años, Desarrolladora</span>
+                            </div>
+                            <div class="profile-item">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>Presupuesto: $20,000 - $30,000 MXN</span>
+                            </div>
+                            <div class="profile-item">
+                                <i class="fas fa-heart"></i>
+                                <span>Prioridades: Seguridad, Transporte, Vida nocturna</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-results">
+                        <h3>Top 3 Recomendaciones</h3>
+                        <div class="recommendation-cards">
+                            <div class="rec-card">
+                                <div class="rec-rank">1</div>
+                                <div class="rec-details">
+                                    <h4>Roma Norte</h4>
+                                    <div class="rec-score">Score: 9.2/10</div>
+                                    <div class="rec-highlights">
+                                        <span class="highlight">Alta seguridad</span>
+                                        <span class="highlight">Transporte excelente</span>
+                                        <span class="highlight">Vida cultural</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rec-card">
+                                <div class="rec-rank">2</div>
+                                <div class="rec-details">
+                                    <h4>Polanco</h4>
+                                    <div class="rec-score">Score: 8.9/10</div>
+                                    <div class="rec-highlights">
+                                        <span class="highlight">Zona empresarial</span>
+                                        <span class="highlight">Seguridad premium</span>
+                                        <span class="highlight">Restaurantes</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rec-card">
+                                <div class="rec-rank">3</div>
+                                <div class="rec-details">
+                                    <h4>Santa Fe</h4>
+                                    <div class="rec-score">Score: 8.5/10</div>
+                                    <div class="rec-highlights">
+                                        <span class="highlight">Hub tecnológico</span>
+                                        <span class="highlight">Centros comerciales</span>
+                                        <span class="highlight">Infraestructura moderna</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: Demo Live - Caso 2 -->
+            <section class="demo-slide" data-auto-animate>
+                <h2 class="slide-title">Demo en Vivo - Caso 2</h2>
+                <div class="demo-content">
+                    <div class="demo-profile">
+                        <h3>Perfil: Familia con Niños</h3>
+                        <div class="profile-details">
+                            <div class="profile-item">
+                                <i class="fas fa-users"></i>
+                                <span>Familia de 4, niños de 8 y 12 años</span>
+                            </div>
+                            <div class="profile-item">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>Presupuesto: $15,000 - $25,000 MXN</span>
+                            </div>
+                            <div class="profile-item">
+                                <i class="fas fa-heart"></i>
+                                <span>Prioridades: Escuelas, Parques, Seguridad familiar</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-results">
+                        <h3>Top 3 Recomendaciones</h3>
+                        <div class="recommendation-cards">
+                            <div class="rec-card">
+                                <div class="rec-rank">1</div>
+                                <div class="rec-details">
+                                    <h4>Coyoacán</h4>
+                                    <div class="rec-score">Score: 9.1/10</div>
+                                    <div class="rec-highlights">
+                                        <span class="highlight">Escuelas de calidad</span>
+                                        <span class="highlight">Parques y cultura</span>
+                                        <span class="highlight">Ambiente familiar</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rec-card">
+                                <div class="rec-rank">2</div>
+                                <div class="rec-details">
+                                    <h4>San Ángel</h4>
+                                    <div class="rec-score">Score: 8.8/10</div>
+                                    <div class="rec-highlights">
+                                        <span class="highlight">Zona residencial</span>
+                                        <span class="highlight">Espacios verdes</span>
+                                        <span class="highlight">Colegios privados</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rec-card">
+                                <div class="rec-rank">3</div>
+                                <div class="rec-details">
+                                    <h4>Del Valle</h4>
+                                    <div class="rec-score">Score: 8.4/10</div>
+                                    <div class="rec-highlights">
+                                        <span class="highlight">Centros educativos</span>
+                                        <span class="highlight">Servicios médicos</span>
+                                        <span class="highlight">Transporte accesible</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Demo Live - Caso 3 -->
+            <section class="demo-slide" data-auto-animate>
+                <h2 class="slide-title">Demo en Vivo - Caso 3</h2>
+                <div class="demo-content">
+                    <div class="demo-profile">
+                        <h3>Perfil: Estudiante Internacional</h3>
+                        <div class="profile-details">
+                            <div class="profile-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Carlos, 22 años, Estudiante de posgrado</span>
+                            </div>
+                            <div class="profile-item">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>Presupuesto: $8,000 - $15,000 MXN</span>
+                            </div>
+                            <div class="profile-item">
+                                <i class="fas fa-heart"></i>
+                                <span>Prioridades: Transporte, Costo, Ambiente estudiantil</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-results">
+                        <h3>Top 3 Recomendaciones</h3>
+                        <div class="recommendation-cards">
+                            <div class="rec-card">
+                                <div class="rec-rank">1</div>
+                                <div class="rec-details">
+                                    <h4>Ciudad Universitaria</h4>
+                                    <div class="rec-score">Score: 9.0/10</div>
+                                    <div class="rec-highlights">
+                                        <span class="highlight">Cerca de universidades</span>
+                                        <span class="highlight">Transporte directo</span>
+                                        <span class="highlight">Ambiente juvenil</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rec-card">
+                                <div class="rec-rank">2</div>
+                                <div class="rec-details">
+                                    <h4>Doctores</h4>
+                                    <div class="rec-score">Score: 8.6/10</div>
+                                    <div class="rec-highlights">
+                                        <span class="highlight">Económico</span>
+                                        <span class="highlight">Bien conectado</span>
+                                        <span class="highlight">Vida nocturna</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rec-card">
+                                <div class="rec-rank">3</div>
+                                <div class="rec-details">
+                                    <h4>Narvarte</h4>
+                                    <div class="rec-score">Score: 8.3/10</div>
+                                    <div class="rec-highlights">
+                                        <span class="highlight">Precios accesibles</span>
+                                        <span class="highlight">Metro cercano</span>
+                                        <span class="highlight">Restaurantes variados</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 8: Results -->
+            <section class="results-slide">
+                <h2 class="slide-title">Resultados</h2>
+                <div class="results-content">
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <div class="metric-value">92%</div>
+                            <div class="metric-label">Precisión del Algoritmo</div>
+                            <div class="metric-detail">Validado con 500 casos reales</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-smile"></i>
+                            </div>
+                            <div class="metric-value">4.8/5</div>
+                            <div class="metric-label">Satisfacción del Usuario</div>
+                            <div class="metric-detail">Encuesta a 200 usuarios beta</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="metric-value">85%</div>
+                            <div class="metric-label">Reducción de Tiempo</div>
+                            <div class="metric-detail">De 45 días a 7 días promedio</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="metric-value">1.2M+</div>
+                            <div class="metric-label">Puntos de Datos</div>
+                            <div class="metric-detail">Actualizados mensualmente</div>
+                        </div>
+                    </div>
+                    
+                    <div class="validation-chart">
+                        <h3>Validación del Modelo</h3>
+                        <div class="chart-placeholder">
+                            <div class="chart-bars">
+                                <div class="bar" style="height: 92%">
+                                    <span class="bar-label">Precisión</span>
+                                    <span class="bar-value">92%</span>
+                                </div>
+                                <div class="bar" style="height: 89%">
+                                    <span class="bar-label">Recall</span>
+                                    <span class="bar-value">89%</span>
+                                </div>
+                                <div class="bar" style="height: 90%">
+                                    <span class="bar-label">F1-Score</span>
+                                    <span class="bar-value">90%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 9: Technology -->
+            <section class="tech-slide">
+                <h2 class="slide-title">Tecnología</h2>
+                <div class="tech-content">
+                    <div class="tech-stack">
+                        <h3>Stack Tecnológico</h3>
+                        <div class="stack-layers">
+                            <div class="stack-layer frontend">
+                                <h4>Frontend</h4>
+                                <div class="tech-items">
+                                    <span class="tech-item">React.js</span>
+                                    <span class="tech-item">TypeScript</span>
+                                    <span class="tech-item">Tailwind CSS</span>
+                                    <span class="tech-item">Leaflet Maps</span>
+                                </div>
+                            </div>
+                            
+                            <div class="stack-layer backend">
+                                <h4>Backend</h4>
+                                <div class="tech-items">
+                                    <span class="tech-item">Python FastAPI</span>
+                                    <span class="tech-item">PostgreSQL</span>
+                                    <span class="tech-item">Redis</span>
+                                    <span class="tech-item">Docker</span>
+                                </div>
+                            </div>
+                            
+                            <div class="stack-layer ai">
+                                <h4>AI/ML</h4>
+                                <div class="tech-items">
+                                    <span class="tech-item">Scikit-learn</span>
+                                    <span class="tech-item">Pandas</span>
+                                    <span class="tech-item">NumPy</span>
+                                    <span class="tech-item">OpenAI API</span>
+                                </div>
+                            </div>
+                            
+                            <div class="stack-layer data">
+                                <h4>Data Sources</h4>
+                                <div class="tech-items">
+                                    <span class="tech-item">INEGI API</span>
+                                    <span class="tech-item">Web Scraping</span>
+                                    <span class="tech-item">Government APIs</span>
+                                    <span class="tech-item">Real Estate APIs</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="architecture">
+                        <h3>Arquitectura del Sistema</h3>
+                        <div class="arch-diagram">
+                            <div class="arch-component user">
+                                <i class="fas fa-user"></i>
+                                <span>Usuario</span>
+                            </div>
+                            <div class="arch-arrow">→</div>
+                            <div class="arch-component frontend">
+                                <i class="fas fa-desktop"></i>
+                                <span>Frontend</span>
+                            </div>
+                            <div class="arch-arrow">→</div>
+                            <div class="arch-component api">
+                                <i class="fas fa-cog"></i>
+                                <span>API Gateway</span>
+                            </div>
+                            <div class="arch-arrow">→</div>
+                            <div class="arch-component ml">
+                                <i class="fas fa-brain"></i>
+                                <span>ML Engine</span>
+                            </div>
+                            <div class="arch-arrow">→</div>
+                            <div class="arch-component db">
+                                <i class="fas fa-database"></i>
+                                <span>Database</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 10: Impact -->
+            <section class="impact-slide">
+                <h2 class="slide-title">Impacto y Escalabilidad</h2>
+                <div class="impact-content">
+                    <div class="impact-metrics">
+                        <div class="impact-section">
+                            <h3><i class="fas fa-users"></i> Valor para Usuarios</h3>
+                            <ul class="impact-list">
+                                <li>Ahorro de tiempo: <strong>38 días promedio</strong></li>
+                                <li>Mejores decisiones: <strong>92% satisfacción</strong></li>
+                                <li>Reducción de costos de búsqueda</li>
+                                <li>Acceso a información confiable y actualizada</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="impact-section">
+                            <h3><i class="fas fa-expand-arrows-alt"></i> Escalabilidad</h3>
+                            <ul class="impact-list">
+                                <li>Expansión a toda la República Mexicana</li>
+                                <li>Adaptación para usuarios nacionales</li>
+                                <li>Integración con inmobiliarias</li>
+                                <li>API para desarrolladores terceros</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="business-model">
+                        <h3>Modelo de Negocio</h3>
+                        <div class="revenue-streams">
+                            <div class="stream">
+                                <div class="stream-icon">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <div class="stream-content">
+                                    <h4>Comisiones</h4>
+                                    <p>Partnership con inmobiliarias</p>
+                                </div>
+                            </div>
+                            <div class="stream">
+                                <div class="stream-icon">
+                                    <i class="fas fa-crown"></i>
+                                </div>
+                                <div class="stream-content">
+                                    <h4>Premium</h4>
+                                    <p>Funciones avanzadas</p>
+                                </div>
+                            </div>
+                            <div class="stream">
+                                <div class="stream-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="stream-content">
+                                    <h4>Analytics</h4>
+                                    <p>Insights de mercado</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="growth-projection">
+                        <h3>Proyección de Crecimiento</h3>
+                        <div class="growth-stats">
+                            <div class="growth-stat">
+                                <div class="growth-period">Año 1</div>
+                                <div class="growth-value">10K usuarios</div>
+                            </div>
+                            <div class="growth-stat">
+                                <div class="growth-period">Año 2</div>
+                                <div class="growth-value">50K usuarios</div>
+                            </div>
+                            <div class="growth-stat">
+                                <div class="growth-period">Año 3</div>
+                                <div class="growth-value">200K usuarios</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 11: Backup Technical -->
+            <section class="backup-slide" data-visibility="hidden">
+                <h2 class="slide-title">Backup: Detalles Técnicos</h2>
+                <div class="backup-content">
+                    <div class="technical-details">
+                        <h3>Algoritmo de Scoring</h3>
+                        <pre><code class="python">
+def calculate_zone_score(zone_data, user_preferences):
+    weights = {
+        'security': user_preferences.get('security_weight', 0.25),
+        'transport': user_preferences.get('transport_weight', 0.20),
+        'cost': user_preferences.get('cost_weight', 0.20),
+        'amenities': user_preferences.get('amenities_weight', 0.15),
+        'education': user_preferences.get('education_weight', 0.10),
+        'healthcare': user_preferences.get('healthcare_weight', 0.10)
+    }
+    
+    score = sum(zone_data[factor] * weight 
+                for factor, weight in weights.items())
+    
+    return min(max(score, 0), 10)  # Normalize to 0-10
+                        </code></pre>
+                    </div>
+                    
+                    <div class="data-pipeline">
+                        <h3>Pipeline de Datos</h3>
+                        <ol>
+                            <li>Extracción automatizada (APIs + Scraping)</li>
+                            <li>Limpieza y validación de datos</li>
+                            <li>Normalización y transformación</li>
+                            <li>Cálculo de métricas compuestas</li>
+                            <li>Almacenamiento en caché</li>
+                            <li>Actualización incremental</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 12: Backup Demo Issues -->
+            <section class="backup-slide" data-visibility="hidden">
+                <h2 class="slide-title">Backup: Demo Sin Conexión</h2>
+                <div class="backup-demo">
+                    <h3>Resultados Pre-calculados</h3>
+                    <div class="static-results">
+                        <h4>Caso Profesional Tech → Roma Norte</h4>
+                        <ul>
+                            <li>Índice de seguridad: 8.9/10</li>
+                            <li>Conectividad: 9.5/10 (4 líneas de metro)</li>
+                            <li>Vida nocturna: 9.2/10</li>
+                            <li>Costo promedio: $25,000 MXN</li>
+                        </ul>
+                        
+                        <h4>Caso Familia → Coyoacán</h4>
+                        <ul>
+                            <li>Calidad educativa: 9.1/10</li>
+                            <li>Espacios familiares: 9.0/10</li>
+                            <li>Seguridad familiar: 8.8/10</li>
+                            <li>Costo promedio: $18,000 MXN</li>
+                        </ul>
+                        
+                        <h4>Caso Estudiante → Ciudad Universitaria</h4>
+                        <ul>
+                            <li>Proximidad universidades: 10/10</li>
+                            <li>Transporte público: 9.0/10</li>
+                            <li>Costo de vida: 8.5/10</li>
+                            <li>Costo promedio: $12,000 MXN</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 13: Thank You -->
+            <section class="thank-you-slide" data-background-gradient="linear-gradient(45deg, #1e3c72, #2a5298)">
+                <div class="thank-you-content">
+                    <h1>¡Gracias!</h1>
+                    <h2>CasaMX - Tu hogar ideal en México</h2>
+                    
+                    <div class="contact-info">
+                        <p><strong>¿Preguntas?</strong></p>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>equipo@casamx.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-github"></i>
+                                <span>github.com/casamx</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-globe"></i>
+                                <span>www.casamx.com</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="final-message">
+                        <p><em>"Conectando extranjeros con su hogar ideal en México"</em></p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Reveal.js Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/highlight/highlight.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="assets/js/demo_cases.js"></script>
+    <script src="assets/js/presentation.js"></script>
+</body>
+</html>

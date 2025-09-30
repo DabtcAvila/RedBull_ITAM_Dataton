@@ -1,0 +1,931 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created_date": "2025-09-30",
+    "description": "Dataset mock de colonias de CDMX para CasaMX - Datatón ITAM 2025",
+    "total_colonias": 20,
+    "currency": "MXN"
+  },
+  "colonias": [
+    {
+      "id": "col_001",
+      "nombre": "Polanco",
+      "alcaldia": "Miguel Hidalgo",
+      "codigo_postal": "11560",
+      "coordenadas": {
+        "lat": 19.4326,
+        "lon": -99.1954
+      },
+      "scores": {
+        "seguridad": 9.2,
+        "transporte": 8.8,
+        "amenidades": 9.5,
+        "precio": 3.2
+      },
+      "precios": {
+        "renta_m2": 650,
+        "venta_m2": 95000,
+        "renta_1br": 28000,
+        "renta_2br": 45000,
+        "renta_3br": 75000
+      },
+      "servicios": {
+        "hospitales": ["Hospital Angeles Lomas", "ABC Medical Center"],
+        "escuelas": ["Colegio Peterson", "Instituto Irlandés"],
+        "parques": ["Parque Lincoln", "Parque América"],
+        "restaurantes": 450,
+        "centros_comerciales": ["Antara Fashion Hall", "Centro Comercial Moliere"]
+      },
+      "transporte": {
+        "metro_cercano": "Auditorio",
+        "distancia_metro": 0.8,
+        "metrobus": ["Línea 7"],
+        "tiempo_polanco": 0,
+        "tiempo_santa_fe": 15,
+        "tiempo_centro": 25,
+        "tiempo_aeropuerto": 35
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "A/B+",
+        "poblacion": 65000,
+        "densidad_poblacional": 12500,
+        "edad_promedio_edificios": 25,
+        "tipo_predominante": "Departamentos de lujo"
+      }
+    },
+    {
+      "id": "col_002",
+      "nombre": "Roma Norte",
+      "alcaldia": "Cuauhtémoc",
+      "codigo_postal": "06700",
+      "coordenadas": {
+        "lat": 19.4118,
+        "lon": -99.1624
+      },
+      "scores": {
+        "seguridad": 8.5,
+        "transporte": 9.0,
+        "amenidades": 9.2,
+        "precio": 5.8
+      },
+      "precios": {
+        "renta_m2": 380,
+        "venta_m2": 58000,
+        "renta_1br": 18000,
+        "renta_2br": 28000,
+        "renta_3br": 42000
+      },
+      "servicios": {
+        "hospitales": ["Hospital Español", "Hospital de la Mujer"],
+        "escuelas": ["Colegio Franco Inglés", "Escuela Nacional Preparatoria"],
+        "parques": ["Parque España", "Plaza Río de Janeiro"],
+        "restaurantes": 380,
+        "centros_comerciales": ["Mercado Medellín", "Plaza Insurgentes"]
+      },
+      "transporte": {
+        "metro_cercano": "Insurgentes",
+        "distancia_metro": 0.6,
+        "metrobus": ["Línea 1", "Línea 3"],
+        "tiempo_polanco": 15,
+        "tiempo_santa_fe": 25,
+        "tiempo_centro": 8,
+        "tiempo_aeropuerto": 40
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "A/B",
+        "poblacion": 42000,
+        "densidad_poblacional": 15200,
+        "edad_promedio_edificios": 45,
+        "tipo_predominante": "Departamentos boutique"
+      }
+    },
+    {
+      "id": "col_003",
+      "nombre": "Condesa",
+      "alcaldia": "Cuauhtémoc",
+      "codigo_postal": "06140",
+      "coordenadas": {
+        "lat": 19.4069,
+        "lon": -99.1734
+      },
+      "scores": {
+        "seguridad": 8.7,
+        "transporte": 8.9,
+        "amenidades": 9.4,
+        "precio": 5.5
+      },
+      "precios": {
+        "renta_m2": 420,
+        "venta_m2": 62000,
+        "renta_1br": 20000,
+        "renta_2br": 32000,
+        "renta_3br": 48000
+      },
+      "servicios": {
+        "hospitales": ["Hospital Ángeles Metropolitano", "Centro Médico ABC"],
+        "escuelas": ["Colegio Madrid", "Universidad Iberoamericana"],
+        "parques": ["Parque México", "Parque España"],
+        "restaurantes": 425,
+        "centros_comerciales": ["Pabellón Condesa", "Centro Comercial Parque Delta"]
+      },
+      "transporte": {
+        "metro_cercano": "Patriotismo",
+        "distancia_metro": 0.7,
+        "metrobus": ["Línea 1"],
+        "tiempo_polanco": 12,
+        "tiempo_santa_fe": 20,
+        "tiempo_centro": 12,
+        "tiempo_aeropuerto": 38
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "A/B",
+        "poblacion": 38000,
+        "densidad_poblacional": 14800,
+        "edad_promedio_edificios": 55,
+        "tipo_predominante": "Departamentos art déco"
+      }
+    },
+    {
+      "id": "col_004",
+      "nombre": "Santa Fe",
+      "alcaldia": "Álvaro Obregón",
+      "codigo_postal": "01210",
+      "coordenadas": {
+        "lat": 19.3598,
+        "lon": -99.2599
+      },
+      "scores": {
+        "seguridad": 9.0,
+        "transporte": 7.2,
+        "amenidades": 8.8,
+        "precio": 3.8
+      },
+      "precios": {
+        "renta_m2": 480,
+        "venta_m2": 72000,
+        "renta_1br": 22000,
+        "renta_2br": 35000,
+        "renta_3br": 55000
+      },
+      "servicios": {
+        "hospitales": ["Hospital Angeles Santa Fe", "Centro Médico ABC"],
+        "escuelas": ["Universidad Iberoamericana", "Tecnológico de Monterrey"],
+        "parques": ["Parque La Mexicana", "Bosque de las Lomas"],
+        "restaurantes": 280,
+        "centros_comerciales": ["Centro Santa Fe", "Samara Shops"]
+      },
+      "transporte": {
+        "metro_cercano": "Observatorio",
+        "distancia_metro": 3.2,
+        "metrobus": ["Línea 1"],
+        "tiempo_polanco": 15,
+        "tiempo_santa_fe": 0,
+        "tiempo_centro": 35,
+        "tiempo_aeropuerto": 45
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "A/B+",
+        "poblacion": 85000,
+        "densidad_poblacional": 8500,
+        "edad_promedio_edificios": 20,
+        "tipo_predominante": "Torres corporativas y residenciales"
+      }
+    },
+    {
+      "id": "col_005",
+      "nombre": "Del Valle Centro",
+      "alcaldia": "Benito Juárez",
+      "codigo_postal": "03100",
+      "coordenadas": {
+        "lat": 19.3761,
+        "lon": -99.1641
+      },
+      "scores": {
+        "seguridad": 8.3,
+        "transporte": 8.7,
+        "amenidades": 8.5,
+        "precio": 6.2
+      },
+      "precios": {
+        "renta_m2": 320,
+        "venta_m2": 48000,
+        "renta_1br": 15000,
+        "renta_2br": 24000,
+        "renta_3br": 36000
+      },
+      "servicios": {
+        "hospitales": ["Hospital Ángeles del Pedregal", "Hospital San Ángel Inn"],
+        "escuelas": ["Colegio Anglo Mexicano", "Universidad del Valle de México"],
+        "parques": ["Parque Hundido", "Parque de los Venados"],
+        "restaurantes": 220,
+        "centros_comerciales": ["Galerías Insurgentes", "Centro Comercial Patio Universidad"]
+      },
+      "transporte": {
+        "metro_cercano": "Eugenia",
+        "distancia_metro": 0.9,
+        "metrobus": ["Línea 3"],
+        "tiempo_polanco": 20,
+        "tiempo_santa_fe": 25,
+        "tiempo_centro": 15,
+        "tiempo_aeropuerto": 35
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "B/C+",
+        "poblacion": 52000,
+        "densidad_poblacional": 16800,
+        "edad_promedio_edificios": 40,
+        "tipo_predominante": "Departamentos familiares"
+      }
+    },
+    {
+      "id": "col_006",
+      "nombre": "Narvarte Poniente",
+      "alcaldia": "Benito Juárez",
+      "codigo_postal": "03020",
+      "coordenadas": {
+        "lat": 19.3912,
+        "lon": -99.1594
+      },
+      "scores": {
+        "seguridad": 7.8,
+        "transporte": 8.9,
+        "amenidades": 8.2,
+        "precio": 7.0
+      },
+      "precios": {
+        "renta_m2": 280,
+        "venta_m2": 42000,
+        "renta_1br": 12500,
+        "renta_2br": 20000,
+        "renta_3br": 30000
+      },
+      "servicios": {
+        "hospitales": ["Hospital General Dr. Manuel Gea González", "Hospital Médica Sur"],
+        "escuelas": ["Colegio Simón Bolívar", "Preparatoria 6 Antonio Caso"],
+        "parques": ["Parque Delta", "Jardín Pushkin"],
+        "restaurantes": 185,
+        "centros_comerciales": ["Plaza Delta", "Centro Comercial Insurgentes"]
+      },
+      "transporte": {
+        "metro_cercano": "Etiopia",
+        "distancia_metro": 0.4,
+        "metrobus": ["Línea 2"],
+        "tiempo_polanco": 18,
+        "tiempo_santa_fe": 30,
+        "tiempo_centro": 12,
+        "tiempo_aeropuerto": 32
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "B/C+",
+        "poblacion": 48000,
+        "densidad_poblacional": 18500,
+        "edad_promedio_edificios": 35,
+        "tipo_predominante": "Edificios de departamentos"
+      }
+    },
+    {
+      "id": "col_007",
+      "nombre": "Coyoacán Centro",
+      "alcaldia": "Coyoacán",
+      "codigo_postal": "04000",
+      "coordenadas": {
+        "lat": 19.3467,
+        "lon": -99.1639
+      },
+      "scores": {
+        "seguridad": 8.4,
+        "transporte": 7.8,
+        "amenidades": 8.9,
+        "precio": 6.8
+      },
+      "precios": {
+        "renta_m2": 290,
+        "venta_m2": 45000,
+        "renta_1br": 13500,
+        "renta_2br": 22000,
+        "renta_3br": 33000
+      },
+      "servicios": {
+        "hospitales": ["Hospital General de México", "Instituto Nacional de Cardiología"],
+        "escuelas": ["Universidad Nacional Autónoma de México", "Colegio de Ciencias y Humanidades"],
+        "parques": ["Parque Frida Kahlo", "Jardín Centenario"],
+        "restaurantes": 165,
+        "centros_comerciales": ["Plaza Coyoacán", "Centro Comercial Garibaldi"]
+      },
+      "transporte": {
+        "metro_cercano": "Viveros",
+        "distancia_metro": 1.2,
+        "metrobus": ["Línea 3"],
+        "tiempo_polanco": 25,
+        "tiempo_santa_fe": 35,
+        "tiempo_centro": 20,
+        "tiempo_aeropuerto": 42
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "B/C+",
+        "poblacion": 35000,
+        "densidad_poblacional": 14200,
+        "edad_promedio_edificios": 65,
+        "tipo_predominante": "Casas coloniales y departamentos"
+      }
+    },
+    {
+      "id": "col_008",
+      "nombre": "San Ángel",
+      "alcaldia": "Álvaro Obregón",
+      "codigo_postal": "01000",
+      "coordenadas": {
+        "lat": 19.3429,
+        "lon": -99.1901
+      },
+      "scores": {
+        "seguridad": 8.6,
+        "transporte": 7.5,
+        "amenidades": 8.7,
+        "precio": 6.0
+      },
+      "precios": {
+        "renta_m2": 350,
+        "venta_m2": 52000,
+        "renta_1br": 16000,
+        "renta_2br": 26000,
+        "renta_3br": 40000
+      },
+      "servicios": {
+        "hospitales": ["Hospital Ángeles del Pedregal", "Hospital San Ángel Inn"],
+        "escuelas": ["Universidad Iberoamericana", "Colegio Anglo Mexicano"],
+        "parques": ["Parque de la Bombilla", "Plaza San Jacinto"],
+        "restaurantes": 145,
+        "centros_comerciales": ["Plaza San Ángel", "Perinorte"]
+      },
+      "transporte": {
+        "metro_cercano": "M.A. de Quevedo",
+        "distancia_metro": 1.8,
+        "metrobus": [],
+        "tiempo_polanco": 22,
+        "tiempo_santa_fe": 15,
+        "tiempo_centro": 25,
+        "tiempo_aeropuerto": 48
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "A/B",
+        "poblacion": 28000,
+        "densidad_poblacional": 9800,
+        "edad_promedio_edificios": 70,
+        "tipo_predominante": "Casas coloniales históricas"
+      }
+    },
+    {
+      "id": "col_009",
+      "nombre": "Doctores",
+      "alcaldia": "Cuauhtémoc",
+      "codigo_postal": "06720",
+      "coordenadas": {
+        "lat": 19.4215,
+        "lon": -99.1439
+      },
+      "scores": {
+        "seguridad": 6.2,
+        "transporte": 8.8,
+        "amenidades": 7.0,
+        "precio": 8.5
+      },
+      "precios": {
+        "renta_m2": 180,
+        "venta_m2": 28000,
+        "renta_1br": 8500,
+        "renta_2br": 14000,
+        "renta_3br": 20000
+      },
+      "servicios": {
+        "hospitales": ["Hospital General de México", "Hospital Juárez de México"],
+        "escuelas": ["Universidad del Valle de México", "Preparatoria Federal Lázaro Cárdenas"],
+        "parques": ["Jardín de la Solidaridad", "Plaza de la Solidaridad"],
+        "restaurantes": 85,
+        "centros_comerciales": ["Mercado San Juan", "Plaza de la Computación"]
+      },
+      "transporte": {
+        "metro_cercano": "Doctores",
+        "distancia_metro": 0.3,
+        "metrobus": ["Línea 3", "Línea 4"],
+        "tiempo_polanco": 20,
+        "tiempo_santa_fe": 35,
+        "tiempo_centro": 5,
+        "tiempo_aeropuerto": 30
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "C/D+",
+        "poblacion": 68000,
+        "densidad_poblacional": 22500,
+        "edad_promedio_edificios": 50,
+        "tipo_predominante": "Vecindades y departamentos populares"
+      }
+    },
+    {
+      "id": "col_010",
+      "nombre": "Juárez",
+      "alcaldia": "Cuauhtémoc",
+      "codigo_postal": "06600",
+      "coordenadas": {
+        "lat": 19.4284,
+        "lon": -99.1576
+      },
+      "scores": {
+        "seguridad": 8.1,
+        "transporte": 9.2,
+        "amenidades": 8.8,
+        "precio": 6.5
+      },
+      "precios": {
+        "renta_m2": 320,
+        "venta_m2": 48000,
+        "renta_1br": 15000,
+        "renta_2br": 24000,
+        "renta_3br": 36000
+      },
+      "servicios": {
+        "hospitales": ["Hospital Español", "Hospital Médica Sur Tlalpan"],
+        "escuelas": ["Universidad del Claustro de Sor Juana", "Tecnológico de Monterrey Campus Santa Fe"],
+        "parques": ["Alameda Central", "Plaza de la República"],
+        "restaurantes": 295,
+        "centros_comerciales": ["Reforma 222", "Plaza Insurgentes"]
+      },
+      "transporte": {
+        "metro_cercano": "Cuauhtémoc",
+        "distancia_metro": 0.5,
+        "metrobus": ["Línea 1", "Línea 3", "Línea 7"],
+        "tiempo_polanco": 8,
+        "tiempo_santa_fe": 25,
+        "tiempo_centro": 8,
+        "tiempo_aeropuerto": 35
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "B/C+",
+        "poblacion": 41000,
+        "densidad_poblacional": 16200,
+        "edad_promedio_edificios": 45,
+        "tipo_predominante": "Edificios de departamentos y oficinas"
+      }
+    },
+    {
+      "id": "col_011",
+      "nombre": "Escandón",
+      "alcaldia": "Miguel Hidalgo",
+      "codigo_postal": "11800",
+      "coordenadas": {
+        "lat": 19.4015,
+        "lon": -99.1856
+      },
+      "scores": {
+        "seguridad": 7.9,
+        "transporte": 8.5,
+        "amenidades": 7.8,
+        "precio": 7.2
+      },
+      "precios": {
+        "renta_m2": 260,
+        "venta_m2": 38000,
+        "renta_1br": 11500,
+        "renta_2br": 18500,
+        "renta_3br": 28000
+      },
+      "servicios": {
+        "hospitales": ["Hospital ABC Observatorio", "Hospital Español"],
+        "escuelas": ["Universidad La Salle", "Preparatoria Simón Bolívar"],
+        "parques": ["Parque Lira", "Plaza Escandón"],
+        "restaurantes": 125,
+        "centros_comerciales": ["Parque Lira", "Plaza Carso"]
+      },
+      "transporte": {
+        "metro_cercano": "Tacubaya",
+        "distancia_metro": 0.8,
+        "metrobus": ["Línea 1"],
+        "tiempo_polanco": 12,
+        "tiempo_santa_fe": 18,
+        "tiempo_centro": 18,
+        "tiempo_aeropuerto": 40
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "C+/B",
+        "poblacion": 44000,
+        "densidad_poblacional": 15800,
+        "edad_promedio_edificios": 35,
+        "tipo_predominante": "Departamentos residenciales"
+      }
+    },
+    {
+      "id": "col_012",
+      "nombre": "Álamos",
+      "alcaldia": "Benito Juárez",
+      "codigo_postal": "03400",
+      "coordenadas": {
+        "lat": 19.3682,
+        "lon": -99.1542
+      },
+      "scores": {
+        "seguridad": 8.0,
+        "transporte": 8.4,
+        "amenidades": 8.1,
+        "precio": 6.8
+      },
+      "precios": {
+        "renta_m2": 290,
+        "venta_m2": 43000,
+        "renta_1br": 13000,
+        "renta_2br": 21000,
+        "renta_3br": 32000
+      },
+      "servicios": {
+        "hospitales": ["Hospital Ángeles del Pedregal", "Centro Médico Nacional Siglo XXI"],
+        "escuelas": ["Universidad Anáhuac", "Colegio Peterson"],
+        "parques": ["Parque de los Venados", "Jardín Pushkin"],
+        "restaurantes": 140,
+        "centros_comerciales": ["Galerías Insurgentes", "Plaza Universidad"]
+      },
+      "transporte": {
+        "metro_cercano": "Viaducto",
+        "distancia_metro": 0.7,
+        "metrobus": ["Línea 2"],
+        "tiempo_polanco": 22,
+        "tiempo_santa_fe": 28,
+        "tiempo_centro": 15,
+        "tiempo_aeropuerto": 33
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "B/C+",
+        "poblacion": 38000,
+        "densidad_poblacional": 16500,
+        "edad_promedio_edificios": 42,
+        "tipo_predominante": "Departamentos familiares"
+      }
+    },
+    {
+      "id": "col_013",
+      "nombre": "Lindavista",
+      "alcaldia": "Gustavo A. Madero",
+      "codigo_postal": "07300",
+      "coordenadas": {
+        "lat": 19.4883,
+        "lon": -99.1284
+      },
+      "scores": {
+        "seguridad": 7.2,
+        "transporte": 8.2,
+        "amenidades": 7.5,
+        "precio": 7.8
+      },
+      "precios": {
+        "renta_m2": 220,
+        "venta_m2": 32000,
+        "renta_1br": 9500,
+        "renta_2br": 15500,
+        "renta_3br": 23000
+      },
+      "servicios": {
+        "hospitales": ["Hospital General La Raza", "Hospital de Traumatología Magdalena de las Salinas"],
+        "escuelas": ["Universidad Autónoma Metropolitana", "Preparatoria Federal Lázaro Cárdenas"],
+        "parques": ["Bosque de Aragón", "Parque Bicentenario"],
+        "restaurantes": 95,
+        "centros_comerciales": ["Centro Comercial Lindavista", "Plaza Aragón"]
+      },
+      "transporte": {
+        "metro_cercano": "Lindavista",
+        "distancia_metro": 0.4,
+        "metrobus": ["Línea 5"],
+        "tiempo_polanco": 28,
+        "tiempo_santa_fe": 45,
+        "tiempo_centro": 22,
+        "tiempo_aeropuerto": 25
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "C/C+",
+        "poblacion": 62000,
+        "densidad_poblacional": 19800,
+        "edad_promedio_edificios": 40,
+        "tipo_predominante": "Edificios habitacionales"
+      }
+    },
+    {
+      "id": "col_014",
+      "nombre": "Portales Norte",
+      "alcaldia": "Benito Juárez",
+      "codigo_postal": "03300",
+      "coordenadas": {
+        "lat": 19.3615,
+        "lon": -99.1598
+      },
+      "scores": {
+        "seguridad": 7.6,
+        "transporte": 8.6,
+        "amenidades": 7.4,
+        "precio": 7.5
+      },
+      "precios": {
+        "renta_m2": 240,
+        "venta_m2": 36000,
+        "renta_1br": 10500,
+        "renta_2br": 17000,
+        "renta_3br": 25000
+      },
+      "servicios": {
+        "hospitales": ["Hospital General Dr. Manuel Gea González", "Hospital Médica Sur"],
+        "escuelas": ["Universidad del Valle de México", "Preparatoria Federal Benito Juárez"],
+        "parques": ["Parque de los Venados", "Plaza Portales"],
+        "restaurantes": 110,
+        "centros_comerciales": ["Plaza Portales", "Galerías Insurgentes"]
+      },
+      "transporte": {
+        "metro_cercano": "Portales",
+        "distancia_metro": 0.3,
+        "metrobus": ["Línea 2"],
+        "tiempo_polanco": 25,
+        "tiempo_santa_fe": 32,
+        "tiempo_centro": 18,
+        "tiempo_aeropuerto": 38
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "C/C+",
+        "poblacion": 55000,
+        "densidad_poblacional": 18200,
+        "edad_promedio_edificios": 38,
+        "tipo_predominante": "Unidades habitacionales"
+      }
+    },
+    {
+      "id": "col_015",
+      "nombre": "Anzures",
+      "alcaldia": "Miguel Hidalgo",
+      "codigo_postal": "11590",
+      "coordenadas": {
+        "lat": 19.4367,
+        "lon": -99.1812
+      },
+      "scores": {
+        "seguridad": 8.4,
+        "transporte": 8.1,
+        "amenidades": 8.3,
+        "precio": 5.8
+      },
+      "precios": {
+        "renta_m2": 380,
+        "venta_m2": 55000,
+        "renta_1br": 17500,
+        "renta_2br": 28000,
+        "renta_3br": 42000
+      },
+      "servicios": {
+        "hospitales": ["Hospital ABC Santa Fe", "Hospital Español"],
+        "escuelas": ["Universidad La Salle", "Colegio Franco Inglés"],
+        "parques": ["Parque Lincoln", "Plaza Río de Janeiro"],
+        "restaurantes": 185,
+        "centros_comerciales": ["Antara Fashion Hall", "Plaza Carso"]
+      },
+      "transporte": {
+        "metro_cercano": "Auditorio",
+        "distancia_metro": 1.2,
+        "metrobus": ["Línea 7"],
+        "tiempo_polanco": 8,
+        "tiempo_santa_fe": 18,
+        "tiempo_centro": 20,
+        "tiempo_aeropuerto": 38
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "A/B",
+        "poblacion": 48000,
+        "densidad_poblacional": 13500,
+        "edad_promedio_edificios": 30,
+        "tipo_predominante": "Departamentos residenciales de lujo"
+      }
+    },
+    {
+      "id": "col_016",
+      "nombre": "Hipódromo",
+      "alcaldia": "Cuauhtémoc",
+      "codigo_postal": "06100",
+      "coordenadas": {
+        "lat": 19.4089,
+        "lon": -99.1689
+      },
+      "scores": {
+        "seguridad": 8.2,
+        "transporte": 8.7,
+        "amenidades": 8.6,
+        "precio": 6.2
+      },
+      "precios": {
+        "renta_m2": 350,
+        "venta_m2": 52000,
+        "renta_1br": 16500,
+        "renta_2br": 26500,
+        "renta_3br": 39000
+      },
+      "servicios": {
+        "hospitales": ["Hospital Ángeles Metropolitano", "Centro Médico ABC"],
+        "escuelas": ["Colegio Madrid", "Universidad Iberoamericana"],
+        "parques": ["Parque México", "Plaza Popocatépetl"],
+        "restaurantes": 210,
+        "centros_comerciales": ["Pabellón Condesa", "Centro Comercial Parque Delta"]
+      },
+      "transporte": {
+        "metro_cercano": "Chilpancingo",
+        "distancia_metro": 0.6,
+        "metrobus": ["Línea 1"],
+        "tiempo_polanco": 15,
+        "tiempo_santa_fe": 22,
+        "tiempo_centro": 10,
+        "tiempo_aeropuerto": 36
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "A/B",
+        "poblacion": 35000,
+        "densidad_poblacional": 14200,
+        "edad_promedio_edificios": 50,
+        "tipo_predominante": "Departamentos boutique y casas"
+      }
+    },
+    {
+      "id": "col_017",
+      "nombre": "Xochimilco Centro",
+      "alcaldia": "Xochimilco",
+      "codigo_postal": "16000",
+      "coordenadas": {
+        "lat": 19.2647,
+        "lon": -99.1031
+      },
+      "scores": {
+        "seguridad": 7.0,
+        "transporte": 6.8,
+        "amenidades": 7.8,
+        "precio": 8.2
+      },
+      "precios": {
+        "renta_m2": 180,
+        "venta_m2": 25000,
+        "renta_1br": 7500,
+        "renta_2br": 12000,
+        "renta_3br": 18000
+      },
+      "servicios": {
+        "hospitales": ["Hospital General Xochimilco", "Hospital Materno Infantil"],
+        "escuelas": ["Universidad Autónoma Metropolitana Xochimilco", "Preparatoria Federal Benito Juárez"],
+        "parques": ["Parque Ecológico de Xochimilco", "Chinampas"],
+        "restaurantes": 75,
+        "centros_comerciales": ["Plaza Xochimilco", "Mercado de Xochimilco"]
+      },
+      "transporte": {
+        "metro_cercano": "Tasqueña",
+        "distancia_metro": 8.5,
+        "metrobus": [],
+        "tiempo_polanco": 55,
+        "tiempo_santa_fe": 48,
+        "tiempo_centro": 45,
+        "tiempo_aeropuerto": 65
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "C/D+",
+        "poblacion": 72000,
+        "densidad_poblacional": 12800,
+        "edad_promedio_edificios": 60,
+        "tipo_predominante": "Casas tradicionales y chinampas"
+      }
+    },
+    {
+      "id": "col_018",
+      "nombre": "Pedregal de San Ángel",
+      "alcaldia": "Álvaro Obregón",
+      "codigo_postal": "01900",
+      "coordenadas": {
+        "lat": 19.3198,
+        "lon": -99.1945
+      },
+      "scores": {
+        "seguridad": 8.8,
+        "transporte": 7.0,
+        "amenidades": 8.4,
+        "precio": 4.5
+      },
+      "precios": {
+        "renta_m2": 420,
+        "venta_m2": 68000,
+        "renta_1br": 18500,
+        "renta_2br": 32000,
+        "renta_3br": 48000
+      },
+      "servicios": {
+        "hospitales": ["Hospital Ángeles del Pedregal", "Instituto Nacional de Pediatría"],
+        "escuelas": ["Universidad Iberoamericana", "Colegio Anglo Mexicano"],
+        "parques": ["Espacio Escultórico UNAM", "Ciudad Universitaria"],
+        "restaurantes": 155,
+        "centros_comerciales": ["Perisur", "Plaza San Ángel"]
+      },
+      "transporte": {
+        "metro_cercano": "Universidad",
+        "distancia_metro": 2.5,
+        "metrobus": [],
+        "tiempo_polanco": 30,
+        "tiempo_santa_fe": 20,
+        "tiempo_centro": 35,
+        "tiempo_aeropuerto": 55
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "A/B+",
+        "poblacion": 42000,
+        "densidad_poblacional": 8500,
+        "edad_promedio_edificios": 45,
+        "tipo_predominante": "Casas residenciales de lujo"
+      }
+    },
+    {
+      "id": "col_019",
+      "nombre": "Tlalpan Centro",
+      "alcaldia": "Tlalpan",
+      "codigo_postal": "14000",
+      "coordenadas": {
+        "lat": 19.2898,
+        "lon": -99.1658
+      },
+      "scores": {
+        "seguridad": 7.8,
+        "transporte": 7.2,
+        "amenidades": 8.0,
+        "precio": 7.0
+      },
+      "precios": {
+        "renta_m2": 260,
+        "venta_m2": 38000,
+        "renta_1br": 11000,
+        "renta_2br": 18000,
+        "renta_3br": 27000
+      },
+      "servicios": {
+        "hospitales": ["Hospital General Dr. Manuel Gea González", "Instituto Nacional de Cancerología"],
+        "escuelas": ["Universidad Nacional Autónoma de México", "Tecnológico de Monterrey"],
+        "parques": ["Parque de los Venados", "Bosque de Tlalpan"],
+        "restaurantes": 120,
+        "centros_comerciales": ["Plaza Cuicuilco", "Centro Comercial Tlalpan"]
+      },
+      "transporte": {
+        "metro_cercano": "General Anaya",
+        "distancia_metro": 3.8,
+        "metrobus": ["Línea 2"],
+        "tiempo_polanco": 38,
+        "tiempo_santa_fe": 30,
+        "tiempo_centro": 32,
+        "tiempo_aeropuerto": 50
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "B/C+",
+        "poblacion": 58000,
+        "densidad_poblacional": 15200,
+        "edad_promedio_edificios": 35,
+        "tipo_predominante": "Casas familiares y departamentos"
+      }
+    },
+    {
+      "id": "col_020",
+      "nombre": "Magdalena Contreras",
+      "alcaldia": "La Magdalena Contreras",
+      "codigo_postal": "10200",
+      "coordenadas": {
+        "lat": 19.3018, 
+        "lon": -99.2445
+      },
+      "scores": {
+        "seguridad": 8.2,
+        "transporte": 6.5,
+        "amenidades": 7.6,
+        "precio": 8.0
+      },
+      "precios": {
+        "renta_m2": 200,
+        "venta_m2": 32000,
+        "renta_1br": 8500,
+        "renta_2br": 14000,
+        "renta_3br": 21000
+      },
+      "servicios": {
+        "hospitales": ["Hospital Materno Infantil Magdalena Contreras", "Hospital General La Raza"],
+        "escuelas": ["Universidad Pedagógica Nacional", "Preparatoria Otilio Montaño"],
+        "parques": ["Parque de los Dinamos", "Desierto de los Leones"],
+        "restaurantes": 65,
+        "centros_comerciales": ["Plaza Contreras", "Mercado Contreras"]
+      },
+      "transporte": {
+        "metro_cercano": "Barranca del Muerto",
+        "distancia_metro": 4.2,
+        "metrobus": [],
+        "tiempo_polanco": 45,
+        "tiempo_santa_fe": 25,
+        "tiempo_centro": 40,
+        "tiempo_aeropuerto": 60
+      },
+      "caracteristicas": {
+        "nivel_socioeconomico": "C/D+",
+        "poblacion": 45000,
+        "densidad_poblacional": 11200,
+        "edad_promedio_edificios": 25,
+        "tipo_predominante": "Casas residenciales y fraccionamientos"
+      }
+    }
+  ]
+}
