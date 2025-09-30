@@ -1,0 +1,124 @@
+# DigitalOcean App Platform Configuration
+# CasaMX - Datatón ITAM 2025
+# Deployment automático desde GitHub
+
+name: casamx-app
+region: nyc
+
+# Dominio personalizado
+domains:
+- domain: casamx.store
+  type: PRIMARY
+
+# Aplicaciones
+services:
+- name: web
+  source_dir: /
+  github:
+    repo: DabtcAvila/RedBull_ITAM_Dataton
+    branch: main
+    deploy_on_push: true
+  
+  # Runtime configuration
+  run_command: python -m streamlit run streamlit_app.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true --server.enableCORS=false --server.enableXsrfProtection=false
+  
+  environment_slug: python
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  
+  # Variables de entorno
+  envs:
+  - key: PORT
+    scope: RUN_TIME
+    value: "8080"
+  - key: ENVIRONMENT
+    scope: RUN_TIME
+    value: "production"
+  - key: STREAMLIT_SERVER_PORT
+    scope: RUN_TIME
+    value: "8080"
+  - key: STREAMLIT_SERVER_ADDRESS
+    scope: RUN_TIME
+    value: "0.0.0.0"
+  - key: STREAMLIT_SERVER_HEADLESS
+    scope: RUN_TIME
+    value: "true"
+  - key: STREAMLIT_BROWSER_GATHER_USAGE_STATS
+    scope: RUN_TIME
+    value: "false"
+  
+  # Health check
+  health_check:
+    http_path: /
+    initial_delay_seconds: 30
+    period_seconds: 10
+    timeout_seconds: 5
+    success_threshold: 1
+    failure_threshold: 3
+  
+  # Recursos HTTP
+  http_port: 8080
+  
+  # Configuración de logs
+  log_destinations:
+  - name: casamx-logs
+
+# API Service (FastAPI)
+- name: api
+  source_dir: /
+  github:
+    repo: DabtcAvila/RedBull_ITAM_Dataton
+    branch: main
+    deploy_on_push: true
+  
+  run_command: cd src/api && python -m uvicorn main:app --host=0.0.0.0 --port=$PORT
+  
+  environment_slug: python
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  
+  envs:
+  - key: PORT
+    scope: RUN_TIME
+    value: "8000"
+  - key: ENVIRONMENT
+    scope: RUN_TIME
+    value: "production"
+  
+  health_check:
+    http_path: /
+    initial_delay_seconds: 20
+    period_seconds: 10
+    timeout_seconds: 5
+    success_threshold: 1
+    failure_threshold: 3
+  
+  http_port: 8000
+  
+  # Configuración de rutas
+  routes:
+  - path: /api
+
+# Workers/Jobs (si necesitas procesos en background)
+jobs: []
+
+# Bases de datos (SQLite se maneja localmente, pero podemos agregar PostgreSQL si necesario)
+databases: []
+
+# Configuración de red
+ingress:
+  rules:
+  - match:
+      path:
+        prefix: /api
+    component:
+      name: api
+  - match:
+      path:
+        prefix: /
+    component:
+      name: web
+
+# Configuración de build
+build_config:
+  # Se usa automáticamente cuando detecta requirements.txt

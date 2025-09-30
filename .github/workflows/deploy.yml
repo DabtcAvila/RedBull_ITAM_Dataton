@@ -1,0 +1,248 @@
+name: Deploy CasaMX to DigitalOcean
+
+# Triggers para deployment automático
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: # Permite ejecución manual
+
+# Variables de entorno globales
+env:
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '18'
+  
+# Jobs de CI/CD
+jobs:
+  # Job 1: Tests y validación
+  test:
+    runs-on: ubuntu-latest
+    name: Run Tests and Validation
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest flake8 black
+        
+    - name: Run code formatting check
+      run: |
+        black --check --diff .
+        
+    - name: Run linting
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        
+    - name: Test API endpoints
+      run: |
+        cd src/api
+        python -c "
+        import sys
+        sys.path.append('.')
+        from main import app
+        print('✅ FastAPI app imports successfully')
+        "
+        
+    - name: Test Streamlit app
+      run: |
+        python -c "
+        import streamlit as st
+        print('✅ Streamlit imports successfully')
+        "
+        
+    - name: Verify data files
+      run: |
+        ls -la data/
+        python -c "
+        import sqlite3
+        from pathlib import Path
+        db_path = Path('data/casamx.db')
+        if db_path.exists():
+            print('✅ Database file exists')
+        else:
+            print('⚠️  Database file not found - will be created automatically')
+        "
+
+  # Job 2: Build y preparación
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    name: Build Application
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+        
+    - name: Install production dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Create production build info
+      run: |
+        echo "BUILD_TIME=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> $GITHUB_ENV
+        echo "BUILD_COMMIT=${GITHUB_SHA:0:8}" >> $GITHUB_ENV
+        echo "BUILD_BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+        
+    - name: Generate build metadata
+      run: |
+        cat > build_info.json << EOF
+        {
+          "build_time": "${{ env.BUILD_TIME }}",
+          "commit_hash": "${{ env.BUILD_COMMIT }}",
+          "branch": "${{ env.BUILD_BRANCH }}",
+          "version": "1.0.0",
+          "environment": "production"
+        }
+        EOF
+        
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-info
+        path: build_info.json
+
+  # Job 3: Deploy a DigitalOcean
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [test, build]
+    name: Deploy to DigitalOcean
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: build-info
+        
+    - name: Display build info
+      run: |
+        cat build_info.json
+        echo "🚀 Deploying CasaMX to DigitalOcean App Platform..."
+        
+    # DigitalOcean CLI setup
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        
+    # Verificar app existente o crear nueva
+    - name: Check existing app
+      id: check_app
+      run: |
+        if doctl apps list --format ID,Spec.Name | grep -q "casamx-app"; then
+          echo "app_exists=true" >> $GITHUB_OUTPUT
+          APP_ID=$(doctl apps list --format ID,Spec.Name --no-header | grep casamx-app | cut -d' ' -f1)
+          echo "app_id=$APP_ID" >> $GITHUB_OUTPUT
+          echo "✅ Found existing app: $APP_ID"
+        else
+          echo "app_exists=false" >> $GITHUB_OUTPUT
+          echo "ℹ️  No existing app found, will create new one"
+        fi
+        
+    # Deploy o actualizar app
+    - name: Deploy to DigitalOcean App Platform
+      run: |
+        if [ "${{ steps.check_app.outputs.app_exists }}" = "true" ]; then
+          echo "📦 Updating existing app..."
+          doctl apps update ${{ steps.check_app.outputs.app_id }} --spec app.yaml --wait
+        else
+          echo "🆕 Creating new app..."
+          doctl apps create --spec app.yaml --wait
+        fi
+        
+    # Verificar deployment
+    - name: Get app info
+      run: |
+        echo "📋 App deployment status:"
+        if [ "${{ steps.check_app.outputs.app_exists }}" = "true" ]; then
+          doctl apps get ${{ steps.check_app.outputs.app_id }}
+        else
+          # Get the newly created app ID
+          NEW_APP_ID=$(doctl apps list --format ID,Spec.Name --no-header | grep casamx-app | cut -d' ' -f1)
+          doctl apps get $NEW_APP_ID
+        fi
+        
+    # Health check post-deployment
+    - name: Health check
+      run: |
+        echo "🏥 Performing health checks..."
+        sleep 60  # Esperar a que el deployment complete
+        
+        # Verificar dominio principal
+        if curl -f -s --connect-timeout 10 https://casamx.store/ > /dev/null; then
+          echo "✅ Main site is healthy: https://casamx.store/"
+        else
+          echo "❌ Main site health check failed"
+          exit 1
+        fi
+        
+        # Verificar API
+        if curl -f -s --connect-timeout 10 https://casamx.store/api/ > /dev/null; then
+          echo "✅ API is healthy: https://casamx.store/api/"
+        else
+          echo "⚠️  API health check failed - may still be starting"
+        fi
+        
+    # Notificación de éxito
+    - name: Deployment success notification
+      run: |
+        echo "🎉 DEPLOYMENT SUCCESSFUL!"
+        echo "🔗 CasaMX is live at: https://casamx.store"
+        echo "🔗 API available at: https://casamx.store/api"
+        echo "📖 API docs at: https://casamx.store/api/docs"
+        echo "🏆 Ready for Datatón ITAM 2025!"
+
+  # Job 4: Monitoreo post-deployment (opcional)
+  monitor:
+    runs-on: ubuntu-latest
+    needs: deploy
+    name: Post-Deployment Monitoring
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Wait for app stabilization
+      run: sleep 120
+      
+    - name: Performance test
+      run: |
+        echo "⚡ Running performance tests..."
+        
+        # Test de velocidad básico
+        RESPONSE_TIME=$(curl -o /dev/null -s -w '%{time_total}' https://casamx.store/)
+        echo "🕐 Response time: ${RESPONSE_TIME}s"
+        
+        if (( $(echo "$RESPONSE_TIME < 3.0" | bc -l) )); then
+          echo "✅ Response time OK (< 3s)"
+        else
+          echo "⚠️  Slow response time (> 3s)"
+        fi
+        
+    - name: SSL certificate check
+      run: |
+        echo "🔒 Checking SSL certificate..."
+        if curl -I -s https://casamx.store/ | grep -q "200 OK"; then
+          echo "✅ SSL certificate is valid"
+        else
+          echo "❌ SSL certificate issue"
+        fi

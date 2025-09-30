@@ -1,14 +1,37 @@
+# Streamlit Configuration for Production
+# CasaMX - Datatón ITAM 2025
+
 [server]
+# Configuración del servidor
 headless = true
-port = 8501
 enableCORS = false
 enableXsrfProtection = false
+port = 8080
+address = "0.0.0.0"
 
 [browser]
+# Configuración del navegador
 gatherUsageStats = false
+showErrorDetails = false
 
 [theme]
-primaryColor = "#FF6B6B"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F0F2F6"
+# Tema personalizado para CasaMX
+primaryColor = "#667eea"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f0f2f6"
 textColor = "#262730"
+font = "sans serif"
+
+[client]
+# Configuración del cliente
+showErrorDetails = false
+toolbarMode = "minimal"
+
+[logger]
+# Configuración de logs
+level = "info"
+
+[global]
+# Configuraciones globales
+developmentMode = false
+dataFrameSerialization = "legacy"
