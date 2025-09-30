@@ -1,0 +1,731 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created_date": "2025-09-30",
+    "description": "Datos completos de 20 colonias premium CDMX - CasaMX PWA",
+    "coordinate_system": "WGS84",
+    "total_neighborhoods": 20
+  },
+  "neighborhoods": [
+    {
+      "id": "polanco",
+      "name": "Polanco",
+      "alcaldia": "Miguel Hidalgo",
+      "coordinates": {"lat": 19.4326, "lng": -99.1924},
+      "price_range": {
+        "min": 45000,
+        "max": 120000,
+        "average": 75000
+      },
+      "scores": {
+        "security": 9.2,
+        "transport": 8.8,
+        "amenities": 9.5,
+        "education": 9.1,
+        "healthcare": 9.3,
+        "entertainment": 9.0,
+        "overall": 9.15
+      },
+      "features": {
+        "metro_stations": ["Polanco", "Auditorio"],
+        "shopping_centers": ["Antara", "Plaza Carso"],
+        "schools": ["American School", "Greengates School"],
+        "hospitals": ["ABC Medical Center", "Médica Sur Polanco"],
+        "parks": ["Parque Lincoln", "Parque de los Venados"]
+      },
+      "demographics": {
+        "expat_friendly": 9.5,
+        "family_oriented": 8.5,
+        "young_professional": 8.0,
+        "senior_friendly": 7.5
+      },
+      "description": "La zona más exclusiva de CDMX, perfecta para ejecutivos internacionales y familias que buscan el máximo lujo y seguridad.",
+      "tags": ["luxury", "international", "business", "embassy_zone"],
+      "safety_index": 92
+    },
+    {
+      "id": "roma_norte",
+      "name": "Roma Norte",
+      "alcaldia": "Cuauhtémoc",
+      "coordinates": {"lat": 19.4142, "lng": -99.1626},
+      "price_range": {
+        "min": 25000,
+        "max": 55000,
+        "average": 38000
+      },
+      "scores": {
+        "security": 7.8,
+        "transport": 9.0,
+        "amenities": 8.7,
+        "education": 8.2,
+        "healthcare": 8.1,
+        "entertainment": 9.2,
+        "overall": 8.5
+      },
+      "features": {
+        "metro_stations": ["Insurgentes", "Sevilla"],
+        "shopping_centers": ["Pabellón Roma", "Plaza Río de Janeiro"],
+        "schools": ["Colegio Madrid", "Instituto Irlandés"],
+        "hospitals": ["Hospital Español", "Médica Sur Roma"],
+        "parks": ["Parque México", "Parque España"]
+      },
+      "demographics": {
+        "expat_friendly": 8.5,
+        "family_oriented": 7.8,
+        "young_professional": 9.2,
+        "senior_friendly": 7.0
+      },
+      "description": "El corazón cultural y gastronómico de CDMX, ideal para jóvenes profesionales que buscan estilo de vida cosmopolita.",
+      "tags": ["hipster", "cultural", "restaurants", "nightlife"],
+      "safety_index": 78
+    },
+    {
+      "id": "condesa",
+      "name": "Condesa",
+      "alcaldia": "Cuauhtémoc",
+      "coordinates": {"lat": 19.4098, "lng": -99.1739},
+      "price_range": {
+        "min": 22000,
+        "max": 50000,
+        "average": 35000
+      },
+      "scores": {
+        "security": 8.0,
+        "transport": 8.5,
+        "amenities": 8.9,
+        "education": 8.0,
+        "healthcare": 7.9,
+        "entertainment": 9.3,
+        "overall": 8.4
+      },
+      "features": {
+        "metro_stations": ["Patriotismo", "Chilpancingo"],
+        "shopping_centers": ["Pabellón Condesa", "Plaza Villa de Madrid"],
+        "schools": ["Colegio Alemán", "Liceo Franco Mexicano"],
+        "hospitals": ["Hospital ABC Observatorio", "Hospital Ángeles"],
+        "parks": ["Parque México", "Parque España"]
+      },
+      "demographics": {
+        "expat_friendly": 8.8,
+        "family_oriented": 8.2,
+        "young_professional": 9.0,
+        "senior_friendly": 7.2
+      },
+      "description": "Zona bohemia con arquitectura art déco, perfecta para expatriados que buscan ambiente relajado y cultural.",
+      "tags": ["bohemian", "art_deco", "pet_friendly", "walkable"],
+      "safety_index": 80
+    },
+    {
+      "id": "santa_fe",
+      "name": "Santa Fe",
+      "alcaldia": "Cuajimalpa",
+      "coordinates": {"lat": 19.3592, "lng": -99.2677},
+      "price_range": {
+        "min": 28000,
+        "max": 70000,
+        "average": 45000
+      },
+      "scores": {
+        "security": 8.8,
+        "transport": 7.2,
+        "amenities": 8.5,
+        "education": 8.8,
+        "healthcare": 8.6,
+        "entertainment": 7.5,
+        "overall": 8.23
+      },
+      "features": {
+        "metro_stations": ["Santa Fe"],
+        "shopping_centers": ["Centro Santa Fe", "Samara"],
+        "schools": ["Universidad Iberoamericana", "Tecnológico de Monterrey"],
+        "hospitals": ["ABC Santa Fe", "Médica Sur Santa Fe"],
+        "parks": ["Parque La Mexicana", "Bosque de las Lomas"]
+      },
+      "demographics": {
+        "expat_friendly": 8.2,
+        "family_oriented": 8.8,
+        "young_professional": 8.5,
+        "senior_friendly": 8.0
+      },
+      "description": "Distrito financiero moderno con rascacielos, ideal para ejecutivos que trabajan en corporativos.",
+      "tags": ["business_district", "modern", "corporate", "shopping"],
+      "safety_index": 88
+    },
+    {
+      "id": "coyoacan",
+      "name": "Coyoacán Centro",
+      "alcaldia": "Coyoacán",
+      "coordinates": {"lat": 19.3467, "lng": -99.1639},
+      "price_range": {
+        "min": 15000,
+        "max": 35000,
+        "average": 24000
+      },
+      "scores": {
+        "security": 7.5,
+        "transport": 8.0,
+        "amenities": 8.2,
+        "education": 8.5,
+        "healthcare": 7.8,
+        "entertainment": 8.8,
+        "overall": 8.13
+      },
+      "features": {
+        "metro_stations": ["Coyoacán", "Viveros"],
+        "shopping_centers": ["Plaza Coyoacán", "Centro Comercial Manacar"],
+        "schools": ["Universidad Nacional (UNAM)", "Colegio de San Patricio"],
+        "hospitals": ["Hospital General de Coyoacán", "Clínica del Sur"],
+        "parks": ["Viveros de Coyoacán", "Parque Frida Kahlo"]
+      },
+      "demographics": {
+        "expat_friendly": 7.8,
+        "family_oriented": 8.8,
+        "young_professional": 7.5,
+        "senior_friendly": 8.5
+      },
+      "description": "Zona histórica y cultural con mercados tradicionales, ideal para familias que buscan autenticidad mexicana.",
+      "tags": ["historic", "cultural", "traditional", "affordable"],
+      "safety_index": 75
+    },
+    {
+      "id": "del_valle",
+      "name": "Del Valle Norte",
+      "alcaldia": "Benito Juárez",
+      "coordinates": {"lat": 19.3884, "lng": -99.1647},
+      "price_range": {
+        "min": 18000,
+        "max": 40000,
+        "average": 28000
+      },
+      "scores": {
+        "security": 8.2,
+        "transport": 8.8,
+        "amenities": 8.1,
+        "education": 8.3,
+        "healthcare": 8.4,
+        "entertainment": 7.8,
+        "overall": 8.27
+      },
+      "features": {
+        "metro_stations": ["Etiopia", "Eugenia"],
+        "shopping_centers": ["Galerías Insurgentes", "Plaza Universidad"],
+        "schools": ["Colegio Hebreo", "Instituto Thomas Jefferson"],
+        "hospitals": ["Hospital Mocel", "Médica Sur Del Valle"],
+        "parks": ["Parque Hundido", "Parque de los Venados"]
+      },
+      "demographics": {
+        "expat_friendly": 7.5,
+        "family_oriented": 8.5,
+        "young_professional": 8.0,
+        "senior_friendly": 8.2
+      },
+      "description": "Colonia residencial tradicional con excelente conectividad, perfecta para familias de clase media-alta.",
+      "tags": ["residential", "family_friendly", "traditional", "well_connected"],
+      "safety_index": 82
+    },
+    {
+      "id": "lomas_chapultepec",
+      "name": "Lomas de Chapultepec",
+      "alcaldia": "Miguel Hidalgo",
+      "coordinates": {"lat": 19.4259, "lng": -99.2156},
+      "price_range": {
+        "min": 50000,
+        "max": 150000,
+        "average": 85000
+      },
+      "scores": {
+        "security": 9.5,
+        "transport": 7.8,
+        "amenities": 8.8,
+        "education": 9.2,
+        "healthcare": 9.0,
+        "entertainment": 8.2,
+        "overall": 8.75
+      },
+      "features": {
+        "metro_stations": ["Auditorio"],
+        "shopping_centers": ["Palacio de Hierro", "Plaza Molière"],
+        "schools": ["Colegio Peterson", "American School Foundation"],
+        "hospitals": ["Hospital Ángeles", "Centro Médico ABC"],
+        "parks": ["Bosque de Chapultepec", "Parque Lira"]
+      },
+      "demographics": {
+        "expat_friendly": 9.2,
+        "family_oriented": 9.0,
+        "young_professional": 7.5,
+        "senior_friendly": 8.8
+      },
+      "description": "Una de las zonas más exclusivas y seguras de CDMX, con mansiones y residencias de lujo.",
+      "tags": ["luxury", "exclusive", "mansions", "embassy_zone"],
+      "safety_index": 95
+    },
+    {
+      "id": "doctores",
+      "name": "Doctores",
+      "alcaldia": "Cuauhtémoc",
+      "coordinates": {"lat": 19.4225, "lng": -99.1431},
+      "price_range": {
+        "min": 8000,
+        "max": 18000,
+        "average": 12000
+      },
+      "scores": {
+        "security": 6.2,
+        "transport": 8.5,
+        "amenities": 7.0,
+        "education": 7.2,
+        "healthcare": 8.8,
+        "entertainment": 6.8,
+        "overall": 7.25
+      },
+      "features": {
+        "metro_stations": ["Doctores", "Obrera"],
+        "shopping_centers": ["Mercado de Doctores", "Plaza Doctores"],
+        "schools": ["Escuela Nacional Preparatoria", "Instituto Patria"],
+        "hospitals": ["Hospital General", "Hospital Juárez"],
+        "parks": ["Parque de los Venados", "Plaza de la Solidaridad"]
+      },
+      "demographics": {
+        "expat_friendly": 5.5,
+        "family_oriented": 7.0,
+        "young_professional": 7.8,
+        "senior_friendly": 6.5
+      },
+      "description": "Zona en transición con precios accesibles y excelente conectividad al centro, ideal para presupuestos ajustados.",
+      "tags": ["affordable", "central", "developing", "hospital_zone"],
+      "safety_index": 62
+    },
+    {
+      "id": "juarez",
+      "name": "Juárez",
+      "alcaldia": "Cuauhtémoc",
+      "coordinates": {"lat": 19.4284, "lng": -99.1576},
+      "price_range": {
+        "min": 20000,
+        "max": 45000,
+        "average": 32000
+      },
+      "scores": {
+        "security": 7.5,
+        "transport": 9.2,
+        "amenities": 8.5,
+        "education": 8.0,
+        "healthcare": 8.2,
+        "entertainment": 8.8,
+        "overall": 8.37
+      },
+      "features": {
+        "metro_stations": ["Cuauhtémoc", "Insurgentes"],
+        "shopping_centers": ["Plaza de la República", "Mercado Juárez"],
+        "schools": ["Colegio de México", "Instituto Anglo Mexicano"],
+        "hospitals": ["Hospital General", "Hospital de la Raza"],
+        "parks": ["Alameda Central", "Plaza de la República"]
+      },
+      "demographics": {
+        "expat_friendly": 8.2,
+        "family_oriented": 7.2,
+        "young_professional": 8.8,
+        "senior_friendly": 7.0
+      },
+      "description": "Zona céntrica con vida nocturna vibrante y excelente conectividad, popular entre jóvenes profesionales.",
+      "tags": ["central", "nightlife", "lgbtq_friendly", "artistic"],
+      "safety_index": 75
+    },
+    {
+      "id": "napoles",
+      "name": "Nápoles",
+      "alcaldia": "Benito Juárez",
+      "coordinates": {"lat": 19.3945, "lng": -99.1723},
+      "price_range": {
+        "min": 16000,
+        "max": 35000,
+        "average": 25000
+      },
+      "scores": {
+        "security": 7.8,
+        "transport": 8.6,
+        "amenities": 8.0,
+        "education": 7.9,
+        "healthcare": 8.1,
+        "entertainment": 8.2,
+        "overall": 8.1
+      },
+      "features": {
+        "metro_stations": ["Zapata", "Parque de los Venados"],
+        "shopping_centers": ["Plaza Insurgentes", "Parque Delta"],
+        "schools": ["Colegio Simón Bolívar", "Instituto Salesiano"],
+        "hospitals": ["Hospital 1° de Octubre", "Clínica Londres"],
+        "parks": ["Parque de los Venados", "Parque Delta"]
+      },
+      "demographics": {
+        "expat_friendly": 7.0,
+        "family_oriented": 8.2,
+        "young_professional": 7.8,
+        "senior_friendly": 7.8
+      },
+      "description": "Colonia residencial con buena oferta gastronómica y centros comerciales, ideal para familias jóvenes.",
+      "tags": ["residential", "family_oriented", "shopping", "restaurants"],
+      "safety_index": 78
+    },
+    {
+      "id": "narvarte",
+      "name": "Narvarte Poniente",
+      "alcaldia": "Benito Juárez",
+      "coordinates": {"lat": 19.3967, "lng": -99.1553},
+      "price_range": {
+        "min": 14000,
+        "max": 28000,
+        "average": 20000
+      },
+      "scores": {
+        "security": 7.2,
+        "transport": 8.8,
+        "amenities": 7.8,
+        "education": 7.5,
+        "healthcare": 7.9,
+        "entertainment": 8.5,
+        "overall": 7.95
+      },
+      "features": {
+        "metro_stations": ["Etiopia", "Narvarte"],
+        "shopping_centers": ["Plaza Narvarte", "Mercado Narvarte"],
+        "schools": ["Colegio Franco Español", "Instituto Tepeyac"],
+        "hospitals": ["Hospital Mocel", "Centro Médico Nacional"],
+        "parks": ["Parque Narvarte", "Plaza Popocatépetl"]
+      },
+      "demographics": {
+        "expat_friendly": 6.8,
+        "family_oriented": 8.0,
+        "young_professional": 8.2,
+        "senior_friendly": 7.5
+      },
+      "description": "Zona residencial con gran conectividad y variedad gastronómica, popular entre trabajadores del centro.",
+      "tags": ["affordable", "well_connected", "foodie", "residential"],
+      "safety_index": 72
+    },
+    {
+      "id": "escandón",
+      "name": "Escandón",
+      "alcaldia": "Miguel Hidalgo",
+      "coordinates": {"lat": 19.4045, "lng": -99.1876},
+      "price_range": {
+        "min": 16000,
+        "max": 32000,
+        "average": 23000
+      },
+      "scores": {
+        "security": 7.6,
+        "transport": 8.2,
+        "amenities": 7.9,
+        "education": 7.8,
+        "healthcare": 8.0,
+        "entertainment": 8.1,
+        "overall": 7.93
+      },
+      "features": {
+        "metro_stations": ["Patriotismo", "Tacubaya"],
+        "shopping_centers": ["Plaza Escandón", "Parque Delta"],
+        "schools": ["Colegio La Salle", "Instituto Motolinía"],
+        "hospitals": ["Hospital Español", "Sanatorio Español"],
+        "parks": ["Parque Escandón", "Plaza Popocatépetl"]
+      },
+      "demographics": {
+        "expat_friendly": 7.2,
+        "family_oriented": 8.1,
+        "young_professional": 7.8,
+        "senior_friendly": 7.9
+      },
+      "description": "Colonia residencial en crecimiento con buena ubicación entre Condesa y Santa Fe.",
+      "tags": ["emerging", "residential", "family_friendly", "well_located"],
+      "safety_index": 76
+    },
+    {
+      "id": "anzures",
+      "name": "Anzures",
+      "alcaldia": "Miguel Hidalgo",
+      "coordinates": {"lat": 19.4388, "lng": -99.1823},
+      "price_range": {
+        "min": 22000,
+        "max": 48000,
+        "average": 33000
+      },
+      "scores": {
+        "security": 8.1,
+        "transport": 8.4,
+        "amenities": 8.3,
+        "education": 8.2,
+        "healthcare": 8.3,
+        "entertainment": 8.0,
+        "overall": 8.22
+      },
+      "features": {
+        "metro_stations": ["San Cosme", "Revolución"],
+        "shopping_centers": ["Plaza Carso", "Antara Fashion Hall"],
+        "schools": ["Colegio Williams", "Liceo Franco Mexicano"],
+        "hospitals": ["Hospital ABC", "Hospital Ángeles"],
+        "parks": ["Parque España", "Parque San Martín"]
+      },
+      "demographics": {
+        "expat_friendly": 8.0,
+        "family_oriented": 8.5,
+        "young_professional": 7.8,
+        "senior_friendly": 8.2
+      },
+      "description": "Zona residencial consolidada cerca de Polanco, con buena relación calidad-precio.",
+      "tags": ["residential", "established", "near_polanco", "value_for_money"],
+      "safety_index": 81
+    },
+    {
+      "id": "san_rafael",
+      "name": "San Rafael",
+      "alcaldia": "Cuauhtémoc",
+      "coordinates": {"lat": 19.4423, "lng": -99.1623},
+      "price_range": {
+        "min": 12000,
+        "max": 25000,
+        "average": 17000
+      },
+      "scores": {
+        "security": 6.8,
+        "transport": 8.9,
+        "amenities": 7.5,
+        "education": 7.6,
+        "healthcare": 7.8,
+        "entertainment": 8.2,
+        "overall": 7.8
+      },
+      "features": {
+        "metro_stations": ["San Cosme", "Revolución"],
+        "shopping_centers": ["Plaza San Rafael", "Mercado San Rafael"],
+        "schools": ["Instituto Patria", "Colegio Cervantes"],
+        "hospitals": ["Hospital General", "Clínica San Rafael"],
+        "parks": ["Plaza San Fernando", "Jardín San Rafael"]
+      },
+      "demographics": {
+        "expat_friendly": 6.5,
+        "family_oriented": 7.5,
+        "young_professional": 8.5,
+        "senior_friendly": 7.2
+      },
+      "description": "Barrio histórico en proceso de gentrificación con precios accesibles y buena conectividad.",
+      "tags": ["historic", "gentrifying", "affordable", "artistic"],
+      "safety_index": 68
+    },
+    {
+      "id": "lindavista",
+      "name": "Lindavista",
+      "alcaldia": "Gustavo A. Madero",
+      "coordinates": {"lat": 19.4789, "lng": -99.1274},
+      "price_range": {
+        "min": 10000,
+        "max": 22000,
+        "average": 15000
+      },
+      "scores": {
+        "security": 6.5,
+        "transport": 8.1,
+        "amenities": 7.2,
+        "education": 7.4,
+        "healthcare": 7.6,
+        "entertainment": 7.0,
+        "overall": 7.3
+      },
+      "features": {
+        "metro_stations": ["Lindavista", "Instituto del Petróleo"],
+        "shopping_centers": ["Plaza Lindavista", "Centro Comercial Mundo E"],
+        "schools": ["Instituto Politécnico Nacional", "Colegio Cervantes Lindavista"],
+        "hospitals": ["Hospital La Raza", "Clínica 25 IMSS"],
+        "parks": ["Parque Lindavista", "Deportivo Lindavista"]
+      },
+      "demographics": {
+        "expat_friendly": 5.8,
+        "family_oriented": 8.0,
+        "young_professional": 7.2,
+        "senior_friendly": 7.8
+      },
+      "description": "Zona residencial del norte con precios muy accesibles y buena conectividad al centro.",
+      "tags": ["affordable", "northern", "family_oriented", "working_class"],
+      "safety_index": 65
+    },
+    {
+      "id": "portales",
+      "name": "Portales Norte",
+      "alcaldia": "Benito Juárez",
+      "coordinates": {"lat": 19.3678, "lng": -99.1547},
+      "price_range": {
+        "min": 12000,
+        "max": 24000,
+        "average": 17000
+      },
+      "scores": {
+        "security": 7.1,
+        "transport": 8.5,
+        "amenities": 7.6,
+        "education": 7.3,
+        "healthcare": 7.7,
+        "entertainment": 7.4,
+        "overall": 7.6
+      },
+      "features": {
+        "metro_stations": ["Portales", "Nativitas"],
+        "shopping_centers": ["Mercado Portales", "Plaza Portales"],
+        "schools": ["Colegio Portales", "Instituto Tecnológico"],
+        "hospitals": ["Hospital General Balbuena", "Clínica 1 IMSS"],
+        "parks": ["Parque de los Venados", "Plaza Portales"]
+      },
+      "demographics": {
+        "expat_friendly": 6.2,
+        "family_oriented": 8.2,
+        "young_professional": 7.5,
+        "senior_friendly": 7.8
+      },
+      "description": "Barrio tradicional con mercados locales y ambiente familiar, ideal para presupuestos moderados.",
+      "tags": ["traditional", "markets", "family_friendly", "affordable"],
+      "safety_index": 71
+    },
+    {
+      "id": "tlalpan_centro",
+      "name": "Tlalpan Centro",
+      "alcaldia": "Tlalpan",
+      "coordinates": {"lat": 19.2908, "lng": -99.1657},
+      "price_range": {
+        "min": 13000,
+        "max": 28000,
+        "average": 19000
+      },
+      "scores": {
+        "security": 7.4,
+        "transport": 7.8,
+        "amenities": 7.7,
+        "education": 8.0,
+        "healthcare": 7.9,
+        "entertainment": 7.8,
+        "overall": 7.77
+      },
+      "features": {
+        "metro_stations": ["General Anaya", "Tasqueña"],
+        "shopping_centers": ["Plaza Cuicuilco", "Centro Comercial Perisur"],
+        "schools": ["Universidad Anáhuac", "Colegio Tlalpan"],
+        "hospitals": ["Hospital de Tlalpan", "Médica Sur Tlalpan"],
+        "parks": ["Parque Nacional Fuentes Brotantes", "Bosque de Tlalpan"]
+      },
+      "demographics": {
+        "expat_friendly": 6.8,
+        "family_oriented": 8.5,
+        "young_professional": 7.2,
+        "senior_friendly": 8.0
+      },
+      "description": "Pueblo mágico al sur de la ciudad con ambiente tranquilo y contacto con la naturaleza.",
+      "tags": ["pueblo_magico", "nature", "tranquil", "historic"],
+      "safety_index": 74
+    },
+    {
+      "id": "doctores_norte",
+      "name": "Doctores Norte",
+      "alcaldia": "Cuauhtémoc", 
+      "coordinates": {"lat": 19.4298, "lng": -99.1445},
+      "price_range": {
+        "min": 9000,
+        "max": 19000,
+        "average": 13500
+      },
+      "scores": {
+        "security": 6.5,
+        "transport": 8.7,
+        "amenities": 7.2,
+        "education": 7.0,
+        "healthcare": 8.9,
+        "entertainment": 6.5,
+        "overall": 7.47
+      },
+      "features": {
+        "metro_stations": ["Doctores", "Niños Héroes"],
+        "shopping_centers": ["Mercado Doctores", "Plaza de la Computación"],
+        "schools": ["Preparatoria 6", "Instituto Mexicano"],
+        "hospitals": ["Hospital General", "Hospital Juárez"],
+        "parks": ["Plaza de la Solidaridad", "Jardín Doctores"]
+      },
+      "demographics": {
+        "expat_friendly": 5.2,
+        "family_oriented": 6.8,
+        "young_professional": 7.5,
+        "senior_friendly": 6.8
+      },
+      "description": "Zona económica cerca del centro histórico, en proceso de mejora urbana.",
+      "tags": ["budget_friendly", "central", "improving", "medical_zone"],
+      "safety_index": 65
+    },
+    {
+      "id": "alameda",
+      "name": "Alameda",
+      "alcaldia": "Miguel Hidalgo",
+      "coordinates": {"lat": 19.4356, "lng": -99.1478},
+      "price_range": {
+        "min": 18000,
+        "max": 38000,
+        "average": 26000
+      },
+      "scores": {
+        "security": 7.8,
+        "transport": 9.1,
+        "amenities": 8.4,
+        "education": 8.1,
+        "healthcare": 8.2,
+        "entertainment": 8.6,
+        "overall": 8.37
+      },
+      "features": {
+        "metro_stations": ["Bellas Artes", "Hidalgo"],
+        "shopping_centers": ["Torre Latinoamericana", "Palacio de Bellas Artes"],
+        "schools": ["Colegio Nacional", "Universidad del Valle de México"],
+        "hospitals": ["Hospital ABC", "Hospital Juárez"],
+        "parks": ["Alameda Central", "Plaza de la República"]
+      },
+      "demographics": {
+        "expat_friendly": 8.5,
+        "family_oriented": 7.5,
+        "young_professional": 8.8,
+        "senior_friendly": 7.8
+      },
+      "description": "Corazón histórico y cultural de CDMX con museos, teatros y arquitectura colonial.",
+      "tags": ["historic_center", "cultural", "museums", "colonial"],
+      "safety_index": 78
+    },
+    {
+      "id": "xochimilco_centro",
+      "name": "Xochimilco Centro",
+      "alcaldia": "Xochimilco",
+      "coordinates": {"lat": 19.2625, "lng": -99.1037},
+      "price_range": {
+        "min": 8000,
+        "max": 18000,
+        "average": 12000
+      },
+      "scores": {
+        "security": 6.8,
+        "transport": 7.2,
+        "amenities": 7.0,
+        "education": 7.2,
+        "healthcare": 7.1,
+        "entertainment": 8.5,
+        "overall": 7.3
+      },
+      "features": {
+        "metro_stations": ["Tasqueña", "Tren Ligero Xochimilco"],
+        "shopping_centers": ["Mercado Xochimilco", "Plaza Xochimilco"],
+        "schools": ["Universidad Autónoma de Xochimilco", "Preparatoria Xochimilco"],
+        "hospitals": ["Hospital Xochimilco", "Clínica Familiar"],
+        "parks": ["Trajineras de Xochimilco", "Parque Ecológico"]
+      },
+      "demographics": {
+        "expat_friendly": 7.5,
+        "family_oriented": 8.8,
+        "young_professional": 6.5,
+        "senior_friendly": 8.2
+      },
+      "description": "Patrimonio de la humanidad con trajineras y chinampas, perfecto para turistas y familias.",
+      "tags": ["unesco_heritage", "trajineras", "traditional", "tourist_friendly"],
+      "safety_index": 68
+    }
+  ]
+}

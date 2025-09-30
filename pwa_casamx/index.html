@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="CasaMX - Encuentra la colonia perfecta en Ciudad de México con inteligencia artificial">
+    <meta name="keywords" content="vivienda, CDMX, renta, colonia, recomendaciones, IA">
+    <meta name="author" content="CasaMX">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0f3460">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CasaMX">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://casamx.app">
+    <meta property="og:title" content="CasaMX - Recomendador de Vivienda CDMX">
+    <meta property="og:description" content="Encuentra la colonia perfecta en Ciudad de México con nuestra IA especializada">
+    <meta property="og:image" content="./assets/images/og-image.png">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-192x192.svg">
+    <link rel="icon" type="image/svg+xml" href="./assets/images/logo.svg">
+    <link rel="icon" type="image/svg+xml" sizes="any" href="./assets/images/logo.svg">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="./manifest.json">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="./assets/css/styles.css" as="style">
+    <link rel="preload" href="./assets/js/app.js" as="script">
+    <link rel="preconnect" href="https://api.mapbox.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- MapBox CSS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    
+    <title>CasaMX - Encuentra tu Hogar Perfecto en CDMX</title>
+</head>
+<body>
+    <!-- PWA Install Banner -->
+    <div id="installBanner" class="install-banner hidden">
+        <div class="install-content">
+            <div class="install-icon">📱</div>
+            <div class="install-text">
+                <h3>Instala CasaMX</h3>
+                <p>Accede instantáneamente desde tu pantalla de inicio</p>
+            </div>
+            <div class="install-actions">
+                <button id="installBtn" class="btn btn-primary">Instalar</button>
+                <button id="dismissInstall" class="btn btn-ghost">Ahora no</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app" class="app-container">
+        <!-- Navigation Header -->
+        <header class="app-header">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <div class="logo-container">
+                        <svg class="logo" viewBox="0 0 24 24" fill="none">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/>
+                        </svg>
+                        <span class="brand-text">CasaMX</span>
+                    </div>
+                    <span class="beta-badge">BETA</span>
+                </div>
+                
+                <nav class="nav-menu">
+                    <button class="nav-btn active" data-view="search">
+                        <span class="nav-icon">🔍</span>
+                        <span class="nav-text">Buscar</span>
+                    </button>
+                    <button class="nav-btn" data-view="demos">
+                        <span class="nav-icon">⭐</span>
+                        <span class="nav-text">Demos</span>
+                    </button>
+                    <button class="nav-btn" data-view="map">
+                        <span class="nav-icon">🗺️</span>
+                        <span class="nav-text">Mapa</span>
+                    </button>
+                    <button class="nav-btn" data-view="about">
+                        <span class="nav-icon">ℹ️</span>
+                        <span class="nav-text">Info</span>
+                    </button>
+                </nav>
+
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Loading Screen -->
+        <div id="loadingScreen" class="loading-screen">
+            <div class="loading-container">
+                <div class="loading-logo">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div class="loading-text">
+                    <h2>CasaMX</h2>
+                    <p>Cargando tu hogar perfecto...</p>
+                </div>
+                <div class="loading-animation">
+                    <div class="loading-bar">
+                        <div class="loading-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Views -->
+        <main class="main-content">
+            
+            <!-- Search View -->
+            <section id="searchView" class="view active">
+                <div class="hero-section">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            Encuentra tu <span class="gradient-text">Hogar Perfecto</span> en CDMX
+                        </h1>
+                        <p class="hero-subtitle">
+                            Inteligencia artificial especializada te ayuda a descubrir la colonia ideal según tu estilo de vida
+                        </p>
+                        <div class="hero-stats">
+                            <div class="stat">
+                                <span class="stat-number">20+</span>
+                                <span class="stat-label">Colonias analizadas</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">95%</span>
+                                <span class="stat-label">Precisión de match</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">2min</span>
+                                <span class="stat-label">Tiempo promedio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Form -->
+                <div class="search-container">
+                    <div class="form-container">
+                        <form id="searchForm" class="search-form">
+                            <!-- Basic Info -->
+                            <div class="form-section">
+                                <h3 class="section-title">📋 Información Básica</h3>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="budget">Presupuesto mensual (MXN)</label>
+                                        <div class="input-container">
+                                            <span class="input-prefix">$</span>
+                                            <input type="number" id="budget" name="budget" 
+                                                   min="5000" max="200000" step="1000" 
+                                                   value="25000" class="form-input">
+                                        </div>
+                                        <div class="budget-range">
+                                            <span>$5,000</span>
+                                            <input type="range" id="budgetRange" min="5000" max="200000" 
+                                                   value="25000" step="1000" class="range-input">
+                                            <span>$200,000+</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="familySize">Tamaño de familia</label>
+                                        <select id="familySize" name="familySize" class="form-select">
+                                            <option value="1">Solo yo</option>
+                                            <option value="2" selected>Pareja (2 personas)</option>
+                                            <option value="3">Familia pequeña (3 personas)</option>
+                                            <option value="4">Familia mediana (4 personas)</option>
+                                            <option value="5">Familia grande (5+ personas)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>¿Tienes hijos?</label>
+                                        <div class="radio-group">
+                                            <label class="radio-label">
+                                                <input type="radio" name="hasChildren" value="true">
+                                                <span class="radio-custom"></span>
+                                                Sí, tengo hijos
+                                            </label>
+                                            <label class="radio-label">
+                                                <input type="radio" name="hasChildren" value="false" checked>
+                                                <span class="radio-custom"></span>
+                                                No tengo hijos
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="country">País de origen</label>
+                                        <select id="country" name="country" class="form-select">
+                                            <option value="mexico">🇲🇽 México</option>
+                                            <option value="usa">🇺🇸 Estados Unidos</option>
+                                            <option value="spain">🇪🇸 España</option>
+                                            <option value="france">🇫🇷 Francia</option>
+                                            <option value="germany">🇩🇪 Alemania</option>
+                                            <option value="uk">🇬🇧 Reino Unido</option>
+                                            <option value="canada">🇨🇦 Canadá</option>
+                                            <option value="other">🌍 Otro país</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Priorities -->
+                            <div class="form-section">
+                                <h3 class="section-title">⚖️ Prioridades (1-10)</h3>
+                                <p class="section-description">
+                                    Califica la importancia de cada factor para tu decisión
+                                </p>
+                                
+                                <div class="priority-grid">
+                                    <div class="priority-item">
+                                        <div class="priority-header">
+                                            <label for="securityPriority">🛡️ Seguridad</label>
+                                            <span class="priority-value" id="securityValue">8</span>
+                                        </div>
+                                        <input type="range" id="securityPriority" name="securityPriority" 
+                                               min="1" max="10" value="8" class="priority-range">
+                                        <div class="priority-labels">
+                                            <span>No importante</span>
+                                            <span>Crítico</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="priority-item">
+                                        <div class="priority-header">
+                                            <label for="transportPriority">🚇 Transporte</label>
+                                            <span class="priority-value" id="transportValue">7</span>
+                                        </div>
+                                        <input type="range" id="transportPriority" name="transportPriority" 
+                                               min="1" max="10" value="7" class="priority-range">
+                                        <div class="priority-labels">
+                                            <span>No importante</span>
+                                            <span>Crítico</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="priority-item">
+                                        <div class="priority-header">
+                                            <label for="amenitiesPriority">🏪 Amenidades</label>
+                                            <span class="priority-value" id="amenitiesValue">6</span>
+                                        </div>
+                                        <input type="range" id="amenitiesPriority" name="amenitiesPriority" 
+                                               min="1" max="10" value="6" class="priority-range">
+                                        <div class="priority-labels">
+                                            <span>No importante</span>
+                                            <span>Crítico</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="priority-item">
+                                        <div class="priority-header">
+                                            <label for="educationPriority">🎓 Educación</label>
+                                            <span class="priority-value" id="educationValue">5</span>
+                                        </div>
+                                        <input type="range" id="educationPriority" name="educationPriority" 
+                                               min="1" max="10" value="5" class="priority-range">
+                                        <div class="priority-labels">
+                                            <span>No importante</span>
+                                            <span>Crítico</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="priority-item">
+                                        <div class="priority-header">
+                                            <label for="pricePriority">💰 Precio</label>
+                                            <span class="priority-value" id="priceValue">7</span>
+                                        </div>
+                                        <input type="range" id="pricePriority" name="pricePriority" 
+                                               min="1" max="10" value="7" class="priority-range">
+                                        <div class="priority-labels">
+                                            <span>No importante</span>
+                                            <span>Crítico</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="priority-item">
+                                        <div class="priority-header">
+                                            <label for="entertainmentPriority">🎭 Entretenimiento</label>
+                                            <span class="priority-value" id="entertainmentValue">6</span>
+                                        </div>
+                                        <input type="range" id="entertainmentPriority" name="entertainmentPriority" 
+                                               min="1" max="10" value="6" class="priority-range">
+                                        <div class="priority-labels">
+                                            <span>No importante</span>
+                                            <span>Crítico</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="form-submit">
+                                <button type="submit" class="btn btn-primary btn-large" id="searchBtn">
+                                    <span class="btn-text">🔍 Encontrar mi hogar perfecto</span>
+                                    <span class="btn-loading">
+                                        <div class="spinner"></div>
+                                        Analizando...
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results View -->
+            <section id="resultsView" class="view">
+                <div class="results-container">
+                    <div class="results-header">
+                        <button class="btn btn-ghost" id="backToSearch">
+                            ← Volver a búsqueda
+                        </button>
+                        <h2>Tus Recomendaciones Perfectas</h2>
+                        <p class="results-subtitle">Basadas en tu perfil y preferencias</p>
+                    </div>
+
+                    <div id="recommendationsList" class="recommendations-list">
+                        <!-- Recommendations will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Demo Cases View -->
+            <section id="demosView" class="view">
+                <div class="demos-container">
+                    <div class="demos-header">
+                        <h2>Casos Demo Interactivos</h2>
+                        <p class="demos-subtitle">
+                            Explora 3 perfiles reales y sus recomendaciones personalizadas
+                        </p>
+                    </div>
+
+                    <div class="demo-cases" id="demoCases">
+                        <!-- Demo cases will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Map View -->
+            <section id="mapView" class="view">
+                <div class="map-container">
+                    <div class="map-header">
+                        <h2>Explorar Colonias en Mapa</h2>
+                        <div class="map-controls">
+                            <select id="mapFilter" class="form-select">
+                                <option value="all">Todas las colonias</option>
+                                <option value="budget">Por presupuesto</option>
+                                <option value="security">Por seguridad</option>
+                                <option value="transport">Por transporte</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="map" class="interactive-map"></div>
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <div class="legend-color luxury"></div>
+                            <span>Luxury ($50k+)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color premium"></div>
+                            <span>Premium ($30-50k)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color standard"></div>
+                            <span>Standard ($15-30k)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color budget"></div>
+                            <span>Budget (<$15k)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About View -->
+            <section id="aboutView" class="view">
+                <div class="about-container">
+                    <div class="about-header">
+                        <h2>Sobre CasaMX</h2>
+                        <p class="about-subtitle">
+                            Tecnología de vanguardia para encontrar tu hogar perfecto
+                        </p>
+                    </div>
+
+                    <div class="about-content">
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">🤖</div>
+                                <h3>Inteligencia Artificial</h3>
+                                <p>Algoritmos avanzados analizan 15+ factores para recomendaciones precisas</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">📍</div>
+                                <h3>Datos Reales</h3>
+                                <p>Información actualizada de 20+ colonias premium de CDMX</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">📱</div>
+                                <h3>App Nativa</h3>
+                                <p>PWA que funciona offline como app nativa en tu dispositivo</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">⚡</div>
+                                <h3>Ultra Rápido</h3>
+                                <p>Resultados en menos de 2 segundos con visualizaciones interactivas</p>
+                            </div>
+                        </div>
+
+                        <div class="tech-stack">
+                            <h3>Tecnología</h3>
+                            <div class="tech-badges">
+                                <span class="tech-badge">HTML5 PWA</span>
+                                <span class="tech-badge">JavaScript ES6+</span>
+                                <span class="tech-badge">MapBox GL</span>
+                                <span class="tech-badge">Service Workers</span>
+                                <span class="tech-badge">IndexedDB</span>
+                                <span class="tech-badge">WebGL</span>
+                            </div>
+                        </div>
+
+                        <div class="credits">
+                            <h3>Créditos</h3>
+                            <p>
+                                Desarrollado para el <strong>Datatón ITAM 2025</strong><br>
+                                Por David Fernando Ávila Díaz<br>
+                                Red Bull ITAM Innovation Challenge
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation (Mobile) -->
+        <nav class="bottom-nav">
+            <button class="bottom-nav-btn active" data-view="search">
+                <span class="nav-icon">🔍</span>
+                <span class="nav-text">Buscar</span>
+            </button>
+            <button class="bottom-nav-btn" data-view="demos">
+                <span class="nav-icon">⭐</span>
+                <span class="nav-text">Demos</span>
+            </button>
+            <button class="bottom-nav-btn" data-view="map">
+                <span class="nav-icon">🗺️</span>
+                <span class="nav-text">Mapa</span>
+            </button>
+            <button class="bottom-nav-btn" data-view="about">
+                <span class="nav-icon">ℹ️</span>
+                <span class="nav-text">Info</span>
+            </button>
+        </nav>
+
+        <!-- Offline Indicator -->
+        <div id="offlineIndicator" class="offline-indicator hidden">
+            <span class="offline-icon">📡</span>
+            <span>Modo Offline</span>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toastContainer" class="toast-container"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+    <script src="./assets/js/recommendation-engine.js"></script>
+    <script src="./assets/js/map-handler.js"></script>
+    <script src="./assets/js/app.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

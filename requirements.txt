@@ -16,6 +16,7 @@ matplotlib==3.8.2
 seaborn==0.13.0
 plotly==5.17.0
 folium==0.15.1
+streamlit-folium==0.15.0
 
 # Web framework
 fastapi==0.104.1

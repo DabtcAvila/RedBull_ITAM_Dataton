@@ -1,0 +1,162 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created_date": "2025-09-30",
+    "description": "3 casos demo premium para presentaciones CasaMX PWA",
+    "total_cases": 3
+  },
+  "demo_cases": [
+    {
+      "id": "maria_gonzalez",
+      "name": "María González",
+      "avatar": "👩‍💼",
+      "country": "España 🇪🇸",
+      "profile_type": "Ejecutiva Internacional con Familia",
+      "description": "Familia española con 2 niños que se muda a CDMX por trabajo corporativo. Busca máxima seguridad y educación internacional.",
+      "criteria": {
+        "budget": 65000,
+        "family_size": 4,
+        "has_children": true,
+        "priorities": {
+          "security": 9.5,
+          "education": 9.0,
+          "amenities": 8.5,
+          "transport": 7.0,
+          "price": 6.0
+        },
+        "preferences": {
+          "international_schools": true,
+          "embassy_zone": true,
+          "expat_community": true,
+          "luxury_amenities": true,
+          "private_security": true
+        }
+      },
+      "expected_results": {
+        "top_recommendation": "polanco",
+        "alternative_1": "lomas_chapultepec",
+        "alternative_2": "santa_fe"
+      },
+      "story": "María es directora regional de una multinacional española. Su esposo Pablo trabaja en finanzas y sus hijos Emma (12) y Diego (8) necesitan colegios bilingües. Llegan con presupuesto alto y priorizan seguridad absoluta.",
+      "key_requirements": [
+        "Colegios internacionales de prestigio",
+        "Zona de embajadas y consulados",
+        "Comunidad expatriada establecida",
+        "Seguridad 24/7 con vigilancia privada",
+        "Centros comerciales premium",
+        "Hospitales de clase mundial"
+      ],
+      "timeline": "Búsqueda activa - mudanza en 2 meses"
+    },
+    {
+      "id": "alex_thompson",
+      "name": "Alex Thompson",
+      "avatar": "👨‍💻",
+      "country": "Estados Unidos 🇺🇸",
+      "profile_type": "Nómada Digital & Emprendedor",
+      "description": "Desarrollador de software estadounidense, soltero, busca vida urbana vibrante con coworking y vida nocturna.",
+      "criteria": {
+        "budget": 35000,
+        "family_size": 1,
+        "has_children": false,
+        "priorities": {
+          "entertainment": 9.2,
+          "amenities": 8.8,
+          "transport": 8.5,
+          "security": 7.5,
+          "price": 7.0
+        },
+        "preferences": {
+          "coworking_spaces": true,
+          "nightlife": true,
+          "restaurants": true,
+          "cultural_scene": true,
+          "walkable": true,
+          "young_professional": true
+        }
+      },
+      "expected_results": {
+        "top_recommendation": "roma_norte",
+        "alternative_1": "condesa",
+        "alternative_2": "juarez"
+      },
+      "story": "Alex (28) es fundador de una startup tech. Trabaja remoto, ama los cafés de especialidad, galerías de arte y la escena gastronómica. Busca inspiración cultural y networking con otros creativos.",
+      "key_requirements": [
+        "Escena cultural y artística vibrante",
+        "Coworking spaces modernos",
+        "Restaurantes y cafeterías trendy",
+        "Vida nocturna diversa",
+        "Transporte público eficiente",
+        "Comunidad de jóvenes profesionales",
+        "Espacios walkable para caminar"
+      ],
+      "timeline": "Explorando opciones - mudanza flexible"
+    },
+    {
+      "id": "sophie_martin",
+      "name": "Sophie Martin",
+      "avatar": "👩‍🎓",
+      "country": "Francia 🇫🇷",
+      "profile_type": "Estudiante de Posgrado",
+      "description": "Estudiante francesa de maestría en antropología, presupuesto limitado, busca autenticidad cultural y transporte accesible.",
+      "criteria": {
+        "budget": 18000,
+        "family_size": 1,
+        "has_children": false,
+        "priorities": {
+          "price": 9.0,
+          "transport": 8.5,
+          "cultural_authenticity": 8.8,
+          "safety": 7.5,
+          "amenities": 6.5
+        },
+        "preferences": {
+          "universities_nearby": true,
+          "local_markets": true,
+          "cultural_sites": true,
+          "affordable_food": true,
+          "public_transport": true,
+          "authentic_experience": true
+        }
+      },
+      "expected_results": {
+        "top_recommendation": "coyoacan",
+        "alternative_1": "san_rafael",
+        "alternative_2": "tlalpan_centro"
+      },
+      "story": "Sophie (24) estudia maestría en UNAM. Ama la cultura mexicana auténtica, mercados locales y sitios históricos. Presupuesto de estudiante pero busca experiencia cultural rica.",
+      "key_requirements": [
+        "Presupuesto muy ajustado pero seguro",
+        "Cercanía a universidades (UNAM)",
+        "Mercados tradicionales mexicanos",
+        "Sitios históricos y museos",
+        "Transporte público económico",
+        "Ambiente estudiantil y cultural",
+        "Experiencia auténtica mexicana"
+      ],
+      "timeline": "Inicio de semestre - necesita vivienda YA"
+    }
+  ],
+  "presentation_order": [
+    "maria_gonzalez",
+    "alex_thompson", 
+    "sophie_martin"
+  ],
+  "demo_scripts": {
+    "maria_gonzalez": {
+      "intro": "María González, ejecutiva española con familia. Presupuesto alto, máxima seguridad.",
+      "process": "El algoritmo prioriza seguridad (9.5) y educación (9.0). Analizando zonas premium...",
+      "result": "Polanco: 94% match. Zona de embajadas, colegios internacionales, seguridad premium."
+    },
+    "alex_thompson": {
+      "intro": "Alex Thompson, nómada digital americano. Busca vida urbana y creatividad.",
+      "process": "Priorizando entretenimiento (9.2) y amenidades (8.8). Buscando zonas trendy...",
+      "result": "Roma Norte: 91% match. Hub creativo, coworking, vida nocturna, comunidad internacional."
+    },
+    "sophie_martin": {
+      "intro": "Sophie Martin, estudiante francesa. Presupuesto ajustado, autenticidad cultural.",
+      "process": "Optimizando precio (9.0) y cultura (8.8). Buscando zonas auténticas...",
+      "result": "Coyoacán: 88% match. Patrimonio histórico, UNAM cercana, mercados tradicionales."
+    }
+  }
+}

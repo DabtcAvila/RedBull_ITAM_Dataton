@@ -1,0 +1,47 @@
+# CasaMX Production Requirements
+# Optimized for DigitalOcean deployment
+
+# Core FastAPI stack
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+gunicorn==21.2.0
+
+# Database
+sqlalchemy==2.0.23
+sqlite3
+
+# Async support
+aiofiles==23.2.1
+httpx==0.25.2
+
+# Data processing (minimal for production)
+pandas==2.1.4
+numpy==1.24.3
+
+# Caching
+redis==5.0.1
+hiredis==2.2.3
+
+# Security
+python-multipart==0.0.6
+passlib[bcrypt]==1.7.4
+python-jose[cryptography]==3.3.0
+
+# Environment
+python-dotenv==1.0.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Monitoring
+prometheus-client==0.19.0
+structlog==23.2.0
+
+# Geographic data (lightweight)
+geopy==2.4.1
+
+# Production utilities
+click==8.1.7
+jinja2==3.1.2
+
+# Health checks
+psutil==5.9.6

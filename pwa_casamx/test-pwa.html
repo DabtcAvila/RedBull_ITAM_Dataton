@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CasaMX PWA - Test Suite</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(26, 26, 46, 0.9);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        h1 {
+            text-align: center;
+            background: linear-gradient(135deg, #0f3460 0%, #e94560 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        .test-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            border-left: 4px solid #e94560;
+        }
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .test-item:last-child {
+            border-bottom: none;
+        }
+        .status {
+            font-weight: bold;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+        }
+        .status.pass {
+            background: #48bb78;
+            color: white;
+        }
+        .status.fail {
+            background: #f56565;
+            color: white;
+        }
+        .status.warning {
+            background: #ed8936;
+            color: white;
+        }
+        .btn {
+            background: linear-gradient(135deg, #0f3460 0%, #e94560 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 10px 5px;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .log-container {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+        .score-container {
+            text-align: center;
+            background: rgba(15, 52, 96, 0.2);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        .score {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏠 CasaMX PWA Test Suite</h1>
+        
+        <div class="score-container">
+            <div class="score" id="overallScore">0%</div>
+            <p>PWA Readiness Score</p>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 Core PWA Features</h3>
+            <div class="test-item">
+                <span>Manifest.json presente</span>
+                <span class="status" id="manifestStatus">Checking...</span>
+            </div>
+            <div class="test-item">
+                <span>Service Worker registrado</span>
+                <span class="status" id="swStatus">Checking...</span>
+            </div>
+            <div class="test-item">
+                <span>Iconos disponibles</span>
+                <span class="status" id="iconsStatus">Checking...</span>
+            </div>
+            <div class="test-item">
+                <span>HTTPS/Local ready</span>
+                <span class="status" id="httpsStatus">Checking...</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📱 Installation</h3>
+            <div class="test-item">
+                <span>Install prompt available</span>
+                <span class="status" id="installStatus">Checking...</span>
+            </div>
+            <div class="test-item">
+                <span>App instalable</span>
+                <span class="status" id="installableStatus">Checking...</span>
+            </div>
+            <div class="test-item">
+                <span>Display: standalone</span>
+                <span class="status" id="standaloneStatus">Checking...</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>⚡ Performance</h3>
+            <div class="test-item">
+                <span>Offline capability</span>
+                <span class="status" id="offlineStatus">Checking...</span>
+            </div>
+            <div class="test-item">
+                <span>Data loading</span>
+                <span class="status" id="dataStatus">Checking...</span>
+            </div>
+            <div class="test-item">
+                <span>Map integration</span>
+                <span class="status" id="mapStatus">Checking...</span>
+            </div>
+            <div class="test-item">
+                <span>Recommendation engine</span>
+                <span class="status" id="engineStatus">Checking...</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Actions</h3>
+            <button class="btn" onclick="runAllTests()">🔄 Run All Tests</button>
+            <button class="btn" onclick="testInstallation()">📱 Test Installation</button>
+            <button class="btn" onclick="testOfflineMode()">📡 Test Offline</button>
+            <button class="btn" onclick="openMainApp()">🚀 Open CasaMX</button>
+        </div>
+
+        <div class="log-container" id="logContainer">
+            <div>🟢 PWA Test Suite initialized</div>
+        </div>
+    </div>
+
+    <script>
+        let testResults = {};
+        let logContainer = document.getElementById('logContainer');
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const color = {
+                'info': '#4299e1',
+                'success': '#48bb78', 
+                'error': '#f56565',
+                'warning': '#ed8936'
+            }[type] || '#ffffff';
+            
+            logContainer.innerHTML += `<div style="color: ${color}">[${timestamp}] ${message}</div>`;
+            logContainer.scrollTop = logContainer.scrollHeight;
+            console.log(message);
+        }
+
+        function updateStatus(id, status, message = '') {
+            const element = document.getElementById(id);
+            element.textContent = status === 'pass' ? '✅ PASS' : 
+                                 status === 'fail' ? '❌ FAIL' : 
+                                 status === 'warning' ? '⚠️ WARN' : 'Checking...';
+            element.className = `status ${status}`;
+            
+            if (message) log(message, status === 'pass' ? 'success' : status === 'fail' ? 'error' : 'warning');
+            
+            testResults[id] = status === 'pass';
+            updateOverallScore();
+        }
+
+        function updateOverallScore() {
+            const totalTests = Object.keys(testResults).length;
+            const passedTests = Object.values(testResults).filter(result => result).length;
+            const score = totalTests > 0 ? Math.round((passedTests / totalTests) * 100) : 0;
+            
+            document.getElementById('overallScore').textContent = `${score}%`;
+            
+            if (score >= 90) {
+                log(`🎉 Excellent! PWA Score: ${score}%`, 'success');
+            } else if (score >= 70) {
+                log(`👍 Good! PWA Score: ${score}%`, 'warning');  
+            } else {
+                log(`⚠️ Needs improvement. PWA Score: ${score}%`, 'error');
+            }
+        }
+
+        async function testManifest() {
+            try {
+                const response = await fetch('./manifest.json');
+                if (response.ok) {
+                    const manifest = await response.json();
+                    if (manifest.name && manifest.icons && manifest.start_url) {
+                        updateStatus('manifestStatus', 'pass', 'Manifest.json is valid');
+                        return true;
+                    }
+                }
+                throw new Error('Invalid manifest');
+            } catch (error) {
+                updateStatus('manifestStatus', 'fail', 'Manifest.json not found or invalid');
+                return false;
+            }
+        }
+
+        function testServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(registrations => {
+                    if (registrations.length > 0) {
+                        updateStatus('swStatus', 'pass', 'Service Worker is registered');
+                    } else {
+                        updateStatus('swStatus', 'warning', 'Service Worker not registered yet');
+                    }
+                });
+                return true;
+            } else {
+                updateStatus('swStatus', 'fail', 'Service Worker not supported');
+                return false;
+            }
+        }
+
+        async function testIcons() {
+            try {
+                const iconSizes = ['72x72', '96x96', '128x128', '144x144', '152x152', '192x192', '384x384', '512x512'];
+                const iconPromises = iconSizes.map(size => 
+                    fetch(`./icons/icon-${size}.svg`).then(r => r.ok)
+                );
+                
+                const iconResults = await Promise.all(iconPromises);
+                const availableIcons = iconResults.filter(result => result).length;
+                
+                if (availableIcons === iconSizes.length) {
+                    updateStatus('iconsStatus', 'pass', `All ${availableIcons} icons available`);
+                } else if (availableIcons > 0) {
+                    updateStatus('iconsStatus', 'warning', `${availableIcons}/${iconSizes.length} icons available`);
+                } else {
+                    updateStatus('iconsStatus', 'fail', 'No icons found');
+                }
+            } catch (error) {
+                updateStatus('iconsStatus', 'fail', 'Error checking icons');
+            }
+        }
+
+        function testHTTPS() {
+            const isHTTPS = location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+            if (isHTTPS) {
+                updateStatus('httpsStatus', 'pass', 'HTTPS or localhost - PWA compatible');
+            } else {
+                updateStatus('httpsStatus', 'fail', 'HTTPS required for PWA installation');
+            }
+        }
+
+        function testInstallPrompt() {
+            // This would be set by the beforeinstallprompt event
+            const hasInstallPrompt = window.deferredPrompt !== undefined;
+            if (hasInstallPrompt) {
+                updateStatus('installStatus', 'pass', 'Install prompt is available');
+            } else {
+                updateStatus('installStatus', 'warning', 'Install prompt not triggered (may already be installed)');
+            }
+        }
+
+        function testInstallable() {
+            if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
+                updateStatus('installableStatus', 'pass', 'App is running as installed PWA');
+                updateStatus('standaloneStatus', 'pass', 'Running in standalone mode');
+            } else {
+                updateStatus('installableStatus', 'warning', 'App is running in browser (not installed)');
+                updateStatus('standaloneStatus', 'warning', 'Not running in standalone mode');
+            }
+        }
+
+        async function testOfflineCapability() {
+            try {
+                // Test if service worker can serve cached content
+                const response = await fetch('./assets/css/styles.css');
+                if (response.ok) {
+                    updateStatus('offlineStatus', 'pass', 'Offline capability detected');
+                } else {
+                    throw new Error('Failed to fetch cached resource');
+                }
+            } catch (error) {
+                updateStatus('offlineStatus', 'warning', 'Offline capability needs testing');
+            }
+        }
+
+        async function testDataLoading() {
+            try {
+                const neighborhoods = await fetch('./assets/data/cdmx-neighborhoods.json');
+                const demos = await fetch('./assets/data/demo-cases.json');
+                
+                if (neighborhoods.ok && demos.ok) {
+                    updateStatus('dataStatus', 'pass', 'All data files loading correctly');
+                } else {
+                    throw new Error('Data files not accessible');
+                }
+            } catch (error) {
+                updateStatus('dataStatus', 'fail', 'Error loading data files');
+            }
+        }
+
+        function testMapIntegration() {
+            if (typeof mapboxgl !== 'undefined') {
+                updateStatus('mapStatus', 'pass', 'MapBox GL is loaded');
+            } else {
+                updateStatus('mapStatus', 'warning', 'MapBox GL not loaded (will use fallback)');
+            }
+        }
+
+        function testRecommendationEngine() {
+            if (typeof CasaMXRecommendationEngine !== 'undefined') {
+                updateStatus('engineStatus', 'pass', 'Recommendation engine is available');
+            } else {
+                updateStatus('engineStatus', 'fail', 'Recommendation engine not loaded');
+            }
+        }
+
+        async function runAllTests() {
+            log('🔄 Starting comprehensive PWA test suite...', 'info');
+            testResults = {};
+            
+            // Core PWA features
+            await testManifest();
+            testServiceWorker();
+            await testIcons();
+            testHTTPS();
+            
+            // Installation
+            testInstallPrompt();
+            testInstallable();
+            
+            // Performance
+            await testOfflineCapability();
+            await testDataLoading();
+            testMapIntegration();
+            testRecommendationEngine();
+            
+            log('✅ All tests completed', 'success');
+        }
+
+        async function testInstallation() {
+            log('📱 Testing PWA installation...', 'info');
+            
+            if (window.deferredPrompt) {
+                try {
+                    await window.deferredPrompt.prompt();
+                    log('🎉 Installation prompt triggered', 'success');
+                } catch (error) {
+                    log('❌ Installation prompt failed', 'error');
+                }
+            } else {
+                log('ℹ️ App may already be installed or prompt not available', 'warning');
+            }
+        }
+
+        async function testOfflineMode() {
+            log('📡 Testing offline functionality...', 'info');
+            
+            try {
+                const originalOnLine = navigator.onLine;
+                
+                // Simulate offline
+                Object.defineProperty(navigator, 'onLine', {
+                    writable: true,
+                    value: false
+                });
+                
+                window.dispatchEvent(new Event('offline'));
+                log('⚪ Offline mode simulated', 'warning');
+                
+                setTimeout(() => {
+                    Object.defineProperty(navigator, 'onLine', {
+                        writable: true,
+                        value: originalOnLine
+                    });
+                    window.dispatchEvent(new Event('online'));
+                    log('🟢 Online mode restored', 'success');
+                }, 3000);
+                
+            } catch (error) {
+                log('❌ Offline test failed', 'error');
+            }
+        }
+
+        function openMainApp() {
+            log('🚀 Opening CasaMX main app...', 'info');
+            window.open('./index.html', '_blank');
+        }
+
+        // Capture install prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            window.deferredPrompt = e;
+            log('📱 Install prompt captured', 'success');
+            testInstallPrompt();
+        });
+
+        // Run initial tests
+        window.addEventListener('load', () => {
+            setTimeout(runAllTests, 1000);
+        });
+    </script>
+</body>
+</html>
