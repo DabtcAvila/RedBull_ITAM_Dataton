@@ -1,0 +1,23 @@
+{
+  "name": "casamx-final",
+  "static_sites": [
+    {
+      "name": "casamx-frontend",
+      "source_dir": "/",
+      "github": {
+        "repo": "DabtcAvila/RedBull_ITAM_Dataton",
+        "branch": "main",
+        "deploy_on_push": true
+      },
+      "build_command": "",
+      "output_dir": "/",
+      "index_document": "index.html"
+    }
+  ],
+  "domains": [
+    {
+      "domain": "casamx.app",
+      "type": "PRIMARY"
+    }
+  ]
+}

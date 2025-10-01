@@ -1,0 +1,31 @@
+{
+  "name": "casamx-dataton-itam",
+  "static_sites": [
+    {
+      "name": "casamx-frontend",
+      "source_dir": "/",
+      "github": {
+        "repo": "DabtcAvila/RedBull_ITAM_Dataton",
+        "branch": "main",
+        "deploy_on_push": true
+      },
+      "build_command": "",
+      "output_dir": "/",
+      "index_document": "index.html",
+      "error_document": "index.html",
+      "routes": [
+        {
+          "path": "/"
+        }
+      ]
+    }
+  ],
+  "domains": [
+    {
+      "domain": "casamx.app",
+      "type": "PRIMARY",
+      "wildcard": false,
+      "zone": "casamx.app"
+    }
+  ]
+}

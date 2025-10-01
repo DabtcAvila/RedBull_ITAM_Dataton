@@ -1,0 +1,41 @@
+{
+  "name": "casamx-simple",
+  "services": [
+    {
+      "name": "web",
+      "source_dir": "/",
+      "github": {
+        "repo": "DabtcAvila/RedBull_ITAM_Dataton",
+        "branch": "main",
+        "deploy_on_push": true
+      },
+      "build_command": "",
+      "run_command": "python3 casamx_server_simple.py",
+      "environment_slug": "python",
+      "instance_count": 1,
+      "instance_size_slug": "apps-s-1vcpu-1gb",
+      "http_port": 8080,
+      "routes": [
+        {
+          "path": "/"
+        }
+      ],
+      "health_check": {
+        "http_path": "/health"
+      },
+      "envs": [
+        {
+          "key": "PORT",
+          "value": "8080",
+          "scope": "RUN_TIME"
+        }
+      ]
+    }
+  ],
+  "domains": [
+    {
+      "domain": "casamx.app",
+      "type": "PRIMARY"
+    }
+  ]
+}
