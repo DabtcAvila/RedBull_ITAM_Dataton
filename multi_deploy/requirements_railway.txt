@@ -1,0 +1,63 @@
+# RAILWAY OPTIMIZED REQUIREMENTS - CASAMX
+# Full-featured deployment with all capabilities
+
+# Core Streamlit (CRITICAL)
+streamlit==1.28.1
+
+# Essential data processing
+pandas==2.1.4
+numpy==1.24.3
+
+# Essential visualization
+plotly==5.17.0
+folium==0.15.1
+streamlit-folium==0.15.0
+
+# Core utilities
+python-dateutil==2.8.2
+pytz==2023.3
+requests==2.31.0
+PyYAML==6.0.1
+python-dotenv==1.0.0
+
+# Machine Learning (full capability)
+scikit-learn==1.3.2
+scipy==1.11.4
+joblib==1.3.2
+
+# Additional visualization
+matplotlib==3.8.2
+seaborn==0.13.0
+
+# Geographic data processing
+geopandas==0.14.1
+shapely==2.0.2
+geopy==2.4.1
+
+# Database support
+sqlalchemy==2.0.23
+
+# Data handling
+openpyxl==3.1.2
+
+# Performance and production
+gunicorn==21.2.0
+whitenoise==6.6.0
+psutil==5.9.6
+
+# Background processing
+aiohttp==3.9.1
+
+# Image processing
+Pillow==10.1.0
+
+# Type hints
+typing-extensions==4.8.0
+pydantic==2.5.0
+
+# PDF generation (for reports)
+reportlab==4.0.7
+
+# Additional utilities
+click==8.1.7
+tqdm==4.66.1

@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CasaMX - Recomendador Inteligente de Vivienda CDMX</title>
+    <meta name="description" content="Encuentra tu hogar ideal en CDMX con recomendaciones inteligentes basadas en tus preferencias">
+    <meta name="keywords" content="vivienda, CDMX, casa, departamento, renta, compra, Mexico">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://casamx.store/">
+    <meta property="og:title" content="CasaMX - Encuentra tu hogar ideal en CDMX">
+    <meta property="og:description" content="Recomendador inteligente de vivienda para Ciudad de México">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://casamx.store/">
+    <meta property="twitter:title" content="CasaMX - Encuentra tu hogar ideal en CDMX">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #3730A3;
+            --secondary: #06B6D4;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Form Card */
+        .recommendation-form {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-full {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* Results */
+        .results-container {
+            margin-top: 2rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInScale 0.5s ease-out;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .property-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .property-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 0.5rem;
+        }
+
+        .property-location {
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .property-scores {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: var(--gray-50);
+        }
+
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .score-label {
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .score-value {
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .score-excellent { background: var(--success); }
+        .score-good { background: var(--secondary); }
+        .score-fair { background: var(--warning); }
+        .score-poor { background: var(--danger); }
+
+        .property-details {
+            padding: 1.5rem;
+        }
+
+        .price-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 10px;
+            color: white;
+        }
+
+        .price-label {
+            font-weight: 600;
+        }
+
+        .price-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .amenities {
+            margin-top: 1rem;
+        }
+
+        .amenities h4 {
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .amenities-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .amenity-tag {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Map */
+        .map-container {
+            background: white;
+            border-radius: 20px;
+            padding: 1rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        #map {
+            height: 400px;
+            border-radius: 15px;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: white;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Hidden by default */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">CasaMX</a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#buscar">Buscar</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="hero" id="inicio">
+                <h1>Encuentra tu hogar ideal en CDMX</h1>
+                <p>Recomendaciones inteligentes basadas en tus preferencias de vida, trabajo y presupuesto</p>
+            </section>
+
+            <section class="recommendation-form" id="buscar">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: var(--gray-800);">
+                    Cuéntanos sobre tu estilo de vida
+                </h2>
+                
+                <form id="preferenceForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="budget">Presupuesto mensual (MXN)</label>
+                            <select class="form-control" id="budget" required>
+                                <option value="">Selecciona tu presupuesto</option>
+                                <option value="15000">$10,000 - $15,000</option>
+                                <option value="25000">$15,000 - $25,000</option>
+                                <option value="35000">$25,000 - $35,000</option>
+                                <option value="50000">$35,000 - $50,000</option>
+                                <option value="75000">$50,000 - $75,000</option>
+                                <option value="100000">$75,000+</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="workLocation">Zona de trabajo</label>
+                            <select class="form-control" id="workLocation" required>
+                                <option value="">¿Dónde trabajas?</option>
+                                <option value="polanco">Polanco</option>
+                                <option value="santa_fe">Santa Fe</option>
+                                <option value="centro">Centro Histórico</option>
+                                <option value="roma_condesa">Roma/Condesa</option>
+                                <option value="insurgentes">Insurgentes</option>
+                                <option value="periferico">Periférico</option>
+                                <option value="home_office">Home Office</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lifestyle">Estilo de vida</label>
+                            <select class="form-control" id="lifestyle" required>
+                                <option value="">¿Cómo te describes?</option>
+                                <option value="young_professional">Profesional joven</option>
+                                <option value="family">Familia con hijos</option>
+                                <option value="student">Estudiante</option>
+                                <option value="couple">Pareja</option>
+                                <option value="senior">Adulto mayor</option>
+                                <option value="single">Soltero/a independiente</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="priorities">Prioridades</label>
+                            <select class="form-control" id="priorities" required>
+                                <option value="">¿Qué es más importante?</option>
+                                <option value="transport">Transporte público</option>
+                                <option value="safety">Seguridad</option>
+                                <option value="amenities">Amenidades (restaurantes, tiendas)</option>
+                                <option value="price">Precio accesible</option>
+                                <option value="schools">Escuelas cercanas</option>
+                                <option value="parks">Parques y recreación</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        Obtener Recomendaciones Inteligentes
+                    </button>
+                </form>
+            </section>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Analizando las mejores opciones para ti...</p>
+            </div>
+
+            <section class="results-container hidden" id="resultsContainer">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: white;">
+                    Tus Recomendaciones Personalizadas
+                </h2>
+                <div class="results-grid" id="resultsGrid"></div>
+            </section>
+
+            <div class="map-container hidden" id="mapContainer">
+                <h3 style="margin-bottom: 1rem; color: var(--gray-800);">Ubicaciones en el mapa</h3>
+                <div id="map"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // CDMX Data embedded directly
+        const CDMX_DATA = {
+            "colonias": [
+                {
+                    "id": "col_001",
+                    "nombre": "Polanco",
+                    "alcaldia": "Miguel Hidalgo",
+                    "coordenadas": {"lat": 19.4326, "lon": -99.1954},
+                    "scores": {"seguridad": 9.2, "transporte": 8.8, "amenidades": 9.5, "precio": 3.2},
+                    "precios": {"renta_1br": 28000, "renta_2br": 45000, "renta_3br": 75000},
+                    "servicios": {
+                        "hospitales": ["Hospital Angeles Lomas", "ABC Medical Center"],
+                        "escuelas": ["Colegio Peterson", "Instituto Irlandés"],
+                        "parques": ["Parque Lincoln", "Parque América"],
+                        "restaurantes": 450
+                    },
+                    "transporte": {"metro_cercano": "Auditorio", "tiempo_centro": 25},
+                    "caracteristicas": {"nivel_socioeconomico": "A/B+", "tipo": "premium"}
+                },
+                {
+                    "id": "col_002",
+                    "nombre": "Roma Norte",
+                    "alcaldia": "Cuauhtémoc",
+                    "coordenadas": {"lat": 19.4145, "lon": -99.1653},
+                    "scores": {"seguridad": 8.5, "transporte": 9.0, "amenidades": 9.2, "precio": 4.8},
+                    "precios": {"renta_1br": 18000, "renta_2br": 28000, "renta_3br": 45000},
+                    "servicios": {
+                        "hospitales": ["Hospital General Dr. Manuel Gea González"],
+                        "escuelas": ["Colegio Franco Español", "Instituto Simón Bolívar"],
+                        "parques": ["Parque México", "Plaza Río de Janeiro"],
+                        "restaurantes": 380
+                    },
+                    "transporte": {"metro_cercano": "Insurgentes", "tiempo_centro": 15},
+                    "caracteristicas": {"nivel_socioeconomico": "A/B", "tipo": "trendy"}
+                },
+                {
+                    "id": "col_003",
+                    "nombre": "Condesa",
+                    "alcaldia": "Cuauhtémoc",
+                    "coordenadas": {"lat": 19.4106, "lon": -99.1719},
+                    "scores": {"seguridad": 8.3, "transporte": 8.7, "amenidades": 9.4, "precio": 4.5},
+                    "precios": {"renta_1br": 19000, "renta_2br": 30000, "renta_3br": 48000},
+                    "servicios": {
+                        "hospitales": ["Hospital Español"],
+                        "escuelas": ["Colegio Madrid", "Instituto Educativo Olinca"],
+                        "parques": ["Parque México", "Parque España"],
+                        "restaurantes": 420
+                    },
+                    "transporte": {"metro_cercano": "Patriotismo", "tiempo_centro": 18},
+                    "caracteristicas": {"nivel_socioeconomico": "A/B", "tipo": "trendy"}
+                },
+                {
+                    "id": "col_004",
+                    "nombre": "Santa Fe",
+                    "alcaldia": "Cuajimalpa de Morelos",
+                    "coordenadas": {"lat": 19.3598, "lon": -99.2599},
+                    "scores": {"seguridad": 9.0, "transporte": 7.5, "amenidades": 8.8, "precio": 2.8},
+                    "precios": {"renta_1br": 35000, "renta_2br": 55000, "renta_3br": 85000},
+                    "servicios": {
+                        "hospitales": ["Hospital Angeles Santa Fe", "Centro Médico ABC"],
+                        "escuelas": ["Colegio Británico", "Instituto Cumbres"],
+                        "parques": ["Parque La Mexicana"],
+                        "restaurantes": 280
+                    },
+                    "transporte": {"metro_cercano": "Observatorio + Metrobús", "tiempo_centro": 45},
+                    "caracteristicas": {"nivel_socioeconomico": "A+", "tipo": "business"}
+                },
+                {
+                    "id": "col_005",
+                    "nombre": "Del Valle",
+                    "alcaldia": "Benito Juárez",
+                    "coordenadas": {"lat": 19.3847, "lon": -99.1641},
+                    "scores": {"seguridad": 8.0, "transporte": 8.5, "amenidades": 8.2, "precio": 6.5},
+                    "precios": {"renta_1br": 15000, "renta_2br": 24000, "renta_3br": 38000},
+                    "servicios": {
+                        "hospitales": ["Hospital San Ángel Inn Universidad"],
+                        "escuelas": ["Colegio Cervantes", "Instituto Thomas Jefferson"],
+                        "parques": ["Parque Hundido"],
+                        "restaurantes": 220
+                    },
+                    "transporte": {"metro_cercano": "Zapata", "tiempo_centro": 25},
+                    "caracteristicas": {"nivel_socioeconomico": "B+", "tipo": "residential"}
+                },
+                {
+                    "id": "col_006",
+                    "nombre": "Coyoacán",
+                    "alcaldia": "Coyoacán",
+                    "coordenadas": {"lat": 19.3467, "lon": -99.1639},
+                    "scores": {"seguridad": 7.8, "transporte": 7.5, "amenidades": 8.7, "precio": 7.2},
+                    "precios": {"renta_1br": 13000, "renta_2br": 22000, "renta_3br": 35000},
+                    "servicios": {
+                        "hospitales": ["Hospital Ángeles Pedregal"],
+                        "escuelas": ["UNAM Ciudad Universitaria", "Colegio Madrid"],
+                        "parques": ["Parque Centenario", "Jardín Hidalgo"],
+                        "restaurantes": 190
+                    },
+                    "transporte": {"metro_cercano": "Coyoacán", "tiempo_centro": 35},
+                    "caracteristicas": {"nivel_socioeconomico": "B", "tipo": "cultural"}
+                },
+                {
+                    "id": "col_007",
+                    "nombre": "Narvarte",
+                    "alcaldia": "Benito Juárez",
+                    "coordenadas": {"lat": 19.3926, "lon": -99.1497},
+                    "scores": {"seguridad": 7.5, "transporte": 9.2, "amenidades": 7.8, "precio": 7.8},
+                    "precios": {"renta_1br": 12000, "renta_2br": 19000, "renta_3br": 30000},
+                    "servicios": {
+                        "hospitales": ["Hospital Médica Sur"],
+                        "escuelas": ["Colegio Guadalupe", "Instituto Pedagógico Anglo Español"],
+                        "parques": ["Parque de los Venados"],
+                        "restaurantes": 165
+                    },
+                    "transporte": {"metro_cercano": "Etiopia", "tiempo_centro": 20},
+                    "caracteristicas": {"nivel_socioeconomico": "B", "tipo": "residential"}
+                },
+                {
+                    "id": "col_008",
+                    "nombre": "Doctores",
+                    "alcaldia": "Cuauhtémoc",
+                    "coordenadas": {"lat": 19.4209, "lon": -99.1431},
+                    "scores": {"seguridad": 6.5, "transporte": 9.5, "amenidades": 6.8, "precio": 8.5},
+                    "precios": {"renta_1br": 8000, "renta_2br": 14000, "renta_3br": 22000},
+                    "servicios": {
+                        "hospitales": ["Hospital General de México"],
+                        "escuelas": ["Escuela Nacional Preparatoria 2"],
+                        "parques": ["Parque de la Ciudadela"],
+                        "restaurantes": 120
+                    },
+                    "transporte": {"metro_cercano": "Doctores", "tiempo_centro": 12},
+                    "caracteristicas": {"nivel_socioeconomico": "C+", "tipo": "accessible"}
+                }
+            ]
+        };
+
+        // Recommendation Engine
+        class RecommendationEngine {
+            constructor(data) {
+                this.data = data;
+            }
+
+            getRecommendations(preferences) {
+                const { budget, workLocation, lifestyle, priorities } = preferences;
+                
+                let scored = this.data.colonias.map(colonia => {
+                    let score = 0;
+                    const reasons = [];
+
+                    // Budget scoring
+                    const avgRent = (colonia.precios.renta_1br + colonia.precios.renta_2br) / 2;
+                    const budgetMatch = this.calculateBudgetScore(avgRent, parseInt(budget));
+                    score += budgetMatch.score * 0.3;
+                    if (budgetMatch.reason) reasons.push(budgetMatch.reason);
+
+                    // Work location scoring
+                    const transportScore = this.calculateTransportScore(colonia, workLocation);
+                    score += transportScore.score * 0.25;
+                    if (transportScore.reason) reasons.push(transportScore.reason);
+
+                    // Lifestyle scoring
+                    const lifestyleScore = this.calculateLifestyleScore(colonia, lifestyle);
+                    score += lifestyleScore.score * 0.25;
+                    if (lifestyleScore.reason) reasons.push(lifestyleScore.reason);
+
+                    // Priorities scoring
+                    const priorityScore = this.calculatePriorityScore(colonia, priorities);
+                    score += priorityScore.score * 0.2;
+                    if (priorityScore.reason) reasons.push(priorityScore.reason);
+
+                    return {
+                        ...colonia,
+                        matchScore: Math.round(score * 10) / 10,
+                        reasons: reasons
+                    };
+                });
+
+                return scored
+                    .filter(colonia => colonia.matchScore > 5)
+                    .sort((a, b) => b.matchScore - a.matchScore)
+                    .slice(0, 4);
+            }
+
+            calculateBudgetScore(rent, budget) {
+                const ratio = rent / budget;
+                if (ratio <= 0.8) return { score: 10, reason: "Excelente ajuste presupuestal" };
+                if (ratio <= 1.0) return { score: 8, reason: "Buen ajuste presupuestal" };
+                if (ratio <= 1.2) return { score: 6, reason: "Presupuesto ajustado" };
+                return { score: 3, reason: "Sobre presupuesto" };
+            }
+
+            calculateTransportScore(colonia, workLocation) {
+                const transportMap = {
+                    'polanco': colonia.nombre === 'Polanco' ? 10 : colonia.scores.transporte,
+                    'santa_fe': colonia.nombre === 'Santa Fe' ? 10 : Math.max(0, 10 - colonia.transporte.tiempo_centro / 10),
+                    'centro': Math.max(0, 10 - colonia.transporte.tiempo_centro / 5),
+                    'roma_condesa': ['Roma Norte', 'Condesa'].includes(colonia.nombre) ? 10 : colonia.scores.transporte,
+                    'home_office': 8
+                };
+
+                const score = transportMap[workLocation] || 7;
+                const reason = score >= 8 ? "Excelente conectividad" : "Buena conectividad";
+                return { score, reason };
+            }
+
+            calculateLifestyleScore(colonia, lifestyle) {
+                const lifestyleMap = {
+                    'young_professional': ['Roma Norte', 'Condesa', 'Polanco'].includes(colonia.nombre) ? 10 : 7,
+                    'family': colonia.servicios.escuelas.length > 1 ? 9 : 6,
+                    'student': colonia.caracteristicas.tipo === 'accessible' ? 9 : 6,
+                    'couple': ['Roma Norte', 'Condesa', 'Del Valle'].includes(colonia.nombre) ? 9 : 7,
+                    'single': colonia.scores.amenidades >= 8 ? 9 : 6
+                };
+
+                const score = lifestyleMap[lifestyle] || 7;
+                const reason = score >= 8 ? "Ideal para tu estilo de vida" : "Compatible con tu estilo";
+                return { score, reason };
+            }
+
+            calculatePriorityScore(colonia, priority) {
+                const priorityMap = {
+                    'transport': { score: colonia.scores.transporte, reason: "Excelente transporte público" },
+                    'safety': { score: colonia.scores.seguridad, reason: "Zona muy segura" },
+                    'amenidades': { score: colonia.scores.amenidades, reason: "Gran variedad de amenidades" },
+                    'price': { score: colonia.scores.precio, reason: "Excelente relación calidad-precio" },
+                    'schools': { score: colonia.servicios.escuelas.length * 2, reason: "Excelentes opciones educativas" },
+                    'parks': { score: colonia.servicios.parques.length * 2.5, reason: "Muchas áreas verdes" }
+                };
+
+                return priorityMap[priority] || { score: 7, reason: "Cumple tus requisitos" };
+            }
+        }
+
+        // App Initialization
+        let map;
+        let recommendationEngine;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            recommendationEngine = new RecommendationEngine(CDMX_DATA);
+            initializeForm();
+        });
+
+        function initializeForm() {
+            const form = document.getElementById('preferenceForm');
+            form.addEventListener('submit', handleFormSubmit);
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const preferences = {
+                budget: document.getElementById('budget').value,
+                workLocation: document.getElementById('workLocation').value,
+                lifestyle: document.getElementById('lifestyle').value,
+                priorities: document.getElementById('priorities').value
+            };
+
+            showLoading();
+            
+            // Simulate AI processing time
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            const recommendations = recommendationEngine.getRecommendations(preferences);
+            displayResults(recommendations);
+            initializeMap(recommendations);
+            
+            hideLoading();
+        }
+
+        function showLoading() {
+            document.getElementById('loading').classList.add('show');
+            document.getElementById('resultsContainer').classList.add('hidden');
+            document.getElementById('mapContainer').classList.add('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').classList.remove('show');
+            document.getElementById('resultsContainer').classList.remove('hidden');
+            document.getElementById('mapContainer').classList.remove('hidden');
+            
+            // Smooth scroll to results
+            document.getElementById('resultsContainer').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        function displayResults(recommendations) {
+            const grid = document.getElementById('resultsGrid');
+            grid.innerHTML = '';
+
+            recommendations.forEach((colonia, index) => {
+                const card = createPropertyCard(colonia, index);
+                grid.appendChild(card);
+            });
+        }
+
+        function createPropertyCard(colonia, index) {
+            const card = document.createElement('div');
+            card.className = 'property-card';
+            card.style.animationDelay = `${index * 0.1}s`;
+
+            const getScoreClass = (score) => {
+                if (score >= 8.5) return 'score-excellent';
+                if (score >= 7) return 'score-good';
+                if (score >= 5.5) return 'score-fair';
+                return 'score-poor';
+            };
+
+            card.innerHTML = `
+                <div class="property-header">
+                    <h3 class="property-title">${colonia.nombre}</h3>
+                    <p class="property-location">${colonia.alcaldia}</p>
+                    <div style="margin-top: 1rem; padding: 0.5rem 1rem; background: linear-gradient(135deg, #10B981, #059669); color: white; border-radius: 25px; text-align: center; font-weight: 700;">
+                        Match: ${colonia.matchScore}/10
+                    </div>
+                </div>
+
+                <div class="property-scores">
+                    <div class="score-item">
+                        <span class="score-label">Seguridad</span>
+                        <span class="score-value ${getScoreClass(colonia.scores.seguridad)}">${colonia.scores.seguridad}</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label">Transporte</span>
+                        <span class="score-value ${getScoreClass(colonia.scores.transporte)}">${colonia.scores.transporte}</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label">Amenidades</span>
+                        <span class="score-value ${getScoreClass(colonia.scores.amenidades)}">${colonia.scores.amenidades}</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label">Precio</span>
+                        <span class="score-value ${getScoreClass(colonia.scores.precio)}">${colonia.scores.precio}</span>
+                    </div>
+                </div>
+
+                <div class="property-details">
+                    <div class="price-info">
+                        <div>
+                            <div class="price-label">1 Recámara</div>
+                            <div class="price-value">$${colonia.precios.renta_1br.toLocaleString()}</div>
+                        </div>
+                        <div>
+                            <div class="price-label">2 Recámaras</div>
+                            <div class="price-value">$${colonia.precios.renta_2br.toLocaleString()}</div>
+                        </div>
+                    </div>
+
+                    <div class="amenities">
+                        <h4>¿Por qué es perfecto para ti?</h4>
+                        <div class="amenities-list">
+                            ${colonia.reasons.map(reason => `<span class="amenity-tag">${reason}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="amenities" style="margin-top: 1rem;">
+                        <h4>Servicios destacados</h4>
+                        <div class="amenities-list">
+                            <span class="amenity-tag">${colonia.servicios.restaurantes} restaurantes</span>
+                            <span class="amenity-tag">${colonia.servicios.escuelas.length} escuelas</span>
+                            <span class="amenity-tag">${colonia.servicios.parques.length} parques</span>
+                            <span class="amenity-tag">Metro: ${colonia.transporte.metro_cercano}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function initializeMap(recommendations) {
+            if (map) {
+                map.remove();
+            }
+
+            map = L.map('map').setView([19.4326, -99.1332], 11);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add markers for recommendations
+            recommendations.forEach((colonia, index) => {
+                const marker = L.marker([colonia.coordenadas.lat, colonia.coordenadas.lon]).addTo(map);
+                
+                marker.bindPopup(`
+                    <div style="text-align: center;">
+                        <h3 style="margin: 0 0 10px 0; color: #4F46E5;">${colonia.nombre}</h3>
+                        <p style="margin: 0 0 5px 0;"><strong>Match:</strong> ${colonia.matchScore}/10</p>
+                        <p style="margin: 0 0 5px 0;"><strong>Desde:</strong> $${colonia.precios.renta_1br.toLocaleString()}</p>
+                        <p style="margin: 0;"><strong>Alcaldía:</strong> ${colonia.alcaldia}</p>
+                    </div>
+                `);
+            });
+
+            // Fit bounds to show all markers
+            if (recommendations.length > 0) {
+                const group = new L.featureGroup(map._layers);
+                map.fitBounds(group.getBounds().pad(0.1));
+            }
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

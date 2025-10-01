@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://casamx.store/sitemap.xml
+
+# Disallow sensitive paths
+Disallow: /admin/
+Disallow: /.netlify/
+Disallow: /api/
+
+# Allow main content
+Allow: /
+Allow: /buscar
+Allow: /nosotros
+Allow: /contacto

@@ -1,0 +1,10 @@
+# Netlify SPA redirects for CasaMX
+/*    /index.html   200
+
+# API redirects (if needed in future)
+/api/*  https://api.casamx.store/:splat  200
+
+# Security redirects
+/admin/*  /404.html  404
+/.env*  /404.html  404
+/config/*  /404.html  404

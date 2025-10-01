@@ -1,0 +1,11 @@
+# CasaMX Vercel Deployment - Minimal Dependencies
+# Optimized for fast deployment and cold start performance
+
+streamlit==1.28.1
+pandas==2.1.4
+numpy==1.24.3
+plotly==5.17.0
+
+# Essential for Streamlit functionality
+python-dateutil==2.8.2
+pytz==2023.3

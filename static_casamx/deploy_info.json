@@ -1,0 +1,15 @@
+{
+  "deployment_type": "static",
+  "created_at": "2025-10-01T00:31:38Z",
+  "files": [
+    "index.html",
+    "data.js", 
+    "app.js",
+    ".htaccess",
+    "robots.txt",
+    "sitemap.xml"
+  ],
+  "deployment_ready": true,
+  "zero_dependencies": true,
+  "cdn_ready": true
+}

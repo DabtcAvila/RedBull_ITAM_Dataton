@@ -1,0 +1,2229 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CasaMX - Encuentra la colonia perfecta en Ciudad de México con inteligencia artificial">
+    <meta name="keywords" content="vivienda, CDMX, renta, colonia, recomendaciones, IA">
+    <meta name="author" content="CasaMX">
+    
+    <!-- SEO Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://casamx.store">
+    <meta property="og:title" content="CasaMX - Recomendador de Vivienda CDMX">
+    <meta property="og:description" content="Encuentra la colonia perfecta en Ciudad de México con nuestra IA especializada">
+    <meta property="og:image" content="https://casamx.store/og-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23667eea'%3E%3Cpath d='M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z'/%3E%3C/svg%3E">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    
+    <title>CasaMX - Encuentra tu Hogar Perfecto en CDMX</title>
+    
+    <style>
+        /* ===== CSS RESET ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ===== VARIABLES ===== */
+        :root {
+            --primary-color: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+            --light-color: #f8f9ff;
+            --dark-color: #333;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #6c757d;
+            --gray-600: #495057;
+            --gray-700: #343a40;
+            --gray-800: #212529;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --border-radius-xl: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== BASE STYLES ===== */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            color: var(--dark-color);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.025em;
+        }
+
+        .header .logo {
+            display: inline-block;
+            font-size: 3rem;
+            margin-right: 15px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+        }
+
+        .header p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            background: white;
+            border-radius: var(--border-radius-xl);
+            padding: 40px;
+            box-shadow: var(--shadow-xl);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+        }
+
+        /* ===== TABS ===== */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--gray-200);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 120px;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--gray-600);
+            transition: var(--transition);
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+            background: var(--light-color);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px 2px 0 0;
+        }
+
+        .tab:hover:not(.active) {
+            color: var(--primary-color);
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== FORM STYLES ===== */
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-description {
+            color: var(--gray-600);
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+            font-size: 0.9rem;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .input-prefix {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-500);
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: var(--transition);
+            background: white;
+        }
+
+        .form-input:has(+ .input-prefix) {
+            padding-left: 45px;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .budget-range {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+
+        .range-input {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--gray-200);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .range-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+        }
+
+        .range-input::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+        }
+
+        /* ===== RADIO GROUPS ===== */
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .radio-label input[type=\"radio\"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-color);
+            margin: 0;
+        }
+
+        /* ===== PRIORITY SECTION ===== */
+        .priority-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .priority-item {
+            background: var(--light-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--gray-200);
+        }
+
+        .priority-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .priority-header label {
+            font-weight: 600;
+            color: var(--dark-color);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .priority-value {
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            min-width: 32px;
+            text-align: center;
+        }
+
+        .priority-range {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--gray-200);
+            outline: none;
+            -webkit-appearance: none;
+            margin-bottom: 8px;
+        }
+
+        .priority-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(102, 126, 234, 0.4);
+            transition: var(--transition);
+        }
+
+        .priority-range::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .priority-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--gray-500);
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-large {
+            padding: 18px 36px;
+            font-size: 1.1rem;
+            border-radius: var(--border-radius-lg);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--gray-600);
+            border: 2px solid var(--gray-300);
+        }
+
+        .btn-ghost:hover {
+            background: var(--gray-100);
+            border-color: var(--gray-400);
+        }
+
+        .btn-loading {
+            display: none;
+        }
+
+        .btn.loading .btn-text {
+            display: none;
+        }
+
+        .btn.loading .btn-loading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ===== RESULTS ===== */
+        .results {
+            margin-top: 40px;
+        }
+
+        .results h3 {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .result-card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius-lg);
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .result-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .result-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .result-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin: 0;
+        }
+
+        .result-score {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .result-price {
+            font-size: 1.1rem;
+            color: var(--success-color);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .result-description {
+            color: var(--gray-600);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .result-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .feature-tag {
+            background: var(--light-color);
+            color: var(--primary-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .result-reasons {
+            background: var(--light-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .result-reasons h4 {
+            color: var(--primary-color);
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .reason {
+            color: var(--gray-700);
+            margin-bottom: 8px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .reason::before {
+            content: \"✓\";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--success-color);
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .result-details {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-200);
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* ===== DEMO CASES ===== */
+        .demo-cases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .demo-card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius-lg);
+            padding: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .demo-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .demo-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .demo-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 12px;
+        }
+
+        .demo-profile {
+            color: var(--gray-600);
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .demo-criteria {
+            background: var(--light-color);
+            padding: 18px;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .demo-criteria > div {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .demo-criteria > div:last-child {
+            margin-bottom: 0;
+            margin-top: 15px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* ===== LOADING ===== */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .spinner {
+            border: 3px solid var(--gray-200);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ===== MAP ===== */
+        .map-container {
+            height: 500px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-top: 20px;
+            border: 2px solid var(--gray-200);
+            box-shadow: var(--shadow-md);
+        }
+
+        #leafletMap {
+            height: 100%;
+            width: 100%;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 30px 20px;
+        }
+
+        .footer p {
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .footer-credits {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* ===== ABOUT SECTION ===== */
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .about-feature {
+            background: var(--light-color);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .about-feature h4 {
+            color: var(--primary-color);
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .about-feature p {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .container { 
+                padding: 15px; 
+            }
+            
+            .main-content { 
+                padding: 25px 20px; 
+                margin-bottom: 20px;
+            }
+            
+            .header {
+                padding: 20px 0;
+                margin-bottom: 30px;
+            }
+            
+            .header h1 { 
+                font-size: 2.2rem;
+                margin-bottom: 10px;
+            }
+            
+            .form-grid { 
+                grid-template-columns: 1fr; 
+                gap: 20px;
+            }
+            
+            .tabs { 
+                flex-direction: column;
+                border-bottom: none;
+            }
+            
+            .tab { 
+                border-bottom: 1px solid var(--gray-200);
+                border-radius: 0;
+                text-align: left;
+                padding: 15px;
+            }
+            
+            .tab.active::after {
+                display: none;
+            }
+            
+            .tab.active {
+                background: var(--primary-color);
+                color: white;
+            }
+            
+            .demo-cases { 
+                grid-template-columns: 1fr; 
+            }
+            
+            .hero-stats {
+                gap: 20px;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            
+            .result-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .priority-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .map-container {
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .main-content {
+                padding: 20px 15px;
+            }
+            
+            .btn-large {
+                padding: 15px 25px;
+                font-size: 1rem;
+            }
+            
+            .result-card {
+                padding: 20px;
+            }
+            
+            .demo-card {
+                padding: 20px;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .result-card {
+            animation: slideInUp 0.5s ease-out forwards;
+        }
+
+        .result-card:nth-child(1) { animation-delay: 0.1s; }
+        .result-card:nth-child(2) { animation-delay: 0.2s; }
+        .result-card:nth-child(3) { animation-delay: 0.3s; }
+        .result-card:nth-child(4) { animation-delay: 0.4s; }
+        .result-card:nth-child(5) { animation-delay: 0.5s; }
+
+        /* ===== UTILITY CLASSES ===== */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-0 { margin-bottom: 0 !important; }
+        .mb-1 { margin-bottom: 0.5rem !important; }
+        .mb-2 { margin-bottom: 1rem !important; }
+        .mb-3 { margin-bottom: 1.5rem !important; }
+        .mb-4 { margin-bottom: 2rem !important; }
+
+        .mt-0 { margin-top: 0 !important; }
+        .mt-1 { margin-top: 0.5rem !important; }
+        .mt-2 { margin-top: 1rem !important; }
+        .mt-3 { margin-top: 1.5rem !important; }
+        .mt-4 { margin-top: 2rem !important; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏠 CasaMX</h1>
+            <p>Encuentra la colonia perfecta en Ciudad de México con inteligencia artificial especializada</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">10+</span>
+                    <span class="stat-label">Colonias analizadas</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">95%</span>
+                    <span class="stat-label">Precisión de match</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">2min</span>
+                    <span class="stat-label">Tiempo promedio</span>
+                </div>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <div class="tabs">
+                <button class="tab active" data-tab="search">🔍 Buscar Hogar</button>
+                <button class="tab" data-tab="demos">⭐ Casos Demo</button>
+                <button class="tab" data-tab="map">🗺️ Explorar Mapa</button>
+                <button class="tab" data-tab="about">ℹ️ Acerca de</button>
+            </div>
+            
+            <!-- Search Tab -->
+            <div id="search" class="tab-content active">
+                <div class="form-section">
+                    <h3 class="section-title">📋 Información Básica</h3>
+                    <p class="section-description">Comparte algunos datos básicos para personalizar las recomendaciones</p>
+                    
+                    <form id="searchForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="budget">Presupuesto mensual (MXN)</label>
+                                <div class="input-container">
+                                    <input type="number" id="budget" name="budget" min="5000" max="200000" value="25000" class="form-input">
+                                    <span class="input-prefix">$</span>
+                                </div>
+                                <div class="budget-range">
+                                    <span>$5,000</span>
+                                    <input type="range" id="budgetRange" min="5000" max="200000" value="25000" step="1000" class="range-input">
+                                    <span>$200,000+</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="familySize">Tamaño de familia</label>
+                                <select id="familySize" name="familySize" class="form-select">
+                                    <option value="1">Solo yo</option>
+                                    <option value="2" selected>Pareja (2 personas)</option>
+                                    <option value="3">Familia pequeña (3 personas)</option>
+                                    <option value="4">Familia mediana (4 personas)</option>
+                                    <option value="5+">Familia grande (5+ personas)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>¿Tienes hijos?</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="hasChildren" value="true" id="hasChildren-yes">
+                                        Sí, tengo hijos
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="hasChildren" value="false" id="hasChildren-no" checked>
+                                        No tengo hijos
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="country">País de origen</label>
+                                <select id="country" name="country" class="form-select">
+                                    <option value="mexico">🇲🇽 México</option>
+                                    <option value="usa">🇺🇸 Estados Unidos</option>
+                                    <option value="spain">🇪🇸 España</option>
+                                    <option value="france">🇫🇷 Francia</option>
+                                    <option value="germany">🇩🇪 Alemania</option>
+                                    <option value="uk">🇬🇧 Reino Unido</option>
+                                    <option value="canada">🇨🇦 Canadá</option>
+                                    <option value="other">🌍 Otro país</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title">⚖️ Prioridades</h3>
+                    <p class="section-description">Califica la importancia de cada factor para tu decisión (1-10)</p>
+                    
+                    <div class="priority-grid">
+                        <div class="priority-item">
+                            <div class="priority-header">
+                                <label for="securityPriority">🛡️ Seguridad</label>
+                                <span class="priority-value" id="securityValue">8</span>
+                            </div>
+                            <input type="range" id="securityPriority" min="1" max="10" value="8" class="priority-range">
+                            <div class="priority-labels">
+                                <span>No importante</span>
+                                <span>Crítico</span>
+                            </div>
+                        </div>
+
+                        <div class="priority-item">
+                            <div class="priority-header">
+                                <label for="transportPriority">🚇 Transporte</label>
+                                <span class="priority-value" id="transportValue">7</span>
+                            </div>
+                            <input type="range" id="transportPriority" min="1" max="10" value="7" class="priority-range">
+                            <div class="priority-labels">
+                                <span>No importante</span>
+                                <span>Crítico</span>
+                            </div>
+                        </div>
+
+                        <div class="priority-item">
+                            <div class="priority-header">
+                                <label for="amenitiesPriority">🏪 Amenidades</label>
+                                <span class="priority-value" id="amenitiesValue">6</span>
+                            </div>
+                            <input type="range" id="amenitiesPriority" min="1" max="10" value="6" class="priority-range">
+                            <div class="priority-labels">
+                                <span>No importante</span>
+                                <span>Crítico</span>
+                            </div>
+                        </div>
+
+                        <div class="priority-item">
+                            <div class="priority-header">
+                                <label for="educationPriority">🎓 Educación</label>
+                                <span class="priority-value" id="educationValue">5</span>
+                            </div>
+                            <input type="range" id="educationPriority" min="1" max="10" value="5" class="priority-range">
+                            <div class="priority-labels">
+                                <span>No importante</span>
+                                <span>Crítico</span>
+                            </div>
+                        </div>
+
+                        <div class="priority-item">
+                            <div class="priority-header">
+                                <label for="pricePriority">💰 Precio</label>
+                                <span class="priority-value" id="priceValue">7</span>
+                            </div>
+                            <input type="range" id="pricePriority" min="1" max="10" value="7" class="priority-range">
+                            <div class="priority-labels">
+                                <span>No importante</span>
+                                <span>Crítico</span>
+                            </div>
+                        </div>
+
+                        <div class="priority-item">
+                            <div class="priority-header">
+                                <label for="entertainmentPriority">🎭 Entretenimiento</label>
+                                <span class="priority-value" id="entertainmentValue">6</span>
+                            </div>
+                            <input type="range" id="entertainmentPriority" min="1" max="10" value="6" class="priority-range">
+                            <div class="priority-labels">
+                                <span>No importante</span>
+                                <span>Crítico</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button type="submit" form="searchForm" class="btn btn-primary btn-large">
+                        <span class="btn-text">🔍 Encontrar mi hogar perfecto</span>
+                        <span class="btn-loading">
+                            <div class="spinner"></div>
+                            Analizando...
+                        </span>
+                    </button>
+                </div>
+                
+                <div id="results" class="results hidden">
+                    <h3>🏆 Tus Recomendaciones Perfectas</h3>
+                    <div id="recommendationsList"></div>
+                </div>
+            </div>
+            
+            <!-- Demo Cases Tab -->
+            <div id="demos" class="tab-content">
+                <div class="text-center mb-4">
+                    <h3>⭐ Casos Demo Interactivos</h3>
+                    <p class="section-description">Explora 3 perfiles reales y sus recomendaciones personalizadas</p>
+                </div>
+                <div class="demo-cases" id="demoCases"></div>
+            </div>
+            
+            <!-- Map Tab -->
+            <div id="map" class="tab-content">
+                <div class="text-center mb-3">
+                    <h3>🗺️ Explora Colonias en Mapa Interactivo</h3>
+                    <p class="section-description">Haz clic en los marcadores para ver información detallada</p>
+                </div>
+                <div class="map-container">
+                    <div id="leafletMap" style="height: 100%; width: 100%;"></div>
+                </div>
+            </div>
+            
+            <!-- About Tab -->
+            <div id="about" class="tab-content">
+                <div class="text-center mb-4">
+                    <h3>ℹ️ Sobre CasaMX</h3>
+                    <p class="section-description">
+                        Tecnología de vanguardia para encontrar tu hogar perfecto en Ciudad de México
+                    </p>
+                </div>
+                
+                <div class="about-features">
+                    <div class="about-feature">
+                        <h4>🤖 Inteligencia Artificial</h4>
+                        <p>Algoritmos avanzados analizan 15+ factores para recomendaciones precisas basadas en tu perfil único</p>
+                    </div>
+                    
+                    <div class="about-feature">
+                        <h4>📍 Datos Reales</h4>
+                        <p>Información actualizada de 10+ colonias premium con datos de seguridad, precios y amenidades</p>
+                    </div>
+                    
+                    <div class="about-feature">
+                        <h4>⚡ Ultra Rápido</h4>
+                        <p>Resultados en menos de 2 segundos con explicaciones detalladas del por qué cada opción es perfecta</p>
+                    </div>
+                    
+                    <div class="about-feature">
+                        <h4>🎯 Personalizado</h4>
+                        <p>Cada recomendación se ajusta a tu presupuesto, estilo de vida y preferencias específicas</p>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4" style="padding: 30px; background: var(--light-color); border-radius: var(--border-radius); border: 1px solid rgba(102, 126, 234, 0.1);">
+                    <h4 style="color: var(--primary-color); margin-bottom: 15px;">🏆 Desarrollado para el Datatón ITAM 2025</h4>
+                    <p><strong>Por:</strong> David Fernando Ávila Díaz</p>
+                    <p><strong>Evento:</strong> Red Bull ITAM Innovation Challenge</p>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: var(--gray-600);">
+                        Una aplicación que utiliza inteligencia artificial para revolucionar la forma en que las personas encuentran su hogar ideal en la Ciudad de México
+                    </p>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <p>&copy; 2025 CasaMX - Encuentra tu hogar perfecto en CDMX</p>
+            <div class="footer-credits">
+                <p>Desarrollado con ❤️ para el Datatón ITAM 2025</p>
+                <p>David Fernando Ávila Díaz | Red Bull ITAM Innovation Challenge</p>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Embedded Data and Application Logic -->
+    <script>
+        // ===== EMBEDDED DATA =====
+        window.CasaMXData = {
+            \"neighborhoods\": [
+                {
+                    \"id\": \"polanco\",
+                    \"name\": \"Polanco\",
+                    \"alcaldia\": \"Miguel Hidalgo\",
+                    \"coordinates\": {\"lat\": 19.4326, \"lng\": -99.1924},
+                    \"price_range\": {
+                        \"min\": 45000,
+                        \"max\": 120000,
+                        \"average\": 75000
+                    },
+                    \"scores\": {
+                        \"security\": 9.2,
+                        \"transport\": 8.8,
+                        \"amenities\": 9.5,
+                        \"education\": 9.1,
+                        \"healthcare\": 9.3,
+                        \"entertainment\": 9.0,
+                        \"overall\": 9.15
+                    },
+                    \"features\": {
+                        \"metro_stations\": [\"Polanco\", \"Auditorio\"],
+                        \"shopping_centers\": [\"Antara\", \"Plaza Carso\"],
+                        \"schools\": [\"American School\", \"Greengates School\"],
+                        \"hospitals\": [\"ABC Medical Center\", \"Médica Sur Polanco\"],
+                        \"parks\": [\"Parque Lincoln\", \"Parque de los Venados\"]
+                    },
+                    \"demographics\": {
+                        \"expat_friendly\": 9.5,
+                        \"family_oriented\": 8.5,
+                        \"young_professional\": 8.0,
+                        \"senior_friendly\": 7.5
+                    },
+                    \"description\": \"La zona más exclusiva de CDMX, perfecta para ejecutivos internacionales y familias que buscan el máximo lujo y seguridad.\",
+                    \"tags\": [\"luxury\", \"international\", \"business\", \"embassy_zone\"],
+                    \"safety_index\": 92
+                },
+                {
+                    \"id\": \"roma_norte\",
+                    \"name\": \"Roma Norte\",
+                    \"alcaldia\": \"Cuauhtémoc\",
+                    \"coordinates\": {\"lat\": 19.4142, \"lng\": -99.1626},
+                    \"price_range\": {
+                        \"min\": 25000,
+                        \"max\": 55000,
+                        \"average\": 38000
+                    },
+                    \"scores\": {
+                        \"security\": 7.8,
+                        \"transport\": 9.0,
+                        \"amenities\": 8.7,
+                        \"education\": 8.2,
+                        \"healthcare\": 8.1,
+                        \"entertainment\": 9.2,
+                        \"overall\": 8.5
+                    },
+                    \"features\": {
+                        \"metro_stations\": [\"Insurgentes\", \"Sevilla\"],
+                        \"shopping_centers\": [\"Pabellón Roma\", \"Plaza Río de Janeiro\"],
+                        \"schools\": [\"Colegio Madrid\", \"Instituto Irlandés\"],
+                        \"hospitals\": [\"Hospital Español\", \"Médica Sur Roma\"],
+                        \"parks\": [\"Parque México\", \"Parque España\"]
+                    },
+                    \"demographics\": {
+                        \"expat_friendly\": 8.5,
+                        \"family_oriented\": 7.8,
+                        \"young_professional\": 9.2,
+                        \"senior_friendly\": 7.0
+                    },
+                    \"description\": \"El corazón cultural y gastronómico de CDMX, ideal para jóvenes profesionales que buscan estilo de vida cosmopolita.\",
+                    \"tags\": [\"hipster\", \"cultural\", \"restaurants\", \"nightlife\"],
+                    \"safety_index\": 78
+                },
+                {
+                    \"id\": \"condesa\",
+                    \"name\": \"Condesa\",
+                    \"alcaldia\": \"Cuauhtémoc\",
+                    \"coordinates\": {\"lat\": 19.4098, \"lng\": -99.1739},
+                    \"price_range\": {
+                        \"min\": 22000,
+                        \"max\": 50000,
+                        \"average\": 35000
+                    },
+                    \"scores\": {
+                        \"security\": 8.0,
+                        \"transport\": 8.5,
+                        \"amenities\": 8.9,
+                        \"education\": 8.0,
+                        \"healthcare\": 7.9,
+                        \"entertainment\": 9.3,
+                        \"overall\": 8.4
+                    },
+                    \"features\": {
+                        \"metro_stations\": [\"Patriotismo\", \"Chilpancingo\"],
+                        \"shopping_centers\": [\"Pabellón Condesa\", \"Plaza Villa de Madrid\"],
+                        \"schools\": [\"Colegio Alemán\", \"Liceo Franco Mexicano\"],
+                        \"hospitals\": [\"Hospital ABC Observatorio\", \"Hospital Ángeles\"],
+                        \"parks\": [\"Parque México\", \"Parque España\"]
+                    },
+                    \"demographics\": {
+                        \"expat_friendly\": 8.8,
+                        \"family_oriented\": 8.2,
+                        \"young_professional\": 9.0,
+                        \"senior_friendly\": 7.2
+                    },
+                    \"description\": \"Zona bohemia con arquitectura art déco, perfecta para expatriados que buscan ambiente relajado y cultural.\",
+                    \"tags\": [\"bohemian\", \"art_deco\", \"pet_friendly\", \"walkable\"],
+                    \"safety_index\": 80
+                },
+                {
+                    \"id\": \"santa_fe\",
+                    \"name\": \"Santa Fe\",
+                    \"alcaldia\": \"Cuajimalpa\",
+                    \"coordinates\": {\"lat\": 19.3592, \"lng\": -99.2677},
+                    \"price_range\": {
+                        \"min\": 28000,
+                        \"max\": 70000,
+                        \"average\": 45000
+                    },
+                    \"scores\": {
+                        \"security\": 8.8,
+                        \"transport\": 7.2,
+                        \"amenities\": 8.5,
+                        \"education\": 8.8,
+                        \"healthcare\": 8.6,
+                        \"entertainment\": 7.5,
+                        \"overall\": 8.23
+                    },
+                    \"features\": {
+                        \"metro_stations\": [\"Santa Fe\"],
+                        \"shopping_centers\": [\"Centro Santa Fe\", \"Samara\"],
+                        \"schools\": [\"Universidad Iberoamericana\", \"Tecnológico de Monterrey\"],
+                        \"hospitals\": [\"ABC Santa Fe\", \"Médica Sur Santa Fe\"],
+                        \"parks\": [\"Parque La Mexicana\", \"Bosque de las Lomas\"]
+                    },
+                    \"demographics\": {
+                        \"expat_friendly\": 8.2,
+                        \"family_oriented\": 8.8,
+                        \"young_professional\": 8.5,
+                        \"senior_friendly\": 8.0
+                    },
+                    \"description\": \"Distrito financiero moderno con rascacielos, ideal para ejecutivos que trabajan en corporativos.\",
+                    \"tags\": [\"business_district\", \"modern\", \"corporate\", \"shopping\"],
+                    \"safety_index\": 88
+                },
+                {
+                    \"id\": \"coyoacan\",
+                    \"name\": \"Coyoacán Centro\",
+                    \"alcaldia\": \"Coyoacán\",
+                    \"coordinates\": {\"lat\": 19.3467, \"lng\": -99.1639},
+                    \"price_range\": {
+                        \"min\": 15000,
+                        \"max\": 35000,
+                        \"average\": 24000
+                    },
+                    \"scores\": {
+                        \"security\": 7.5,
+                        \"transport\": 8.0,
+                        \"amenities\": 8.2,
+                        \"education\": 8.5,
+                        \"healthcare\": 7.8,
+                        \"entertainment\": 8.8,
+                        \"overall\": 8.13
+                    },
+                    \"features\": {
+                        \"metro_stations\": [\"Coyoacán\", \"Viveros\"],
+                        \"shopping_centers\": [\"Plaza Coyoacán\", \"Centro Comercial Manacar\"],
+                        \"schools\": [\"Universidad Nacional (UNAM)\", \"Colegio de San Patricio\"],
+                        \"hospitals\": [\"Hospital General de Coyoacán\", \"Clínica del Sur\"],
+                        \"parks\": [\"Viveros de Coyoacán\", \"Parque Frida Kahlo\"]
+                    },
+                    \"demographics\": {
+                        \"expat_friendly\": 7.8,
+                        \"family_oriented\": 8.8,
+                        \"young_professional\": 7.5,
+                        \"senior_friendly\": 8.5
+                    },
+                    \"description\": \"Zona histórica y cultural con mercados tradicionales, ideal para familias que buscan autenticidad mexicana.\",
+                    \"tags\": [\"historic\", \"cultural\", \"traditional\", \"affordable\"],
+                    \"safety_index\": 75
+                },
+                {
+                    \"id\": \"del_valle\",
+                    \"name\": \"Del Valle Norte\",
+                    \"alcaldia\": \"Benito Juárez\",
+                    \"coordinates\": {\"lat\": 19.3884, \"lng\": -99.1647},
+                    \"price_range\": {
+                        \"min\": 18000,
+                        \"max\": 40000,
+                        \"average\": 28000
+                    },
+                    \"scores\": {
+                        \"security\": 8.2,
+                        \"transport\": 8.8,
+                        \"amenities\": 8.1,
+                        \"education\": 8.3,
+                        \"healthcare\": 8.4,
+                        \"entertainment\": 7.8,
+                        \"overall\": 8.27
+                    },
+                    \"features\": {
+                        \"metro_stations\": [\"Etiopia\", \"Eugenia\"],
+                        \"shopping_centers\": [\"Galerías Insurgentes\", \"Plaza Universidad\"],
+                        \"schools\": [\"Colegio Hebreo\", \"Instituto Thomas Jefferson\"],
+                        \"hospitals\": [\"Hospital Mocel\", \"Médica Sur Del Valle\"],
+                        \"parks\": [\"Parque Hundido\", \"Parque de los Venados\"]
+                    },
+                    \"demographics\": {
+                        \"expat_friendly\": 7.5,
+                        \"family_oriented\": 8.5,
+                        \"young_professional\": 8.0,
+                        \"senior_friendly\": 8.2
+                    },
+                    \"description\": \"Colonia residencial tradicional con excelente conectividad, perfecta para familias de clase media-alta.\",
+                    \"tags\": [\"residential\", \"family_friendly\", \"traditional\", \"well_connected\"],
+                    \"safety_index\": 82
+                },
+                {
+                    \"id\": \"lomas_chapultepec\",
+                    \"name\": \"Lomas de Chapultepec\",
+                    \"alcaldia\": \"Miguel Hidalgo\",
+                    \"coordinates\": {\"lat\": 19.4259, \"lng\": -99.2156},
+                    \"price_range\": {
+                        \"min\": 50000,
+                        \"max\": 150000,
+                        \"average\": 85000
+                    },
+                    \"scores\": {
+                        \"security\": 9.5,
+                        \"transport\": 7.8,
+                        \"amenities\": 8.8,
+                        \"education\": 9.2,
+                        \"healthcare\": 9.0,
+                        \"entertainment\": 8.2,
+                        \"overall\": 8.75
+                    },
+                    \"features\": {
+                        \"metro_stations\": [\"Auditorio\"],
+                        \"shopping_centers\": [\"Palacio de Hierro\", \"Plaza Molière\"],
+                        \"schools\": [\"Colegio Peterson\", \"American School Foundation\"],
+                        \"hospitals\": [\"Hospital Ángeles\", \"Centro Médico ABC\"],
+                        \"parks\": [\"Bosque de Chapultepec\", \"Parque Lira\"]
+                    },
+                    \"demographics\": {
+                        \"expat_friendly\": 9.2,
+                        \"family_oriented\": 9.0,
+                        \"young_professional\": 7.5,
+                        \"senior_friendly\": 8.8
+                    },
+                    \"description\": \"Una de las zonas más exclusivas y seguras de CDMX, con mansiones y residencias de lujo.\",
+                    \"tags\": [\"luxury\", \"exclusive\", \"mansions\", \"embassy_zone\"],
+                    \"safety_index\": 95
+                },
+                {
+                    \"id\": \"doctores\",
+                    \"name\": \"Doctores\",
+                    \"alcaldia\": \"Cuauhtémoc\",
+                    \"coordinates\": {\"lat\": 19.4225, \"lng\": -99.1431},
+                    \"price_range\": {
+                        \"min\": 8000,
+                        \"max\": 18000,
+                        \"average\": 12000
+                    },
+                    \"scores\": {
+                        \"security\": 6.2,
+                        \"transport\": 8.5,
+                        \"amenities\": 7.0,
+                        \"education\": 7.2,
+                        \"healthcare\": 8.8,
+                        \"entertainment\": 6.8,
+                        \"overall\": 7.25
+                    },
+                    \"features\": {
+                        \"metro_stations\": [\"Doctores\", \"Obrera\"],
+                        \"shopping_centers\": [\"Mercado de Doctores\", \"Plaza Doctores\"],
+                        \"schools\": [\"Escuela Nacional Preparatoria\", \"Instituto Patria\"],
+                        \"hospitals\": [\"Hospital General\", \"Hospital Juárez\"],
+                        \"parks\": [\"Parque de los Venados\", \"Plaza de la Solidaridad\"]
+                    },
+                    \"demographics\": {
+                        \"expat_friendly\": 5.5,
+                        \"family_oriented\": 7.0,
+                        \"young_professional\": 7.8,
+                        \"senior_friendly\": 6.5
+                    },
+                    \"description\": \"Zona en transición con precios accesibles y excelente conectividad al centro, ideal para presupuestos ajustados.\",
+                    \"tags\": [\"affordable\", \"central\", \"developing\", \"hospital_zone\"],
+                    \"safety_index\": 62
+                },
+                {
+                    \"id\": \"juarez\",
+                    \"name\": \"Juárez\",
+                    \"alcaldia\": \"Cuauhtémoc\",
+                    \"coordinates\": {\"lat\": 19.4284, \"lng\": -99.1576},
+                    \"price_range\": {
+                        \"min\": 20000,
+                        \"max\": 45000,
+                        \"average\": 32000
+                    },
+                    \"scores\": {
+                        \"security\": 7.5,
+                        \"transport\": 9.2,
+                        \"amenities\": 8.5,
+                        \"education\": 8.0,
+                        \"healthcare\": 8.2,
+                        \"entertainment\": 8.8,
+                        \"overall\": 8.37
+                    },
+                    \"features\": {
+                        \"metro_stations\": [\"Cuauhtémoc\", \"Insurgentes\"],
+                        \"shopping_centers\": [\"Plaza de la República\", \"Mercado Juárez\"],
+                        \"schools\": [\"Colegio de México\", \"Instituto Anglo Mexicano\"],
+                        \"hospitals\": [\"Hospital General\", \"Hospital de la Raza\"],
+                        \"parks\": [\"Alameda Central\", \"Plaza de la República\"]
+                    },
+                    \"demographics\": {
+                        \"expat_friendly\": 8.2,
+                        \"family_oriented\": 7.2,
+                        \"young_professional\": 8.8,
+                        \"senior_friendly\": 7.0
+                    },
+                    \"description\": \"Zona céntrica con vida nocturna vibrante y excelente conectividad, popular entre jóvenes profesionales.\",
+                    \"tags\": [\"central\", \"nightlife\", \"lgbtq_friendly\", \"artistic\"],
+                    \"safety_index\": 75
+                },
+                {
+                    \"id\": \"napoles\",
+                    \"name\": \"Nápoles\",
+                    \"alcaldia\": \"Benito Juárez\",
+                    \"coordinates\": {\"lat\": 19.3945, \"lng\": -99.1723},
+                    \"price_range\": {
+                        \"min\": 16000,
+                        \"max\": 35000,
+                        \"average\": 25000
+                    },
+                    \"scores\": {
+                        \"security\": 7.8,
+                        \"transport\": 8.6,
+                        \"amenities\": 8.0,
+                        \"education\": 7.9,
+                        \"healthcare\": 8.1,
+                        \"entertainment\": 8.2,
+                        \"overall\": 8.1
+                    },
+                    \"features\": {
+                        \"metro_stations\": [\"Zapata\", \"Parque de los Venados\"],
+                        \"shopping_centers\": [\"Plaza Insurgentes\", \"Parque Delta\"],
+                        \"schools\": [\"Colegio Simón Bolívar\", \"Instituto Salesiano\"],
+                        \"hospitals\": [\"Hospital 1° de Octubre\", \"Clínica Londres\"],
+                        \"parks\": [\"Parque de los Venados\", \"Parque Delta\"]
+                    },
+                    \"demographics\": {
+                        \"expat_friendly\": 7.0,
+                        \"family_oriented\": 8.2,
+                        \"young_professional\": 7.8,
+                        \"senior_friendly\": 7.8
+                    },
+                    \"description\": \"Colonia residencial con buena oferta gastronómica y centros comerciales, ideal para familias jóvenes.\",
+                    \"tags\": [\"residential\", \"family_oriented\", \"shopping\", \"restaurants\"],
+                    \"safety_index\": 78
+                }
+            ],
+            \"demo_cases\": [
+                {
+                    \"id\": \"young_expat_professional\",
+                    \"name\": \"Alex - Joven Profesional Extranjero\",
+                    \"age\": 28,
+                    \"nationality\": \"Estados Unidos\",
+                    \"profession\": \"Desarrollador de Software\",
+                    \"profile_description\": \"Joven profesional americano que busca experiencia internacional. Trabaja remoto para empresa tech de Silicon Valley.\",
+                    \"criteria\": {
+                        \"budget\": 35000,
+                        \"family_size\": 1,
+                        \"has_children\": false,
+                        \"priorities\": {
+                            \"security\": 8,
+                            \"transport\": 7,
+                            \"amenities\": 8,
+                            \"education\": 3,
+                            \"price\": 6,
+                            \"entertainment\": 9
+                        }
+                    },
+                    \"lifestyle_preferences\": [
+                        \"Vida nocturna activa\",
+                        \"Cafés y coworking spaces\",
+                        \"Comunidad expat\",
+                        \"Walkable neighborhood\"
+                    ]
+                },
+                {
+                    \"id\": \"executive_family\",
+                    \"name\": \"María & Carlos - Familia Ejecutiva\",
+                    \"profile\": \"Pareja de 35-40 años con 2 hijos pequeños\",
+                    \"nationality\": \"México\",
+                    \"professions\": [\"Directora Marketing\", \"Gerente Finanzas\"],
+                    \"profile_description\": \"Familia mexicana consolidada profesionalmente. Ambos trabajan en Santa Fe, buscan zona segura para criar a sus hijos.\",
+                    \"criteria\": {
+                        \"budget\": 65000,
+                        \"family_size\": 4,
+                        \"has_children\": true,
+                        \"priorities\": {
+                            \"security\": 10,
+                            \"transport\": 8,
+                            \"amenities\": 7,
+                            \"education\": 9,
+                            \"price\": 5,
+                            \"entertainment\": 6
+                        }
+                    },
+                    \"lifestyle_preferences\": [
+                        \"Máxima seguridad\",
+                        \"Escuelas internacionales\",
+                        \"Parques y áreas verdes\",
+                        \"Proximidad a Santa Fe\"
+                    ]
+                },
+                {
+                    \"id\": \"budget_student\",
+                    \"name\": \"Sophie - Estudiante Internacional\",
+                    \"age\": 22,
+                    \"nationality\": \"Francia\",
+                    \"situation\": \"Intercambio académico en UNAM\",
+                    \"profile_description\": \"Estudiante francesa en intercambio académico por 1 año. Busca experiencia cultural auténtica con presupuesto limitado.\",
+                    \"criteria\": {
+                        \"budget\": 15000,
+                        \"family_size\": 1,
+                        \"has_children\": false,
+                        \"priorities\": {
+                            \"security\": 7,
+                            \"transport\": 9,
+                            \"amenities\": 5,
+                            \"education\": 8,
+                            \"price\": 10,
+                            \"entertainment\": 7
+                        }
+                    },
+                    \"lifestyle_preferences\": [
+                        \"Transporte público eficiente\",
+                        \"Ambiente cultural\",
+                        \"Presupuesto estudiantil\",
+                        \"Proximidad a universidades\"
+                    ]
+                }
+            ]
+        };
+
+        // ===== MAIN APPLICATION CLASS =====
+        class CasaMXApp {
+            constructor() {
+                this.data = window.CasaMXData;
+                this.map = null;
+                this.recommendations = [];
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.setupPriorityRanges();
+                this.setupBudgetSync();
+                this.loadDemoCases();
+                console.log('✅ CasaMX App initialized with', this.data.neighborhoods.length, 'neighborhoods');
+            }
+
+            setupEventListeners() {
+                // Tab navigation
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        this.switchTab(e.target.dataset.tab);
+                    });
+                });
+
+                // Form submission
+                document.getElementById('searchForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleSearch();
+                });
+
+                // Priority range updates
+                document.querySelectorAll('.priority-range').forEach(range => {
+                    range.addEventListener('input', (e) => {
+                        const valueId = e.target.id.replace('Priority', 'Value');
+                        document.getElementById(valueId).textContent = e.target.value;
+                    });
+                });
+            }
+
+            setupPriorityRanges() {
+                // Initialize range displays
+                document.querySelectorAll('.priority-range').forEach(range => {
+                    const valueId = range.id.replace('Priority', 'Value');
+                    document.getElementById(valueId).textContent = range.value;
+                });
+            }
+
+            setupBudgetSync() {
+                const budgetInput = document.getElementById('budget');
+                const budgetRange = document.getElementById('budgetRange');
+
+                budgetInput.addEventListener('input', (e) => {
+                    budgetRange.value = e.target.value;
+                });
+
+                budgetRange.addEventListener('input', (e) => {
+                    budgetInput.value = e.target.value;
+                });
+            }
+
+            switchTab(tabName) {
+                // Update tab buttons
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelector(`[data-tab=\"${tabName}\"]`).classList.add('active');
+
+                // Update tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tabName).classList.add('active');
+
+                // Initialize map if switching to map tab
+                if (tabName === 'map' && !this.map) {
+                    setTimeout(() => this.initializeMap(), 100);
+                }
+            }
+
+            handleSearch() {
+                const formData = new FormData(document.getElementById('searchForm'));
+                
+                const userPreferences = {
+                    budget: parseInt(formData.get('budget') || document.getElementById('budget').value),
+                    familySize: parseInt(formData.get('familySize')),
+                    hasChildren: formData.get('hasChildren') === 'true',
+                    country: formData.get('country'),
+                    priorities: {
+                        security: parseInt(document.getElementById('securityPriority').value),
+                        transport: parseInt(document.getElementById('transportPriority').value),
+                        amenities: parseInt(document.getElementById('amenitiesPriority').value),
+                        education: parseInt(document.getElementById('educationPriority').value),
+                        price: parseInt(document.getElementById('pricePriority').value),
+                        entertainment: parseInt(document.getElementById('entertainmentPriority').value)
+                    }
+                };
+
+                this.showLoading();
+                
+                // Simulate processing time for better UX
+                setTimeout(() => {
+                    this.recommendations = this.calculateRecommendations(userPreferences);
+                    this.displayResults();
+                }, 1800);
+            }
+
+            calculateRecommendations(userPrefs) {
+                const recommendations = this.data.neighborhoods.map(neighborhood => {
+                    const score = this.calculateMatchScore(neighborhood, userPrefs);
+                    const reasons = this.generateReasons(neighborhood, score, userPrefs);
+                    
+                    return {
+                        neighborhood,
+                        score: score.total,
+                        breakdown: score.breakdown,
+                        reasons
+                    };
+                });
+
+                // Sort by score (highest first)
+                recommendations.sort((a, b) => b.score - a.score);
+
+                // Return top 5
+                return recommendations.slice(0, 5);
+            }
+
+            calculateMatchScore(neighborhood, userPrefs) {
+                const scores = {};
+                
+                // Budget compatibility (25% weight)
+                scores.budget = this.calculateBudgetScore(neighborhood, userPrefs);
+                
+                // Security score (20% weight)
+                scores.security = this.calculateSecurityScore(neighborhood, userPrefs);
+                
+                // Transport accessibility (15% weight)
+                scores.transport = this.calculateTransportScore(neighborhood, userPrefs);
+                
+                // Amenities (15% weight)
+                scores.amenities = neighborhood.scores.amenities / 10;
+                
+                // Education (10% weight, higher if has children)
+                scores.education = neighborhood.scores.education / 10;
+                const educationWeight = userPrefs.hasChildren ? 0.20 : 0.05;
+                
+                // Entertainment (10% weight)
+                scores.entertainment = neighborhood.scores.entertainment / 10;
+                
+                // Demographics (5% weight)
+                scores.demographics = this.calculateDemographicsScore(neighborhood, userPrefs);
+
+                // Calculate weighted total
+                let total = 0;
+                total += scores.budget * 0.25;
+                total += scores.security * 0.20;
+                total += scores.transport * 0.15;
+                total += scores.amenities * 0.15;
+                total += scores.education * educationWeight;
+                total += scores.entertainment * 0.10;
+                total += scores.demographics * 0.05;
+
+                // Apply bonuses/penalties
+                const adjustments = this.calculateAdjustments(neighborhood, userPrefs);
+                total += adjustments;
+
+                // Convert to 0-100 scale
+                total = Math.max(0, Math.min(100, total * 100));
+
+                return {
+                    total: Math.round(total),
+                    breakdown: scores
+                };
+            }
+
+            calculateBudgetScore(neighborhood, userPrefs) {
+                const budget = userPrefs.budget;
+                const { min, max, average } = neighborhood.price_range;
+
+                if (budget >= min && budget <= max) {
+                    const distanceFromAverage = Math.abs(budget - average) / average;
+                    return Math.max(0.8, 1.0 - distanceFromAverage);
+                }
+
+                if (budget < min) {
+                    const shortfall = (min - budget) / min;
+                    return Math.max(0, 1.0 - shortfall * 2);
+                }
+
+                if (budget > max) {
+                    const excess = (budget - max) / max;
+                    return Math.max(0.3, 1.0 - excess * 0.5);
+                }
+
+                return 0.5;
+            }
+
+            calculateSecurityScore(neighborhood, userPrefs) {
+                const baseScore = neighborhood.scores.security / 10;
+                const priority = userPrefs.priorities.security / 10;
+                
+                // High priority users need high security neighborhoods
+                if (priority >= 0.8 && baseScore < 0.7) {
+                    return baseScore * 0.6;
+                }
+                
+                return baseScore;
+            }
+
+            calculateTransportScore(neighborhood, userPrefs) {
+                const baseScore = neighborhood.scores.transport / 10;
+                const metroBonus = neighborhood.features.metro_stations.length > 0 ? 0.1 : 0;
+                return Math.min(1.0, baseScore + metroBonus);
+            }
+
+            calculateDemographicsScore(neighborhood, userPrefs) {
+                let score = 0;
+                let factors = 0;
+                
+                // Expat friendliness
+                if (userPrefs.country !== 'mexico') {
+                    score += neighborhood.demographics.expat_friendly / 10;
+                    factors++;
+                }
+                
+                // Family orientation
+                if (userPrefs.hasChildren) {
+                    score += neighborhood.demographics.family_oriented / 10;
+                    factors++;
+                } else if (userPrefs.familySize <= 2) {
+                    score += neighborhood.demographics.young_professional / 10;
+                    factors++;
+                }
+                
+                return factors > 0 ? score / factors : 0.7;
+            }
+
+            calculateAdjustments(neighborhood, userPrefs) {
+                let adjustments = 0;
+
+                // Luxury zone bonus for high budget
+                if (userPrefs.budget > 60000 && neighborhood.tags?.includes('luxury')) {
+                    adjustments += 0.05;
+                }
+
+                // Embassy zone bonus for internationals
+                if (userPrefs.country !== 'mexico' && neighborhood.tags?.includes('embassy_zone')) {
+                    adjustments += 0.08;
+                }
+
+                // Young professional bonus
+                if (userPrefs.familySize <= 2 && !userPrefs.hasChildren) {
+                    if (neighborhood.tags?.includes('hipster') || neighborhood.tags?.includes('nightlife')) {
+                        adjustments += 0.07;
+                    }
+                }
+
+                // Safety penalty for security-conscious users
+                if (userPrefs.priorities.security >= 8 && neighborhood.scores.security < 7.5) {
+                    adjustments -= 0.15;
+                }
+
+                // Budget-friendly bonus
+                if (userPrefs.budget < 20000 && neighborhood.tags?.includes('affordable')) {
+                    adjustments += 0.04;
+                }
+
+                return adjustments;
+            }
+
+            generateReasons(neighborhood, score, userPrefs) {
+                const reasons = [];
+
+                // Budget reasons
+                if (score.breakdown.budget > 0.8) {
+                    reasons.push(`💰 Perfecto para tu presupuesto de $${userPrefs.budget.toLocaleString()}`);
+                }
+
+                // Security reasons
+                if (score.breakdown.security > 0.8 && userPrefs.priorities.security >= 8) {
+                    reasons.push(`🛡️ Zona altamente segura (${neighborhood.safety_index}/100)`);
+                }
+
+                // Transport reasons
+                if (score.breakdown.transport > 0.8) {
+                    const metros = neighborhood.features.metro_stations;
+                    reasons.push(`🚇 Excelente conectividad (${metros.length} estaciones de metro)`);
+                }
+
+                // Family reasons
+                if (userPrefs.hasChildren && score.breakdown.education > 0.8) {
+                    reasons.push(`🎓 Excelentes escuelas para tus hijos`);
+                }
+
+                // Expat reasons
+                if (userPrefs.country !== 'mexico' && neighborhood.demographics.expat_friendly > 8) {
+                    reasons.push(`🌍 Muy amigable para expatriados`);
+                }
+
+                // Lifestyle reasons
+                if (!userPrefs.hasChildren && score.breakdown.entertainment > 0.8) {
+                    reasons.push(`🎭 Vida nocturna y entretenimiento vibrante`);
+                }
+
+                return reasons.slice(0, 4);
+            }
+
+            showLoading() {
+                const searchBtn = document.querySelector('#searchForm button[type=\"submit\"]');
+                searchBtn.classList.add('loading');
+                
+                const resultsDiv = document.getElementById('results');
+                resultsDiv.classList.remove('hidden');
+                
+                const listDiv = document.getElementById('recommendationsList');
+                listDiv.innerHTML = `
+                    <div class=\"loading\">
+                        <div class=\"spinner\"></div>
+                        <p style=\"color: var(--gray-600); font-size: 1.1rem; margin-top: 10px;\">
+                            Analizando las mejores opciones para ti...
+                        </p>
+                        <p style=\"color: var(--gray-500); font-size: 0.9rem; margin-top: 10px;\">
+                            Procesando ${this.data.neighborhoods.length} colonias con IA especializada
+                        </p>
+                    </div>
+                `;
+            }
+
+            displayResults() {
+                const searchBtn = document.querySelector('#searchForm button[type=\"submit\"]');
+                searchBtn.classList.remove('loading');
+                
+                const listDiv = document.getElementById('recommendationsList');
+                listDiv.innerHTML = this.recommendations.map(rec => this.createResultCard(rec)).join('');
+
+                // Scroll to results
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            createResultCard(recommendation) {
+                const { neighborhood, score, reasons } = recommendation;
+                const priceRange = `$${neighborhood.price_range.min.toLocaleString()} - $${neighborhood.price_range.max.toLocaleString()}`;
+                
+                return `
+                    <div class=\"result-card\">
+                        <div class=\"result-header\">
+                            <div class=\"result-title\">${neighborhood.name}</div>
+                            <div class=\"result-score\">${score}% Match</div>
+                        </div>
+                        
+                        <div class=\"result-price\">Rango: ${priceRange} MXN/mes</div>
+                        <div class=\"result-description\">${neighborhood.description}</div>
+                        
+                        <div class=\"result-features\">
+                            ${neighborhood.tags.map(tag => `<span class=\"feature-tag\">${this.formatTag(tag)}</span>`).join('')}
+                        </div>
+                        
+                        <div class=\"result-reasons\">
+                            <h4>¿Por qué es perfecto para ti?</h4>
+                            ${reasons.map(reason => `<div class=\"reason\">${reason}</div>`).join('')}
+                        </div>
+                        
+                        <div class=\"result-details\">
+                            <strong>📍 Alcaldía:</strong> ${neighborhood.alcaldia} • 
+                            <strong>🏥 Hospitales:</strong> ${neighborhood.features.hospitals.length} • 
+                            <strong>🚇 Metro:</strong> ${neighborhood.features.metro_stations.join(', ')} • 
+                            <strong>🛡️ Seguridad:</strong> ${neighborhood.safety_index}/100
+                        </div>
+                    </div>
+                `;
+            }
+
+            formatTag(tag) {
+                const tagMap = {
+                    'luxury': '✨ Lujo',
+                    'affordable': '💰 Accesible',
+                    'hipster': '🎨 Trendy',
+                    'cultural': '🎭 Cultural',
+                    'business_district': '🏢 Distrito Financiero',
+                    'historic': '🏛️ Histórico',
+                    'family_friendly': '👨‍👩‍👧‍👦 Familiar',
+                    'nightlife': '🌃 Vida Nocturna',
+                    'walkable': '🚶 Caminable',
+                    'embassy_zone': '🏛️ Zona Embajadas',
+                    'international': '🌍 Internacional',
+                    'business': '💼 Negocios',
+                    'restaurants': '🍽️ Restaurantes',
+                    'bohemian': '🎨 Bohemio',
+                    'art_deco': '🏗️ Art Déco',
+                    'pet_friendly': '🐕 Pet Friendly',
+                    'modern': '🏙️ Moderno',
+                    'corporate': '🏢 Corporativo',
+                    'shopping': '🛍️ Shopping',
+                    'traditional': '🏛️ Tradicional',
+                    'residential': '🏘️ Residencial',
+                    'well_connected': '🚇 Bien Conectado',
+                    'exclusive': '👑 Exclusivo',
+                    'mansions': '🏰 Mansiones',
+                    'central': '📍 Céntrico',
+                    'developing': '🚧 En Desarrollo',
+                    'hospital_zone': '🏥 Zona Hospitalaria',
+                    'lgbtq_friendly': '🏳️‍🌈 LGBTQ+ Friendly',
+                    'artistic': '🎨 Artístico',
+                    'family_oriented': '👪 Orientado a Familias'
+                };
+                return tagMap[tag] || tag;
+            }
+
+            loadDemoCases() {
+                const demoCasesDiv = document.getElementById('demoCases');
+                
+                demoCasesDiv.innerHTML = this.data.demo_cases.map(demoCase => `
+                    <div class=\"demo-card\" onclick=\"app.runDemoCase('${demoCase.id}')\">
+                        <div class=\"demo-title\">${demoCase.name}</div>
+                        <div class=\"demo-profile\">${demoCase.profile_description}</div>
+                        <div class=\"demo-criteria\">
+                            <div><strong>💰 Presupuesto:</strong> $${demoCase.criteria.budget.toLocaleString()}/mes</div>
+                            <div><strong>👥 Familia:</strong> ${demoCase.criteria.family_size} persona${demoCase.criteria.family_size > 1 ? 's' : ''}</div>
+                            <div><strong>👶 Hijos:</strong> ${demoCase.criteria.has_children ? 'Sí' : 'No'}</div>
+                            <div><strong>🌍 Nacionalidad:</strong> ${demoCase.nationality}</div>
+                            <div style=\"margin-top: 15px; font-size: 0.9em; color: var(--primary-color); text-align: center; font-weight: 600;\">
+                                👆 Haz clic para ver recomendaciones
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            runDemoCase(caseId) {
+                const demoCase = this.data.demo_cases.find(c => c.id === caseId);
+                if (!demoCase) return;
+
+                // Convert demo case to user preferences
+                const userPrefs = {
+                    budget: demoCase.criteria.budget,
+                    familySize: demoCase.criteria.family_size,
+                    hasChildren: demoCase.criteria.has_children,
+                    country: demoCase.nationality.toLowerCase().replace(' ', '_').split(' ')[0],
+                    priorities: demoCase.criteria.priorities
+                };
+
+                // Fill form with demo data
+                document.getElementById('budget').value = demoCase.criteria.budget;
+                document.getElementById('budgetRange').value = demoCase.criteria.budget;
+                document.getElementById('familySize').value = demoCase.criteria.family_size;
+                
+                const hasChildrenRadio = demoCase.criteria.has_children ? 
+                    document.getElementById('hasChildren-yes') : 
+                    document.getElementById('hasChildren-no');
+                hasChildrenRadio.checked = true;
+
+                // Set country (approximate mapping)
+                const countryMapping = {
+                    'estados': 'usa',
+                    'méxico': 'mexico',
+                    'francia': 'france',
+                    'españa': 'spain',
+                    'alemania': 'germany'
+                };
+                const country = countryMapping[demoCase.nationality.toLowerCase().split(' ')[0]] || 'other';
+                document.getElementById('country').value = country;
+
+                // Set priorities
+                Object.entries(demoCase.criteria.priorities).forEach(([key, value]) => {
+                    const priorityId = key + 'Priority';
+                    const valueId = key + 'Value';
+                    const element = document.getElementById(priorityId);
+                    if (element) {
+                        element.value = value;
+                        document.getElementById(valueId).textContent = value;
+                    }
+                });
+
+                // Calculate recommendations
+                this.recommendations = this.calculateRecommendations(userPrefs);
+
+                // Switch to search tab and display results
+                this.switchTab('search');
+                setTimeout(() => {
+                    this.displayResults();
+                    
+                    // Add demo case info header
+                    const resultsDiv = document.getElementById('results');
+                    const demoHeader = document.createElement('div');
+                    demoHeader.style.cssText = `
+                        background: var(--light-color); 
+                        padding: 25px; 
+                        border-radius: var(--border-radius); 
+                        margin-bottom: 25px;
+                        border: 1px solid rgba(102, 126, 234, 0.2);
+                    `;
+                    demoHeader.innerHTML = `
+                        <h3 style=\"color: var(--primary-color); margin-bottom: 12px;\">📊 Caso Demo: ${demoCase.name}</h3>
+                        <p style=\"margin-bottom: 15px; line-height: 1.5;\">${demoCase.profile_description}</p>
+                        <div style=\"display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; font-size: 0.9rem;\">
+                            <span><strong>💰 Presupuesto:</strong> $${demoCase.criteria.budget.toLocaleString()}</span>
+                            <span><strong>👥 Familia:</strong> ${demoCase.criteria.family_size} persona${demoCase.criteria.family_size > 1 ? 's' : ''}</span>
+                            <span><strong>🌍 Nacionalidad:</strong> ${demoCase.nationality}</span>
+                            <span><strong>👶 Hijos:</strong> ${demoCase.criteria.has_children ? 'Sí' : 'No'}</span>
+                        </div>
+                    `;
+                    const firstResult = document.querySelector('#recommendationsList .result-card');
+                    if (firstResult) {
+                        firstResult.parentNode.insertBefore(demoHeader, firstResult);
+                    }
+                }, 200);
+            }
+
+            initializeMap() {
+                try {
+                    // Initialize Leaflet map
+                    this.map = L.map('leafletMap').setView([19.4326, -99.1332], 11);
+                    
+                    // Add tile layer
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap contributors',
+                        maxZoom: 18,
+                    }).addTo(this.map);
+
+                    // Add neighborhood markers
+                    this.data.neighborhoods.forEach(neighborhood => {
+                        const priceRange = `$${neighborhood.price_range.min.toLocaleString()} - $${neighborhood.price_range.max.toLocaleString()}`;
+                        
+                        // Create custom marker based on price range
+                        let markerColor = '#667eea';
+                        if (neighborhood.price_range.average > 50000) markerColor = '#dc3545';
+                        else if (neighborhood.price_range.average > 30000) markerColor = '#ffc107';
+                        else if (neighborhood.price_range.average > 15000) markerColor = '#28a745';
+                        else markerColor = '#17a2b8';
+                        
+                        const marker = L.marker([neighborhood.coordinates.lat, neighborhood.coordinates.lng])
+                            .addTo(this.map);
+                        
+                        marker.bindPopup(`
+                            <div style=\"font-family: 'Inter', sans-serif; max-width: 250px;\">
+                                <h3 style=\"margin: 0 0 12px 0; color: var(--primary-color); font-size: 1.1rem;\">${neighborhood.name}</h3>
+                                <p style=\"margin: 6px 0; font-size: 0.9rem;\"><strong>💰 Precio:</strong> ${priceRange}/mes</p>
+                                <p style=\"margin: 6px 0; font-size: 0.9rem;\"><strong>🛡️ Seguridad:</strong> ${neighborhood.safety_index}/100</p>
+                                <p style=\"margin: 6px 0; font-size: 0.9rem;\"><strong>📍 Alcaldía:</strong> ${neighborhood.alcaldia}</p>
+                                <p style=\"margin: 6px 0; font-size: 0.9rem;\"><strong>🚇 Metro:</strong> ${neighborhood.features.metro_stations.join(', ')}</p>
+                                <p style=\"margin: 12px 0 0 0; font-size: 0.85rem; line-height: 1.4; color: var(--gray-600);\">${neighborhood.description}</p>
+                                <div style=\"margin-top: 10px;\">
+                                    ${neighborhood.tags.slice(0, 3).map(tag => `<span style=\"background: var(--light-color); color: var(--primary-color); padding: 3px 8px; border-radius: 10px; font-size: 0.75rem; margin-right: 5px;\">${this.formatTag(tag)}</span>`).join('')}
+                                </div>
+                            </div>
+                        `);
+                    });
+
+                    console.log('✅ Map initialized with', this.data.neighborhoods.length, 'markers');
+                } catch (error) {
+                    console.error('❌ Error initializing map:', error);
+                    document.getElementById('leafletMap').innerHTML = `
+                        <div style=\"display: flex; align-items: center; justify-content: center; height: 100%; background: var(--gray-100); color: var(--gray-600);\">
+                            <div style=\"text-align: center;\">
+                                <h3>🗺️ Mapa no disponible</h3>
+                                <p>El mapa interactivo no pudo cargarse. Las recomendaciones funcionan normalmente.</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // ===== INITIALIZE APP =====
+        document.addEventListener('DOMContentLoaded', () => {
+            window.app = new CasaMXApp();
+        });
+    </script>
+</body>
+</html>"

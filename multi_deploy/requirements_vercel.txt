@@ -1,0 +1,33 @@
+# VERCEL OPTIMIZED REQUIREMENTS - CASAMX
+# Minimal dependencies for fastest deployment
+
+# Core Streamlit (CRITICAL)
+streamlit==1.28.1
+
+# Essential data processing
+pandas==2.1.4
+numpy==1.24.3
+
+# Essential visualization
+plotly==5.17.0
+folium==0.15.1
+streamlit-folium==0.15.0
+
+# Core utilities
+python-dateutil==2.8.2
+pytz==2023.3
+requests==2.31.0
+
+# Lightweight alternatives
+Pillow==10.1.0
+typing-extensions==4.8.0
+
+# Remove heavy dependencies for Vercel:
+# - No scikit-learn (use lightweight ML if needed)
+# - No geopandas (too heavy for serverless)
+# - No matplotlib/seaborn (plotly only)
+# - No database dependencies (use JSON/CSV)
+
+# Optional lightweight additions
+PyYAML==6.0.1
+python-dotenv==1.0.0

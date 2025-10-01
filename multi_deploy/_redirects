@@ -1,0 +1,17 @@
+# Netlify _redirects file for CasaMX
+# Handle all routes through Streamlit app
+
+/*    /streamlit_app.py   200
+
+# API routes
+/api/*    /streamlit_app.py   200
+
+# Static assets
+/static/*   /static/:splat   200
+
+# Health check
+/health   /streamlit_app.py   200
+/_health   /streamlit_app.py   200
+
+# Fallback for SPA behavior
+/*    /index.html   404

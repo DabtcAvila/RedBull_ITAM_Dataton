@@ -1,0 +1,14 @@
+{
+  "name": "casamx-vercel-app",
+  "version": "1.0.0",
+  "description": "CasaMX - Tu hogar ideal en México",
+  "main": "main.py",
+  "scripts": {
+    "build": "echo 'Build complete'",
+    "start": "python main.py",
+    "dev": "python main.py"
+  },
+  "keywords": ["housing", "mexico", "streamlit", "real-estate"],
+  "author": "David Fernando Ávila Díaz",
+  "license": "MIT"
+}

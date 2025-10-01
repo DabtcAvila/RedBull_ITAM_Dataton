@@ -1,0 +1,51 @@
+# CasaMX - DigitalOcean Static Site Redirects
+# For Netlify/Vercel compatibility if needed
+
+# SPA fallback - redirect all non-existent routes to index.html
+/* /index.html 200
+
+# Force HTTPS
+http://casamx.store/* https://casamx.store/:splat 301!
+http://www.casamx.store/* https://casamx.store/:splat 301!
+https://www.casamx.store/* https://casamx.store/:splat 301!
+
+# Legacy redirects (if needed)
+/home /index.html 301
+/app /index.html 301
+/search /#search 301
+/demo /#demos 301
+/map /#map 301
+/about /#about 301
+
+# API redirects (not needed for static site)
+# /api/* https://api.casamx.store/:splat 200
+
+# Headers for security
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-XSS-Protection: 1; mode=block
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# Cache headers
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+  
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+  
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+  
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+  
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+  
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+  
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable

@@ -1,0 +1,36 @@
+{
+  "version": 2,
+  "name": "casamx-store",
+  "builds": [
+    {
+      "src": "streamlit_app.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/streamlit_app.py"
+    }
+  ],
+  "env": {
+    "PYTHONPATH": ".",
+    "STREAMLIT_SERVER_PORT": "8080",
+    "STREAMLIT_SERVER_ADDRESS": "0.0.0.0",
+    "STREAMLIT_SERVER_HEADLESS": "true",
+    "STREAMLIT_SERVER_ENABLE_CORS": "false",
+    "STREAMLIT_BROWSER_GATHER_USAGE_STATS": "false"
+  },
+  "functions": {
+    "streamlit_app.py": {
+      "maxDuration": 30
+    }
+  },
+  "regions": ["iad1"],
+  "projectSettings": {
+    "framework": "streamlit",
+    "buildCommand": "pip install -r requirements.txt",
+    "installCommand": "pip install -r requirements_vercel.txt",
+    "devCommand": "streamlit run streamlit_app.py"
+  }
+}

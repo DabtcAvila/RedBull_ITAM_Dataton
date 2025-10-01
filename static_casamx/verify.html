@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CasaMX - Verificación de Deployment</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 20px auto; 
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .check { 
+            background: white;
+            padding: 20px; 
+            margin: 10px 0; 
+            border-radius: 10px;
+            border-left: 5px solid #28a745;
+        }
+        .error { 
+            border-left-color: #dc3545;
+            background: #fff5f5;
+        }
+        .loading {
+            border-left-color: #ffc107;
+            background: #fffdf0;
+        }
+        h1 { color: #333; text-align: center; }
+        .status { font-weight: bold; }
+        .details { margin-top: 10px; font-size: 0.9em; color: #666; }
+    </style>
+</head>
+<body>
+    <h1>🔍 CasaMX - Verificación de Sistema</h1>
+    
+    <div id="checks">
+        <div class="check loading">
+            <div class="status">⏳ Verificando componentes del sistema...</div>
+        </div>
+    </div>
+
+    <script>
+        const checks = [
+            {
+                name: "Archivo principal index.html",
+                test: () => document.title.includes('CasaMX'),
+                description: "Verifica que el archivo HTML principal esté cargado correctamente"
+            },
+            {
+                name: "Datos de colonias CDMX",
+                test: () => typeof window.CasaMXData !== 'undefined' && window.CasaMXData.neighborhoods,
+                description: "Verifica que los datos de colonias estén embebidos y disponibles"
+            },
+            {
+                name: "Motor de recomendaciones JavaScript",
+                test: () => typeof CasaMXApp !== 'undefined',
+                description: "Verifica que la clase principal de la aplicación esté definida"
+            },
+            {
+                name: "Elementos de interfaz",
+                test: () => document.getElementById('searchForm') && document.getElementById('demoCases'),
+                description: "Verifica que todos los elementos HTML necesarios estén presentes"
+            },
+            {
+                name: "Responsive Design",
+                test: () => document.querySelector('meta[name="viewport"]'),
+                description: "Verifica que el diseño sea responsive y móvil-friendly"
+            },
+            {
+                name: "Fonts de Google",
+                test: () => {
+                    const links = document.querySelectorAll('link[href*="fonts.googleapis.com"]');
+                    return links.length > 0;
+                },
+                description: "Verifica que las fuentes de Google estén cargando"
+            },
+            {
+                name: "Leaflet Maps",
+                test: () => typeof L !== 'undefined',
+                description: "Verifica que la librería de mapas Leaflet esté disponible"
+            },
+            {
+                name: "Datos de casos demo",
+                test: () => window.CasaMXData?.demo_cases?.length >= 3,
+                description: "Verifica que los 3 casos demo estén disponibles"
+            }
+        ];
+
+        function runChecks() {
+            const container = document.getElementById('checks');
+            container.innerHTML = '';
+
+            let passedChecks = 0;
+            
+            checks.forEach((check, index) => {
+                setTimeout(() => {
+                    const div = document.createElement('div');
+                    const passed = check.test();
+                    
+                    div.className = passed ? 'check' : 'check error';
+                    div.innerHTML = `
+                        <div class="status">
+                            ${passed ? '✅' : '❌'} ${check.name}
+                        </div>
+                        <div class="details">${check.description}</div>
+                        ${passed ? '' : '<div class="details" style="color: #dc3545; font-weight: bold;">⚠️ Este componente requiere corrección</div>'}
+                    `;
+                    
+                    container.appendChild(div);
+                    
+                    if (passed) passedChecks++;
+                    
+                    // Show summary after last check
+                    if (index === checks.length - 1) {
+                        setTimeout(() => {
+                            const summaryDiv = document.createElement('div');
+                            const allPassed = passedChecks === checks.length;
+                            
+                            summaryDiv.className = allPassed ? 'check' : 'check error';
+                            summaryDiv.innerHTML = `
+                                <div class="status" style="font-size: 1.2em;">
+                                    ${allPassed ? '🎉' : '⚠️'} Resumen: ${passedChecks}/${checks.length} verificaciones pasadas
+                                </div>
+                                <div class="details">
+                                    ${allPassed 
+                                        ? '¡Perfecto! El sistema está completamente funcional y listo para producción en casamx.store' 
+                                        : 'Hay componentes que requieren atención antes del deployment final'
+                                    }
+                                </div>
+                                ${allPassed ? `
+                                    <div style="margin-top: 15px; padding: 15px; background: #d4edda; border-radius: 5px;">
+                                        <strong>✅ DEPLOYMENT READY</strong><br>
+                                        • Sube todos los archivos a DigitalOcean Static Site<br>
+                                        • La aplicación funcionará perfectamente<br>
+                                        • Tiempo estimado de deployment: < 2 minutos
+                                    </div>
+                                ` : ''}
+                            `;
+                            
+                            container.appendChild(summaryDiv);
+                        }, 200);
+                    }
+                }, index * 300);
+            });
+        }
+
+        // Wait for external resources to load
+        window.addEventListener('load', () => {
+            setTimeout(runChecks, 1000);
+        });
+    </script>
+</body>
+</html>

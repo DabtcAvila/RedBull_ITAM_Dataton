@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CasaMX - Encuentra la colonia perfecta en Ciudad de México con inteligencia artificial">
+    <title>CasaMX - Encuentra tu Hogar Perfecto en CDMX</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    
+    <!-- Custom Styles -->
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .main-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 30px;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .tab:hover {
+            color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .form-input, .form-select {
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .priority-section {
+            margin: 30px 0;
+        }
+        
+        .priority-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 12px;
+        }
+        
+        .priority-label {
+            min-width: 140px;
+            font-weight: 500;
+        }
+        
+        .priority-range {
+            flex: 1;
+            height: 8px;
+            background: #e1e5e9;
+            border-radius: 4px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .priority-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+        
+        .priority-value {
+            min-width: 30px;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .radio-item input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .results {
+            margin-top: 30px;
+        }
+        
+        .result-card {
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .result-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.1);
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .result-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .result-score {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+        
+        .result-price {
+            font-size: 1.1rem;
+            color: #28a745;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .result-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .result-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .feature-tag {
+            background: #f0f4ff;
+            color: #667eea;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .result-reasons {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+        
+        .result-reasons h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .reason {
+            color: #555;
+            margin-bottom: 5px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .reason::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .demo-cases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .demo-card {
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 16px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.1);
+        }
+        
+        .demo-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .demo-profile {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .demo-criteria {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 12px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .map-container {
+            height: 500px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+        }
+        
+        .footer p {
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .main-content { padding: 25px; }
+            .header h1 { font-size: 2rem; }
+            .form-grid { grid-template-columns: 1fr; }
+            .tabs { flex-direction: column; }
+            .tab { border-bottom: 1px solid #e1e5e9; }
+            .demo-cases { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏠 CasaMX</h1>
+            <p>Encuentra la colonia perfecta en Ciudad de México con inteligencia artificial especializada</p>
+        </header>
+        
+        <main class="main-content">
+            <div class="tabs">
+                <button class="tab active" data-tab="search">🔍 Buscar Hogar</button>
+                <button class="tab" data-tab="demos">⭐ Casos Demo</button>
+                <button class="tab" data-tab="map">🗺️ Explorar Mapa</button>
+                <button class="tab" data-tab="about">ℹ️ Acerca de</button>
+            </div>
+            
+            <!-- Search Tab -->
+            <div id="search" class="tab-content active">
+                <form id="searchForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="budget">Presupuesto mensual (MXN)</label>
+                            <input type="number" id="budget" name="budget" min="5000" max="200000" value="25000" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="familySize">Tamaño de familia</label>
+                            <select id="familySize" name="familySize" class="form-select">
+                                <option value="1">Solo yo</option>
+                                <option value="2" selected>Pareja (2 personas)</option>
+                                <option value="3">Familia pequeña (3 personas)</option>
+                                <option value="4">Familia mediana (4 personas)</option>
+                                <option value="5+">Familia grande (5+ personas)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>¿Tienes hijos?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" name="hasChildren" value="true" id="hasChildren-yes">
+                                    <label for="hasChildren-yes">Sí</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" name="hasChildren" value="false" id="hasChildren-no" checked>
+                                    <label for="hasChildren-no">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="country">País de origen</label>
+                            <select id="country" name="country" class="form-select">
+                                <option value="mexico">🇲🇽 México</option>
+                                <option value="usa">🇺🇸 Estados Unidos</option>
+                                <option value="spain">🇪🇸 España</option>
+                                <option value="france">🇫🇷 Francia</option>
+                                <option value="germany">🇩🇪 Alemania</option>
+                                <option value="other">🌍 Otro país</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="priority-section">
+                        <h3>Califica la importancia (1-10):</h3>
+                        <div class="priority-item">
+                            <div class="priority-label">🛡️ Seguridad</div>
+                            <input type="range" id="securityPriority" min="1" max="10" value="8" class="priority-range">
+                            <div class="priority-value" id="securityValue">8</div>
+                        </div>
+                        
+                        <div class="priority-item">
+                            <div class="priority-label">🚇 Transporte</div>
+                            <input type="range" id="transportPriority" min="1" max="10" value="7" class="priority-range">
+                            <div class="priority-value" id="transportValue">7</div>
+                        </div>
+                        
+                        <div class="priority-item">
+                            <div class="priority-label">🏪 Amenidades</div>
+                            <input type="range" id="amenitiesPriority" min="1" max="10" value="6" class="priority-range">
+                            <div class="priority-value" id="amenitiesValue">6</div>
+                        </div>
+                        
+                        <div class="priority-item">
+                            <div class="priority-label">🎓 Educación</div>
+                            <input type="range" id="educationPriority" min="1" max="10" value="5" class="priority-range">
+                            <div class="priority-value" id="educationValue">5</div>
+                        </div>
+                        
+                        <div class="priority-item">
+                            <div class="priority-label">💰 Precio</div>
+                            <input type="range" id="pricePriority" min="1" max="10" value="7" class="priority-range">
+                            <div class="priority-value" id="priceValue">7</div>
+                        </div>
+                        
+                        <div class="priority-item">
+                            <div class="priority-label">🎭 Entretenimiento</div>
+                            <input type="range" id="entertainmentPriority" min="1" max="10" value="6" class="priority-range">
+                            <div class="priority-value" id="entertainmentValue">6</div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">🔍 Encontrar mi hogar perfecto</button>
+                </form>
+                
+                <div id="results" class="results" style="display: none;">
+                    <h3>Tus Recomendaciones Perfectas:</h3>
+                    <div id="recommendationsList"></div>
+                </div>
+            </div>
+            
+            <!-- Demo Cases Tab -->
+            <div id="demos" class="tab-content">
+                <h3>Explora 3 casos reales con recomendaciones personalizadas:</h3>
+                <div class="demo-cases" id="demoCases"></div>
+            </div>
+            
+            <!-- Map Tab -->
+            <div id="map" class="tab-content">
+                <h3>Explora colonias en el mapa interactivo:</h3>
+                <div class="map-container">
+                    <div id="leafletMap" style="height: 100%; width: 100%;"></div>
+                </div>
+            </div>
+            
+            <!-- About Tab -->
+            <div id="about" class="tab-content">
+                <h3>Sobre CasaMX</h3>
+                <p style="margin-bottom: 20px;">
+                    CasaMX utiliza inteligencia artificial avanzada para analizar más de 15 factores 
+                    y encontrar la colonia perfecta según tu perfil y preferencias.
+                </p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div style="background: #f8f9ff; padding: 20px; border-radius: 12px;">
+                        <h4 style="color: #667eea; margin-bottom: 10px;">🤖 IA Especializada</h4>
+                        <p>Algoritmos que analizan 20+ colonias premium con datos reales y actualizados.</p>
+                    </div>
+                    
+                    <div style="background: #f8f9ff; padding: 20px; border-radius: 12px;">
+                        <h4 style="color: #667eea; margin-bottom: 10px;">⚡ Ultra Rápido</h4>
+                        <p>Recomendaciones precisas en menos de 2 segundos con explicaciones detalladas.</p>
+                    </div>
+                    
+                    <div style="background: #f8f9ff; padding: 20px; border-radius: 12px;">
+                        <h4 style="color: #667eea; margin-bottom: 10px;">📊 Datos Reales</h4>
+                        <p>Información verificada de seguridad, precios, transporte y amenidades.</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px; padding: 20px; background: #f0f4ff; border-radius: 12px;">
+                    <p><strong>Desarrollado para el Datatón ITAM 2025</strong></p>
+                    <p>Por David Fernando Ávila Díaz - Red Bull ITAM Innovation Challenge</p>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <p>&copy; 2025 CasaMX - Encuentra tu hogar perfecto en CDMX</p>
+        </footer>
+    </div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Embedded Data and Engine -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

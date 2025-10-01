@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CasaMX - Encuentra tu hogar ideal en CDMX</title>
+    <meta name="description" content="CasaMX - Sistema inteligente de recomendaciones de vivienda para Ciudad de México. Datatón ITAM 2025.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+    
+    <!-- CSS Framework -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero-section p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .feature-section {
+            padding: 4rem 0;
+        }
+
+        .stats-section {
+            background: white;
+            padding: 3rem 0;
+            margin: 2rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+
+        .emergency-notice {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .zone-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .zone-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .zone-price {
+            color: var(--success-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .zone-score {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Emergency Notice -->
+    <div class="container-fluid">
+        <div class="emergency-notice">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>SISTEMA DE EMERGENCIA ACTIVO</strong> - 
+            Página estática de respaldo mientras se restaura el servicio principal.
+            <br><small>Datatón ITAM 2025 - Deployment garantizado activado</small>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1><i class="fas fa-home"></i> CasaMX</h1>
+            <p>Encuentra tu hogar ideal en Ciudad de México</p>
+            <p><small>Datatón ITAM 2025 • Sistema Inteligente de Recomendaciones</small></p>
+            <button class="btn btn-primary-custom btn-lg" onclick="startRecommendationProcess()">
+                <i class="fas fa-search"></i> Comenzar Búsqueda
+            </button>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 stat-item">
+                    <div class="stat-number">8+</div>
+                    <div class="stat-label">Zonas Analizadas</div>
+                </div>
+                <div class="col-md-3 stat-item">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Indicadores</div>
+                </div>
+                <div class="col-md-3 stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Perfiles de Usuario</div>
+                </div>
+                <div class="col-md-3 stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Precisión</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="feature-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card card-custom">
+                        <div class="card-body text-center">
+                            <i class="fas fa-brain card-icon"></i>
+                            <h5 class="card-title">Algoritmo Inteligente</h5>
+                            <p class="card-text">Sistema de recomendaciones personalizado que analiza tus preferencias y encuentra las mejores opciones.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-custom">
+                        <div class="card-body text-center">
+                            <i class="fas fa-map-marked-alt card-icon"></i>
+                            <h5 class="card-title">Datos Geográficos</h5>
+                            <p class="card-text">Información detallada de seguridad, transporte, precios y amenidades por colonia en CDMX.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-custom">
+                        <div class="card-body text-center">
+                            <i class="fas fa-chart-line card-icon"></i>
+                            <h5 class="card-title">Análisis Avanzado</h5>
+                            <p class="card-text">Visualizaciones interactivas y reportes detallados para tomar la mejor decisión.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Zones Section -->
+    <section class="feature-section" style="background: white;">
+        <div class="container">
+            <h2 class="text-center mb-5">🏆 Zonas Destacadas</h2>
+            <div class="row" id="zones-container">
+                <div class="col-md-6 col-lg-4">
+                    <div class="zone-card">
+                        <div class="zone-title">#1 Roma Norte</div>
+                        <div class="zone-price">$25,000-35,000/mes</div>
+                        <span class="zone-score">Score: 85/100</span>
+                        <p class="mt-2 mb-1"><small>Cuauhtémoc • Excelente conectividad</small></p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-shield-alt text-success"></i> Alta seguridad</li>
+                            <li><i class="fas fa-subway text-primary"></i> Cerca del metro</li>
+                            <li><i class="fas fa-utensils text-warning"></i> Gran vida nocturna</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="zone-card">
+                        <div class="zone-title">#2 Condesa</div>
+                        <div class="zone-price">$28,000-40,000/mes</div>
+                        <span class="zone-score">Score: 88/100</span>
+                        <p class="mt-2 mb-1"><small>Cuauhtémoc • Zona trendy</small></p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-tree text-success"></i> Muchos parques</li>
+                            <li><i class="fas fa-coffee text-warning"></i> Cafés y restaurantes</li>
+                            <li><i class="fas fa-heart text-danger"></i> Ambiente joven</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="zone-card">
+                        <div class="zone-title">#3 Polanco</div>
+                        <div class="zone-price">$45,000-70,000/mes</div>
+                        <span class="zone-score">Score: 92/100</span>
+                        <p class="mt-2 mb-1"><small>Miguel Hidalgo • Zona premium</small></p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-gem text-primary"></i> Máximo lujo</li>
+                            <li><i class="fas fa-building text-secondary"></i> Zona corporativa</li>
+                            <li><i class="fas fa-car text-success"></i> Fácil acceso</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Action Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h2>¿Listo para encontrar tu hogar perfecto?</h2>
+            <p>Completa nuestro cuestionario personalizado y recibe recomendaciones inteligentes</p>
+            <button class="btn btn-light btn-lg" onclick="showComingSoon()" style="border-radius: 25px; padding: 12px 40px; font-weight: 600;">
+                <i class="fas fa-rocket"></i> Comenzar Ahora
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h5><i class="fas fa-trophy"></i> CasaMX</h5>
+                    <p>Datatón ITAM 2025 • David Fernando Ávila Díaz</p>
+                    <p><small>Sistema Inteligente de Recomendaciones Inmobiliarias • CDMX</small></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        function startRecommendationProcess() {
+            showLoadingMessage();
+            
+            // Check if main app is available
+            checkMainAppStatus();
+        }
+
+        function showLoadingMessage() {
+            const container = document.createElement('div');
+            container.className = 'modal fade';
+            container.id = 'loadingModal';
+            container.innerHTML = `
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body text-center p-4">
+                            <div class="loading-spinner mb-3"></div>
+                            <h5>Conectando con sistema principal...</h5>
+                            <p>Verificando disponibilidad del servicio</p>
+                            <div class="progress mt-3">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                     role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(container);
+            
+            const modal = new bootstrap.Modal(document.getElementById('loadingModal'));
+            modal.show();
+
+            // Animate progress bar
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                document.querySelector('.progress-bar').style.width = progress + '%';
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => modal.hide(), 1000);
+                }
+            }, 200);
+        }
+
+        function checkMainAppStatus() {
+            // Try different deployment URLs
+            const urls = [
+                'https://casamx.store',
+                'https://casamx-store.vercel.app',
+                'https://casamx-store.netlify.app'
+            ];
+
+            let urlIndex = 0;
+            
+            function tryNextUrl() {
+                if (urlIndex >= urls.length) {
+                    showComingSoon();
+                    return;
+                }
+
+                const url = urls[urlIndex];
+                
+                // Try to fetch the URL
+                fetch(url + '/_health')
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.href = url;
+                        } else {
+                            urlIndex++;
+                            setTimeout(tryNextUrl, 1000);
+                        }
+                    })
+                    .catch(() => {
+                        urlIndex++;
+                        setTimeout(tryNextUrl, 1000);
+                    });
+            }
+
+            setTimeout(tryNextUrl, 2000);
+        }
+
+        function showComingSoon() {
+            const modal = document.createElement('div');
+            modal.className = 'modal fade';
+            modal.id = 'comingSoonModal';
+            modal.innerHTML = `
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <i class="fas fa-tools text-warning"></i> 
+                                Servicio en Preparación
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <i class="fas fa-cog fa-spin fa-3x text-primary mb-3"></i>
+                            <h4>¡Estamos finalizando el deploy!</h4>
+                            <p>El sistema principal de CasaMX se está desplegando en este momento.</p>
+                            <p><strong>Tiempo estimado:</strong> 2-5 minutos</p>
+                            <hr>
+                            <h6>¿Qué podrás hacer una vez listo?</h6>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check text-success"></i> Completar cuestionario personalizado</li>
+                                <li><i class="fas fa-check text-success"></i> Obtener 5 recomendaciones inteligentes</li>
+                                <li><i class="fas fa-check text-success"></i> Ver mapa interactivo</li>
+                                <li><i class="fas fa-check text-success"></i> Descargar reporte PDF</li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="location.reload()">
+                                <i class="fas fa-sync-alt"></i> Verificar de Nuevo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            const modalInstance = new bootstrap.Modal(document.getElementById('comingSoonModal'));
+            modalInstance.show();
+        }
+
+        // Auto-check main app every 30 seconds
+        setInterval(() => {
+            fetch('https://casamx.store/_health')
+                .then(response => {
+                    if (response.ok) {
+                        const banner = document.createElement('div');
+                        banner.className = 'alert alert-success alert-dismissible';
+                        banner.style.position = 'fixed';
+                        banner.style.top = '10px';
+                        banner.style.right = '10px';
+                        banner.style.zIndex = '9999';
+                        banner.innerHTML = `
+                            <strong><i class="fas fa-check-circle"></i> ¡Servicio restaurado!</strong>
+                            <a href="https://casamx.store" class="btn btn-success btn-sm ms-2">Ir a CasaMX</a>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        `;
+                        document.body.appendChild(banner);
+                    }
+                })
+                .catch(() => {
+                    // Service still down
+                });
+        }, 30000);
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('CasaMX Emergency Page - Datatón ITAM 2025');
+            console.log('Static fallback page active');
+        });
+    </script>
+</body>
+</html>

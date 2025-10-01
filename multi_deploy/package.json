@@ -1,0 +1,38 @@
+{
+  "name": "casamx-store",
+  "version": "1.0.0",
+  "description": "CasaMX - Sistema de Recomendaciones de Vivienda CDMX - Datatón ITAM 2025",
+  "main": "streamlit_app.py",
+  "scripts": {
+    "dev": "streamlit run streamlit_app.py",
+    "start": "streamlit run streamlit_app.py --server.port=$PORT",
+    "build": "echo 'Build completed'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "streamlit",
+    "real-estate",
+    "cdmx",
+    "recommendations",
+    "dataton",
+    "itam",
+    "housing"
+  ],
+  "author": "David Fernando Ávila Díaz",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davidaviladiaz/casamx-store"
+  },
+  "engines": {
+    "python": "3.9.x",
+    "pip": ">=21.0.0"
+  },
+  "vercel": {
+    "functions": {
+      "streamlit_app.py": {
+        "runtime": "python3.9"
+      }
+    }
+  }
+}

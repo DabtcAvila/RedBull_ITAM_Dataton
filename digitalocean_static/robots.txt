@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# CasaMX - AI-Powered Housing Recommendations for Mexico City
+# Sitemap location
+Sitemap: https://casamx.store/sitemap.xml
+
+# Specific bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Block sensitive areas (none in this static site)
+# Disallow: /admin/
+
+# Crawl-delay (optional)
+Crawl-delay: 1
