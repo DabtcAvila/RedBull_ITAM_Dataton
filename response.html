@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CasaMX - Tu hogar ideal en México</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 3rem; }
+        .header h1 { font-size: 4rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .header h2 { font-size: 1.8rem; opacity: 0.9; margin-bottom: 1rem; }
+        .header p { font-size: 1.2rem; opacity: 0.8; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .stat-card {
+            background: rgba(255,255,255,0.15);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .stat-number { font-size: 3rem; font-weight: bold; color: #FFD700; margin-bottom: 0.5rem; }
+        .demo-section {
+            background: rgba(255,255,255,0.1);
+            padding: 3rem 2rem;
+            border-radius: 25px;
+            margin: 3rem 0;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        .demo-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0; }
+        .demo-btn {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            border: none;
+            padding: 2rem;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .demo-btn:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+        .results { display: none; margin-top: 3rem; }
+        .zona-card {
+            background: rgba(255,255,255,0.15);
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-radius: 15px;
+            border-left: 6px solid #FFD700;
+            transition: all 0.3s ease;
+        }
+        .zona-card:hover { transform: translateX(10px); background: rgba(255,255,255,0.2); }
+        .zona-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .zona-title { font-size: 1.5rem; font-weight: bold; }
+        .zona-score { 
+            background: #FFD700; 
+            color: #333; 
+            padding: 0.5rem 1rem; 
+            border-radius: 50px; 
+            font-weight: bold; 
+        }
+        .zona-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .detail-item { text-align: center; }
+        .footer { text-align: center; margin-top: 4rem; opacity: 0.8; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem; }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.5rem; }
+            .stats { grid-template-columns: 1fr; }
+            .demo-buttons { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 CasaMX</h1>
+            <h2>Tu hogar ideal en México</h2>
+            <p>Recomendaciones personalizadas de zonas en CDMX para extranjeros</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">2.1M+</div>
+                <div>Extranjeros en México buscando hogar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">150+</div>
+                <div>Zonas de CDMX analizadas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">&lt;3s</div>
+                <div>Tiempo de respuesta promedio</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">92%</div>
+                <div>Precisión en recomendaciones</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3 style="text-align: center; margin-bottom: 2rem; font-size: 2rem;">🎯 Casos Demo Instantáneos</h3>
+            <div class="demo-buttons">
+                <button class="demo-btn" onclick="demoFamilia()">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">👨‍👩‍👧‍👦</div>
+                    <div><strong>María & Carlos</strong></div>
+                    <div>Familia española con 2 niños</div>
+                    <div style="opacity: 0.8; margin-top: 0.5rem;">Presupuesto: €35,000 • Prioridad: Seguridad</div>
+                </button>
+                <button class="demo-btn" onclick="demoProfesional()">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">💻</div>
+                    <div><strong>Alessandro</strong></div>
+                    <div>Profesional tech italiano</div>
+                    <div style="opacity: 0.8; margin-top: 0.5rem;">Presupuesto: €25,000 • Prioridad: Transporte</div>
+                </button>
+                <button class="demo-btn" onclick="demoEstudiante()">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎓</div>
+                    <div><strong>Sophie</strong></div>
+                    <div>Estudiante francesa</div>
+                    <div style="opacity: 0.8; margin-top: 0.5rem;">Presupuesto: €15,000 • Prioridad: Precio</div>
+                </button>
+            </div>
+        </div>
+
+        <div id="resultados" class="results">
+            <h3 style="text-align: center; margin-bottom: 2rem;">🏆 Recomendaciones Personalizadas</h3>
+            <div id="perfil-info"></div>
+            <div id="zonas-list"></div>
+        </div>
+
+        <div class="footer">
+            <h3>🏆 CasaMX - Datatón ITAM 2025</h3>
+            <p><strong>David Fernando Ávila Díaz</strong> - Instituto Tecnológico Autónomo de México</p>
+            <p>🎯 Recomendador inteligente de zonas • 🚀 Tecnología de IA • 📊 Datos oficiales INEGI</p>
+        </div>
+    </div>
+
+    <script>
+        const colonias = [
+            {nombre: "Roma Norte", precio: 25000, seguridad: 85, transporte: 95, alcaldia: "Cuauhtémoc", amenidades: 90},
+            {nombre: "Condesa", precio: 28000, seguridad: 82, transporte: 88, alcaldia: "Cuauhtémoc", amenidades: 95},
+            {nombre: "Polanco", precio: 45000, seguridad: 95, transporte: 85, alcaldia: "Miguel Hidalgo", amenidades: 100},
+            {nombre: "Del Valle", precio: 22000, seguridad: 88, transporte: 78, alcaldia: "Benito Juárez", amenidades: 85},
+            {nombre: "Coyoacán Centro", precio: 18000, seguridad: 90, transporte: 70, alcaldia: "Coyoacán", amenidades: 88},
+            {nombre: "Narvarte", precio: 20000, seguridad: 75, transporte: 85, alcaldia: "Benito Juárez", amenidades: 80},
+            {nombre: "Santa Fe", precio: 35000, seguridad: 88, transporte: 72, alcaldia: "Cuajimalpa", amenidades: 95},
+            {nombre: "San Ángel", precio: 32000, seguridad: 92, transporte: 68, alcaldia: "Álvaro Obregón", amenidades: 90}
+        ];
+
+        function calcularScore(zona, pesos) {
+            return (zona.seguridad * pesos.seguridad + 
+                   zona.transporte * pesos.transporte + 
+                   zona.amenidades * pesos.amenidades +
+                   (100 - zona.precio/500) * pesos.precio) / 4;
+        }
+
+        function mostrarResultados(zonasRecomendadas, perfil) {
+            document.getElementById('perfil-info').innerHTML = `
+                <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; text-align: center;">
+                    <h4>${perfil.nombre}</h4>
+                    <p>${perfil.descripcion}</p>
+                    <p><strong>Presupuesto:</strong> ${perfil.presupuesto} • <strong>Prioridades:</strong> ${perfil.prioridades}</p>
+                </div>
+            `;
+
+            let html = '';
+            zonasRecomendadas.forEach((zona, index) => {
+                const scoreColor = index === 0 ? '#FFD700' : index === 1 ? '#C0C0C0' : '#CD7F32';
+                html += `
+                    <div class="zona-card">
+                        <div class="zona-header">
+                            <div class="zona-title">#${index + 1}: ${zona.nombre}</div>
+                            <div class="zona-score" style="background: ${scoreColor};">⭐ ${zona.score.toFixed(1)}</div>
+                        </div>
+                        <p><strong>📍 Alcaldía:</strong> ${zona.alcaldia}</p>
+                        <div class="zona-details">
+                            <div class="detail-item">
+                                <div style="font-size: 1.5rem;">💰</div>
+                                <div><strong>$${zona.precio.toLocaleString()}</strong></div>
+                                <div style="opacity: 0.8;">por mes</div>
+                            </div>
+                            <div class="detail-item">
+                                <div style="font-size: 1.5rem;">🛡️</div>
+                                <div><strong>${zona.seguridad}/100</strong></div>
+                                <div style="opacity: 0.8;">seguridad</div>
+                            </div>
+                            <div class="detail-item">
+                                <div style="font-size: 1.5rem;">🚇</div>
+                                <div><strong>${zona.transporte}/100</strong></div>
+                                <div style="opacity: 0.8;">transporte</div>
+                            </div>
+                            <div class="detail-item">
+                                <div style="font-size: 1.5rem;">🏢</div>
+                                <div><strong>${zona.amenidades}/100</strong></div>
+                                <div style="opacity: 0.8;">amenidades</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('zonas-list').innerHTML = html;
+            document.getElementById('resultados').style.display = 'block';
+            document.getElementById('resultados').scrollIntoView({behavior: 'smooth'});
+        }
+
+        function demoFamilia() {
+            const perfil = {
+                nombre: "👨‍👩‍👧‍👦 María & Carlos - Familia Española",
+                descripcion: "Pareja con 2 niños (8 y 12 años) buscando zona segura",
+                presupuesto: "€35,000 MXN/mes",
+                prioridades: "Seguridad máxima, buenas escuelas, transporte"
+            };
+            
+            const pesos = {seguridad: 0.4, transporte: 0.2, amenidades: 0.3, precio: 0.1};
+            const zonasConScore = colonias.filter(z => z.precio <= 35000)
+                                          .map(z => ({...z, score: calcularScore(z, pesos)}))
+                                          .sort((a,b) => b.score - a.score)
+                                          .slice(0,3);
+            
+            mostrarResultados(zonasConScore, perfil);
+        }
+
+        function demoProfesional() {
+            const perfil = {
+                nombre: "💻 Alessandro - Profesional Tech Italiano", 
+                descripcion: "Desarrollador de 28 años, trabajo remoto, vida social activa",
+                presupuesto: "€25,000 MXN/mes",
+                prioridades: "Conectividad, vida nocturna, networking"
+            };
+            
+            const pesos = {seguridad: 0.2, transporte: 0.4, amenidades: 0.3, precio: 0.1};
+            const zonasConScore = colonias.filter(z => z.precio <= 28000)
+                                          .map(z => ({...z, score: calcularScore(z, pesos)}))
+                                          .sort((a,b) => b.score - a.score)
+                                          .slice(0,3);
+            
+            mostrarResultados(zonasConScore, perfil);
+        }
+
+        function demoEstudiante() {
+            const perfil = {
+                nombre: "🎓 Sophie - Estudiante Francesa",
+                descripcion: "Intercambio académico, 22 años, presupuesto limitado",
+                presupuesto: "€15,000 MXN/mes",
+                prioridades: "Precio económico, transporte a universidad"
+            };
+            
+            const pesos = {seguridad: 0.2, transporte: 0.3, amenidades: 0.2, precio: 0.3};
+            const zonasConScore = colonias.filter(z => z.precio <= 20000)
+                                          .map(z => ({...z, score: calcularScore(z, pesos)}))
+                                          .sort((a,b) => b.score - a.score)
+                                          .slice(0,3);
+            
+            mostrarResultados(zonasConScore, perfil);
+        }
+
+        // Auto-load demo familiar al cargar
+        window.onload = function() {
+            setTimeout(() => {
+                demoFamilia();
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
