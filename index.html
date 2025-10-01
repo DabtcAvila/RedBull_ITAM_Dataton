@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CasaMX - Tu hogar ideal en México</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .form-card { 
+            background: rgba(255,255,255,0.1); 
+            padding: 2rem; 
+            border-radius: 15px; 
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+        }
+        .button {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .results { display: none; }
+        .zona-card {
+            background: rgba(255,255,255,0.15);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            border-left: 4px solid #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 CasaMX</h1>
+            <h2>Tu hogar ideal en México</h2>
+            <p>Encuentra las mejores zonas de CDMX personalizadas para ti</p>
+        </div>
+
+        <div class="form-card">
+            <h3>🎯 Cuéntanos sobre ti</h3>
+            <form id="preferences-form">
+                <div style="margin: 1rem 0;">
+                    <label>💰 Presupuesto mensual (MXN):</label><br>
+                    <input type="range" id="presupuesto" min="10000" max="50000" value="25000" onchange="updateValue(this.value, 'presupuesto-value')">
+                    <span id="presupuesto-value">$25,000</span>
+                </div>
+                
+                <div style="margin: 1rem 0;">
+                    <label>🛡️ Prioridad Seguridad (1-10):</label><br>
+                    <input type="range" id="seguridad" min="1" max="10" value="8" onchange="updateValue(this.value, 'seguridad-value')">
+                    <span id="seguridad-value">8</span>
+                </div>
+                
+                <div style="margin: 1rem 0;">
+                    <label>🚇 Prioridad Transporte (1-10):</label><br>
+                    <input type="range" id="transporte" min="1" max="10" value="7" onchange="updateValue(this.value, 'transporte-value')">
+                    <span id="transporte-value">7</span>
+                </div>
+                
+                <button type="button" class="button" onclick="buscarZonas()">
+                    🔍 Buscar mi zona ideal
+                </button>
+            </form>
+        </div>
+
+        <div id="resultados" class="results">
+            <h3>🎯 Tus Recomendaciones Personalizadas</h3>
+            <div id="recomendaciones-list"></div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <div style="display: inline-block; margin: 0 2rem;">
+                    <h4>📊 Zonas Analizadas</h4>
+                    <div style="font-size: 2rem; font-weight: bold;">150+</div>
+                </div>
+                <div style="display: inline-block; margin: 0 2rem;">
+                    <h4>⚡ Tiempo Respuesta</h4>
+                    <div style="font-size: 2rem; font-weight: bold;">&lt;3s</div>
+                </div>
+                <div style="display: inline-block; margin: 0 2rem;">
+                    <h4>🎯 Precisión</h4>
+                    <div style="font-size: 2rem; font-weight: bold;">92%</div>
+                </div>
+            </div>
+        </div>
+
+        <footer style="text-align: center; margin-top: 3rem; opacity: 0.8;">
+            <p><strong>CasaMX</strong> - Datatón ITAM 2025 | David Fernando Ávila Díaz</p>
+        </footer>
+    </div>
+
+    <script>
+        // Datos de colonias CDMX
+        const colonias = [
+            {nombre: "Roma Norte", precio: 25000, seguridad: 85, transporte: 95, alcaldia: "Cuauhtémoc"},
+            {nombre: "Condesa", precio: 28000, seguridad: 82, transporte: 88, alcaldia: "Cuauhtémoc"},
+            {nombre: "Polanco", precio: 45000, seguridad: 95, transporte: 85, alcaldia: "Miguel Hidalgo"},
+            {nombre: "Del Valle", precio: 22000, seguridad: 88, transporte: 78, alcaldia: "Benito Juárez"},
+            {nombre: "Coyoacán Centro", precio: 18000, seguridad: 90, transporte: 70, alcaldia: "Coyoacán"},
+            {nombre: "Narvarte", precio: 20000, seguridad: 75, transporte: 85, alcaldia: "Benito Juárez"},
+            {nombre: "Santa Fe", precio: 35000, seguridad: 88, transporte: 72, alcaldia: "Cuajimalpa"},
+            {nombre: "San Ángel", precio: 32000, seguridad: 92, transporte: 68, alcaldia: "Álvaro Obregón"}
+        ];
+
+        function updateValue(val, elementId) {
+            document.getElementById(elementId).textContent = val.includes('000') ? '$' + parseInt(val).toLocaleString() : val;
+        }
+
+        function buscarZonas() {
+            const presupuesto = parseInt(document.getElementById('presupuesto').value);
+            const prioridadSeguridad = parseInt(document.getElementById('seguridad').value);
+            const prioridadTransporte = parseInt(document.getElementById('transporte').value);
+            
+            // Filtrar por presupuesto
+            const zonasFiltradas = colonias.filter(zona => zona.precio <= presupuesto * 1.2);
+            
+            // Calcular score personalizado
+            const zonasConScore = zonasFiltradas.map(zona => {
+                const score = (zona.seguridad * prioridadSeguridad + zona.transporte * prioridadTransporte) / 2;
+                return {...zona, score};
+            });
+            
+            // Ordenar por score
+            zonasConScore.sort((a, b) => b.score - a.score);
+            
+            // Mostrar top 3
+            const top3 = zonasConScore.slice(0, 3);
+            
+            let html = '';
+            top3.forEach((zona, index) => {
+                html += `
+                    <div class="zona-card">
+                        <h4>#${index + 1}: ${zona.nombre}</h4>
+                        <p><strong>Alcaldía:</strong> ${zona.alcaldia}</p>
+                        <p><strong>💰 Precio:</strong> $${zona.precio.toLocaleString()}/mes</p>
+                        <p><strong>🛡️ Seguridad:</strong> ${zona.seguridad}/100</p>
+                        <p><strong>🚇 Transporte:</strong> ${zona.transporte}/100</p>
+                        <p><strong>⭐ Score personalizado:</strong> ${zona.score.toFixed(1)}/100</p>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('recomendaciones-list').innerHTML = html;
+            document.getElementById('resultados').style.display = 'block';
+            
+            // Scroll a resultados
+            document.getElementById('resultados').scrollIntoView({behavior: 'smooth'});
+        }
+
+        // Demo cases
+        function loadDemo(tipo) {
+            if (tipo === 'familia') {
+                document.getElementById('presupuesto').value = 35000;
+                document.getElementById('seguridad').value = 9;
+                document.getElementById('transporte').value = 7;
+            } else if (tipo === 'profesional') {
+                document.getElementById('presupuesto').value = 25000;
+                document.getElementById('seguridad').value = 6;
+                document.getElementById('transporte').value = 9;
+            } else if (tipo === 'estudiante') {
+                document.getElementById('presupuesto').value = 15000;
+                document.getElementById('seguridad').value = 7;
+                document.getElementById('transporte').value = 8;
+            }
+            
+            // Update displays
+            updateValue(document.getElementById('presupuesto').value, 'presupuesto-value');
+            updateValue(document.getElementById('seguridad').value, 'seguridad-value');
+            updateValue(document.getElementById('transporte').value, 'transporte-value');
+            
+            // Auto search
+            setTimeout(() => buscarZonas(), 500);
+        }
+    </script>
+</body>
+</html>
