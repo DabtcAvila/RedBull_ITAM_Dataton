@@ -1,14 +1,10 @@
 name = "casamx-app"
 main = "cloudflare-worker.js"
-compatibility_date = "2023-10-30"
+compatibility_date = "2024-10-01"
 
 [env.production]
 name = "casamx-app"
 routes = [
-  { pattern = "casamx.app/*", zone_name = "casamx.app" }
+  { pattern = "casamx.app/*", zone_name = "casamx.app" },
+  { pattern = "www.casamx.app/*", zone_name = "casamx.app" }
 ]
-
-[[env.production.kv_namespaces]]
-binding = "CACHE"
-id = "your_kv_namespace_id"
-preview_id = "your_preview_id"
